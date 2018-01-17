@@ -1,0 +1,46 @@
+Project: 911 User & Responder Tool
+
+This project aims to help a 911-emergency operator to locate a caller in seconds.
+Due to the use of outdated technology, more than 50% of the calls made to the emergency response team fails to locate the caller, and this project provides a solution, saving precious lives.
+
+This project can be divided into three major parts:
+1.	Windows Application for the 911 Operator to access the caller’s location and information.
+2.	An SQL Database and a Web API to help to store information and send the caller’s geographic location, respectively. 
+3.	Android App for the user to send the operator information, location when 911 is dialed. 
+
+The features of these parts are discussed below in detail:
+
+Windows Application
+•	Ability to retrieve encoded information about the caller from the SQL database.
+•	Ability to decode the location of the caller
+•	Show the location of the caller in a GUI map using Google Maps public API
+•	Should route the call from a mobile phone to the Windows App. So the operator can talk and use the App at the same time. [VoIP]
+•	Options to deploy Ambulance, Police, Firefighters etc.
+•	Login info to gain access as a 911 responder
+
+SQL Database & Web API service
+•	Store important information of the user based in the user’s phone number
+o	Name
+o	Date of Birth
+o	Blood Type
+o	Medical History
+o	Age 
+o	Gender
+•	Some kind of API which as capable to connect to the Android device, receive its location and send it to the 911 operator’s Windows application.
+
+Android App
+•	Should be basic and user friendly, so users at any age can use it.
+•	Large and clear button to dial 911
+•	Should be able to find the user’s location and send it to the Web API
+•	Option to add information like Name, DOB, Blood Type, Medical History… 
+•	SMS verification code to verify user’s phone number during setup. [So we know the user calling is not a robot/scam]
+•	Grant access of the mobile features to the app. E.g. Access to location and the dialer.
+•	Implement material design but should be quick and responsive, as the app should not waste any time calling 911.
+•	The app should automatically set the brightness to high [to prevent accidental calls] and place the call on the highest volume or on speaker.
+
+For Anymore details or clarification, please contact any of the group members:
+Shubham Sharma: shubham@iastate.edu
+Paul Biermann: paulmb@iastate.edu
+Rishab Narendra:  rishabn@iastate.edu
+Michael Onyszczak:  mikeonys@iastate.edu
+
