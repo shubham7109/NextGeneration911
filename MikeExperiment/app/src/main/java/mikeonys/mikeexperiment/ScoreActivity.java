@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class ScoreActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
-    public static final String mypreference = "mypref";
+    public static final String mypreference = "demoPrefFile";
     public static final String scoreKey = "scoreKey";
     int hiScore;
 
