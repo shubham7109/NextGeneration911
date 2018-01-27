@@ -5,4 +5,6 @@
     <string name="submit_score">Send Score</string>
     <string name="score_value">Enter a number</string>
     <string name="reset_score">Reset Hi-Score</string>
+    <string name="score_act_button">Open Score Demo</string>
+    <string name="message_act_button">Open Message Demo</string>
 </resources>
