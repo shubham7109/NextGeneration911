@@ -25,22 +25,22 @@ public class UI_Window extends Frame implements ActionListener {
         deployAmbulance = new JButton("Ambulance");
         deployAmbulance.setActionCommand(Actions.Ambulance.name());
         deployAmbulance.addActionListener(this);
-        add(deployAmbulance);
+
 
         deloyPolice = new JButton("Police");
         deloyPolice.setActionCommand(Actions.Police.name());
         deloyPolice.addActionListener(this);
-        add(deloyPolice);
+
 
         deployFireFighters = new JButton("Fire Fighters");
         deployFireFighters.setActionCommand(Actions.FireFighters.name());
         deployFireFighters.addActionListener(this);
-        add(deployFireFighters);
+
 
         deployFirstResponders = new JButton("First Responders");
         deployFirstResponders.setActionCommand(Actions.FirstResponders.name());
         deployFirstResponders.addActionListener(this);
-        add(deployFirstResponders);
+
 
         setTitle("911 Locator and Deployment Tool");
         setSize(1000,500);
@@ -54,6 +54,19 @@ public class UI_Window extends Frame implements ActionListener {
                 System.exit(0);
             }
         });
+
+        setButtonPositions();
+    }
+
+    private void setButtonPositions(){
+        deployAmbulance.setLocation(500,400);
+        add(deployAmbulance);
+        deployFirstResponders.setLocation(500,400);
+        add(deployFirstResponders);
+        deployFireFighters.setLocation(500,400);
+        add(deployFireFighters);
+        deloyPolice.setLocation(500,400);
+        add(deloyPolice);
     }
 
     public static  void main(String[] args){
