@@ -2,4 +2,6 @@
     <string name="app_name">MikeExperiment</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
+    <string name="submit_score">Send Score</string>
+    <string name="score_value">Enter a number</string>
 </resources>
