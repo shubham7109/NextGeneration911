@@ -28,12 +28,18 @@ public class UI_Window extends Frame implements ActionListener {
         add(deployAmbulance);
 
         deloyPolice = new JButton("Police");
+        deloyPolice.setActionCommand(Actions.Police.name());
+        deloyPolice.addActionListener(this);
         add(deloyPolice);
 
         deployFireFighters = new JButton("Fire Fighters");
+        deployFireFighters.setActionCommand(Actions.FireFighters.name());
+        deployFireFighters.addActionListener(this);
         add(deployFireFighters);
 
         deployFirstResponders = new JButton("First Responders");
+        deployFirstResponders.setActionCommand(Actions.FirstResponders.name());
+        deployFirstResponders.addActionListener(this);
         add(deployFirstResponders);
 
         setTitle("911 Locator and Deployment Tool");
@@ -62,7 +68,17 @@ public class UI_Window extends Frame implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
 
         if (evt.getActionCommand() == Actions.Ambulance.name()) {
-            JOptionPane.showMessageDialog(null, "Hello");
+            JOptionPane.showMessageDialog(null, "Ambulance");
         }
+        if (evt.getActionCommand() == Actions.Police.name()) {
+            JOptionPane.showMessageDialog(null, "Police");
+        }
+        if (evt.getActionCommand() == Actions.FireFighters.name()) {
+            JOptionPane.showMessageDialog(null, "Fire Fighters");
+        }
+        if (evt.getActionCommand() == Actions.FirstResponders.name()) {
+            JOptionPane.showMessageDialog(null, "First Responders");
+        }
+
     }
 }
