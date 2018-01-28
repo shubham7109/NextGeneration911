@@ -3,19 +3,27 @@ package myProject;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TopicController {
 	
+	@Autowired //marked as "Needs dependency injection"
+	private TopicService topicService;
+	
 	//return type automatically converted to json
 	@RequestMapping("/topics")
 	public List<Topic> getAllTopics() {
-		return Arrays.asList(
-				new Topic("Spring", "SpringFramework", "SpringFrameworkDescription"),
-				new Topic("Example", "exa", "exa"),
-				new Topic("Test", "test", "TEST")
-				);
+		return topicService.getAllTopics();
+	}
+	
+	//curly brackets indicate variable portion
+	//PathVariable maps {id} to id
+	@RequestMapping("/topics/{id}")
+	public Topic getTopic(@PathVariable("id") String id) {
+		return topicService.getTopic(id);
 	}
 }
