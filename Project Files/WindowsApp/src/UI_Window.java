@@ -51,8 +51,86 @@ public class UI_Window extends Frame implements ActionListener {
         callerInfo = new Label("Caller information:");
         font = new Font("Arial", Font.PLAIN, 16);
         callerInfo.setFont(font);
-        callerInfo.setBounds(10,50,400,40);
+        callerInfo.setBounds(10,50,200,40);
         add(callerInfo);
+
+        name = new Label("Name:");
+        font = new Font("Arial", Font.PLAIN, 16);
+        name.setFont(font);
+        name.setBounds(10,100,100,40);
+        add(name);
+
+        gender = new Label("Gender:");
+        font = new Font("Arial", Font.PLAIN, 16);
+        gender.setFont(font);
+        gender.setBounds(10,150,100,40);
+        add(gender);
+
+        age = new Label("Age:");
+        font = new Font("Arial", Font.PLAIN, 16);
+        age.setFont(font);
+        age.setBounds(10,200,100,40);
+        add(age);
+
+        dob = new Label("Date of Birth:");
+        font = new Font("Arial", Font.PLAIN, 16);
+        dob.setFont(font);
+        dob.setBounds(10,250,100,40);
+        add(dob);
+
+        bloodType = new Label("Blood Type:");
+        font = new Font("Arial", Font.PLAIN, 16);
+        bloodType.setFont(font);
+        bloodType.setBounds(10,300,100,40);
+        add(bloodType);
+
+        medicalHistory = new Label("Med History:");
+        font = new Font("Arial", Font.PLAIN, 16);
+        medicalHistory.setFont(font);
+        medicalHistory.setBounds(10,350,100,40);
+        add(medicalHistory);
+
+        callerName = new TextField("Michael Dapaah");
+        font = new Font("Arial", Font.PLAIN, 16);
+        callerName.setFont(font);
+        callerName.setEditable(false);
+        callerName.setBounds(150,100,250,40);
+        add(callerName);
+
+        callerGender = new TextField("Male");
+        font = new Font("Arial", Font.PLAIN, 16);
+        callerGender.setFont(font);
+        callerGender.setEditable(false);
+        callerGender.setBounds(150,150,250,40);
+        add(callerGender);
+
+        callerAge = new TextField("26");
+        font = new Font("Arial", Font.PLAIN, 16);
+        callerAge.setFont(font);
+        callerAge.setEditable(false);
+        callerAge.setBounds(150,200,250,40);
+        add(callerAge);
+
+        callerDOB = new TextField("Jan 11 1991");
+        font = new Font("Arial", Font.PLAIN, 16);
+        callerDOB.setFont(font);
+        callerDOB.setEditable(false);
+        callerDOB.setBounds(150,250,250,40);
+        add(callerDOB);
+
+        callerBloodType = new TextField("O+");
+        font = new Font("Arial", Font.PLAIN, 16);
+        callerBloodType.setFont(font);
+        callerBloodType.setEditable(false);
+        callerBloodType.setBounds(150,300,250,40);
+        add(callerBloodType);
+
+        callerMedicalHistory = new TextField("Body temperature is not hot");
+        font = new Font("Arial", Font.PLAIN, 16);
+        callerMedicalHistory.setFont(font);
+        callerMedicalHistory.setEditable(false);
+        callerMedicalHistory.setBounds(150,350,250,40);
+        add(callerMedicalHistory);
 
 
 
