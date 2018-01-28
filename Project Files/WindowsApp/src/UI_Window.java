@@ -10,6 +10,8 @@ public class UI_Window extends Frame implements ActionListener {
     private JButton deployFireFighters;
     private JButton deployFirstResponders;
     private Frame frame;
+    private Label map;
+    private Label callerInfo;
 
     private enum Actions {
         Ambulance,
@@ -20,7 +22,20 @@ public class UI_Window extends Frame implements ActionListener {
 
     // Constructor to set up GUI
     public UI_Window(){
-        setLayout(new FlowLayout());
+
+        map = new Label("Google Map API will come here");
+        map.setAlignment(Label.CENTER);
+        map.setBounds(600,300,400,40);
+        add(map);
+
+        callerInfo = new Label("Caller information:");
+        map.setBounds(600,300,400,40);
+        add(map);
+
+
+
+        callerInfo = new Label("Caller Information");
+        add(callerInfo);
 
         deployAmbulance = new JButton("Ambulance");
         deployAmbulance.setActionCommand(Actions.Ambulance.name());
@@ -41,9 +56,10 @@ public class UI_Window extends Frame implements ActionListener {
         deployFirstResponders.setActionCommand(Actions.FirstResponders.name());
         deployFirstResponders.addActionListener(this);
 
+        setButtonPositions();
 
         setTitle("911 Locator and Deployment Tool");
-        setSize(1000,500);
+        setSize(1000,1000);
 
         // Code check if 'X' (close) button is pressed
         addWindowListener(new WindowAdapter()
@@ -55,25 +71,24 @@ public class UI_Window extends Frame implements ActionListener {
             }
         });
 
-        setButtonPositions();
+        setLayout(null);
+        setVisible(true);
     }
 
     private void setButtonPositions(){
-        deployAmbulance.setLocation(500,400);
+        deployAmbulance.setBounds(600,700,170,40);
         add(deployAmbulance);
-        deployFirstResponders.setLocation(500,400);
+        deployFirstResponders.setBounds(800,700,170,40);
         add(deployFirstResponders);
-        deployFireFighters.setLocation(500,400);
+        deployFireFighters.setBounds(600,900,170,40);
         add(deployFireFighters);
-        deloyPolice.setLocation(500,400);
+        deloyPolice.setBounds(800,900,170,40);
         add(deloyPolice);
     }
 
     public static  void main(String[] args){
 
         UI_Window app = new UI_Window();
-        app.setBounds(133,100,532,400);
-        app.setVisible(true);
 
     }
 
