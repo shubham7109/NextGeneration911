@@ -9,9 +9,26 @@ public class UI_Window extends Frame implements ActionListener {
     private JButton deloyPolice;
     private JButton deployFireFighters;
     private JButton deployFirstResponders;
+
     private Frame frame;
+
     private Label map;
     private Label callerInfo;
+
+    private Label name;
+    private Label gender;
+    private Label age;
+    private Label dob;
+    private Label bloodType;
+    private Label medicalHistory;
+
+    private TextField callerName;
+    private TextField callerGender;
+    private TextField callerAge;
+    private TextField callerDOB;
+    private TextField callerBloodType;
+    private TextField callerMedicalHistory;
+
 
     private enum Actions {
         Ambulance,
@@ -23,14 +40,20 @@ public class UI_Window extends Frame implements ActionListener {
     // Constructor to set up GUI
     public UI_Window(){
 
+        Font font = new Font("Arial", Font.PLAIN, 24);
+
         map = new Label("Google Map API will come here");
         map.setAlignment(Label.CENTER);
+        map.setFont(font);
         map.setBounds(600,300,400,40);
         add(map);
 
         callerInfo = new Label("Caller information:");
-        map.setBounds(600,300,400,40);
-        add(map);
+        font = new Font("Arial", Font.PLAIN, 16);
+        callerInfo.setFont(font);
+        callerInfo.setBounds(10,50,400,40);
+        add(callerInfo);
+
 
 
 
