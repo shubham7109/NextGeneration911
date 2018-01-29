@@ -44,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openCall(View view){
+        Intent intent = new Intent(this, CallActivity.class);
+        startActivity(intent);
+    }
+
 
 
 }
