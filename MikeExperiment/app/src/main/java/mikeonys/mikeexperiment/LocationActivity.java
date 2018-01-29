@@ -1,68 +1,50 @@
 package mikeonys.mikeexperiment;
 
+import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import java.text.DecimalFormat;
 
 public class LocationActivity extends AppCompatActivity {
+    private static final int requestCode = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        CurrentLocationListener locationListener = new CurrentLocationListener();
+        TextView textView = findViewById(R.id.location);
+        textView.setText("Lat: 0.000 Long: 0.000");
 
-        try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) locationListener);
-            String locationProvider = LocationManager.GPS_PROVIDER;
-            Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-            TextView textView = findViewById(R.id.location);
-            textView.setText(lastKnownLocation.toString());
-        } catch (SecurityException e) {
-            /* Don't know how to handle rejected location services */
-        }
     }
 
-    public void updateLocation(View view) {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        CurrentLocationListener locationListener = new CurrentLocationListener();
+    public void getLocation(View view){
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
-        try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) locationListener);
-            String locationProvider = LocationManager.GPS_PROVIDER;
-            Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+        if(ContextCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            DecimalFormat decimalFormat = new DecimalFormat(".###"); // 5 digits gives +- 100 m
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+
             TextView textView = findViewById(R.id.location);
-            textView.setText(lastKnownLocation.toString());
-        } catch (SecurityException e) {
-            /* Don't know how to handle rejected location services */
-        }
-    }
+            textView.setText("Lat: " + decimalFormat.format(latitude) + " Long: " + decimalFormat.format(longitude));
 
-    public class CurrentLocationListener implements  android.location.LocationListener{
-        public void onLocationChanged(Location location) {
-            // Dont Care just need to implement
+        } else{ // Location Permissions not granted
+            ActivityCompat.requestPermissions(LocationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestCode);
         }
 
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-            // Dont Care just need to implement
-        }
-
-        public void onProviderEnabled(String s) {
-            // Dont Care just need to implement
-        }
-
-        public void onProviderDisabled(String s) {
-            // Dont Care just need to implement
-        }
     }
 }
 

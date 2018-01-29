@@ -11,4 +11,5 @@
     <string name="permission_button">Open Permission Demo</string>
     <string name="get_permission">Request Permissions</string>
     <string name="check_permission">Check Permissions</string>
+    <string name="request_location_button">Request Location</string>
 </resources>
