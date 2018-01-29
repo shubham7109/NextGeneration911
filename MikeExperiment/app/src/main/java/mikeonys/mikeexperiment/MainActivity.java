@@ -39,5 +39,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openPermission(View view){
+        Intent intent = new Intent(this, PermissionActivity.class);
+        startActivity(intent);
+    }
+
+
 
 }

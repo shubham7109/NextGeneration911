@@ -8,4 +8,7 @@
     <string name="score_act_button">Open Score Demo</string>
     <string name="message_act_button">Open Message Demo</string>
     <string name="location_act_button">Open Location Demo</string>
+    <string name="permission_button">Open Permission Demo</string>
+    <string name="get_permission">Request Permissions</string>
+    <string name="check_permission">Check Permissions</string>
 </resources>
