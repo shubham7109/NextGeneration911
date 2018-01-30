@@ -1,5 +1,8 @@
 package poc_SpringBoot;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class PersonService {
 	
 	
