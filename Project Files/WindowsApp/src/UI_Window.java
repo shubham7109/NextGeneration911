@@ -160,7 +160,7 @@ public class UI_Window extends Frame implements ActionListener {
         setButtonPositions();
 
         setTitle("911 Locator and Deployment Tool");
-        setSize(1000,1000);
+        setSize(1000,700);
 
         // Code check if 'X' (close) button is pressed
         addWindowListener(new WindowAdapter()
@@ -177,13 +177,13 @@ public class UI_Window extends Frame implements ActionListener {
     }
 
     private void setButtonPositions(){
-        deployAmbulance.setBounds(600,700,170,40);
+        deployAmbulance.setBounds(600,500,170,40);
         add(deployAmbulance);
-        deployFirstResponders.setBounds(800,700,170,40);
+        deployFirstResponders.setBounds(800,500,170,40);
         add(deployFirstResponders);
-        deployFireFighters.setBounds(600,900,170,40);
+        deployFireFighters.setBounds(600,600,170,40);
         add(deployFireFighters);
-        deloyPolice.setBounds(800,900,170,40);
+        deloyPolice.setBounds(800,600,170,40);
         add(deloyPolice);
     }
 
