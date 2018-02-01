@@ -16,6 +16,12 @@ public class Person {
 		
 	}
 	
+	public Person(String id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+	
 	
 	public Person(String id, String name, String dLnum, String medicalHistory, String dob, String bloodType, int age,
 			int gender) {
