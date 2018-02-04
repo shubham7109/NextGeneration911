@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MikeExperiment</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="submit_score">Send Score</string>
+    <string name="score_value">Enter a number</string>
+    <string name="reset_score">Reset Hi-Score</string>
+    <string name="score_act_button">Open Score Demo</string>
+    <string name="message_act_button">Open Message Demo</string>
+    <string name="location_act_button">Open Location Demo</string>
+    <string name="permission_button">Open Permission Demo</string>
+    <string name="get_permission">Request Permissions</string>
+    <string name="check_permission">Check Permissions</string>
+    <string name="request_location_button">Request Location</string>
+    <string name="phonecall_button">Open Call Demo</string>
+    <string name="call_mikes_googlePhone">Call Mike\'s Google Phone</string>
+</resources>
