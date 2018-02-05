@@ -1,4 +1,4 @@
-package poc_SpringBoot;
+package serverCode;
 
 public class Person {
 	

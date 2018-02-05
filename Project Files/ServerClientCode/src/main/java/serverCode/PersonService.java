@@ -1,4 +1,4 @@
-package poc_SpringBoot;
+package serverCode;
 
 import org.springframework.stereotype.Service;
 
@@ -7,6 +7,7 @@ public class PersonService {
 	
 	
 	public Person getPerson(String id) {
+		//TODO retrieve a person from database
 		return new Person(id, "testPerson");
 	}
 }
