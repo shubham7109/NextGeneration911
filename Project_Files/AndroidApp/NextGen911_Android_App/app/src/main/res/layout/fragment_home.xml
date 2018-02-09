@@ -1,18 +1,34 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="sb5.cs309.nextgen911.HomeFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <Button
         android:id="@+id/ems_button"
-        android:layout_width="186dp"
-        android:layout_height="155dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="124dp"
         android:background="@android:color/holo_orange_dark"
         android:text="@string/call_911"
         android:textSize="30sp"
         android:textStyle="bold" />
-</FrameLayout>
+
+    <Button
+        android:id="@+id/reg_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ems_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/ems_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ems_button" />
+
+</RelativeLayout>

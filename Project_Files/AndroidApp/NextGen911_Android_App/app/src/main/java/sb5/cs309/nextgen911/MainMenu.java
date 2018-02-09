@@ -36,23 +36,7 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
 
-        /* Check for Critical Permissions */
-        requestPermissions();
-
-        /* Handle User Registration Should not block, access to 911
-           currently just a dummy registration
-         */
-        if (!sharedPreferences.contains(regKey)) {
-            Button button = (Button) findViewById(R.id.reg_status);
-            button.setText(getResources().getString(R.string.reg_warning));
-
-            // TODO Handle Registration steps
-        } else {
-            Button button = (Button) findViewById(R.id.reg_status);
-            button.setVisibility(View.INVISIBLE);
-        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
