@@ -16,7 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+
 import android.widget.Toast;
 
 
@@ -43,40 +44,55 @@ public class MainMenu extends AppCompatActivity {
         /* Handle User Registration Should not block, access to 911
            currently just a dummy registration
          */
-        if(!sharedPreferences.contains(regKey)) {
-            TextView textView = (TextView) findViewById(R.id.reg_status);
-            textView.setText(getResources().getString(R.string.reg_warning));
+        if (!sharedPreferences.contains(regKey)) {
+            Button button = (Button) findViewById(R.id.reg_status);
+            button.setText(getResources().getString(R.string.reg_warning));
+
+            // TODO Handle Registration steps
+        } else {
+            Button button = (Button) findViewById(R.id.reg_status);
+            button.setVisibility(View.INVISIBLE);
         }
-
-
-        fragmentManager = getSupportFragmentManager();
-//        fragment = new RadioFragment();
-        final FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        transaction.add(R.id.main_container, fragment).commit();
-
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        //fragment = new RadioFragment();
-                        break;
-                    case R.id.navigation_personal_info:
-                        //fragment = new StreamFragment();
-                        break;
-                    case R.id.navigation_text:
-                        //fragment = new InfoFragment();
-                        break;
-                }
-                final FragmentTransaction transaction = fragmentManager.beginTransaction();
-                //transaction.replace(R.id.main_container, fragment).commit();
-                return true;
-            }
-        });
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
+            switch (item.getItemId()) {
+                case R.id.navigation_personal_info:
+                    fragment = new PersonalInfoFragment();
+                    //loadFragment(fragment);
+                    return true;
+
+                case R.id.navigation_home:
+                    fragment = new HomeFragment();
+                    //loadFragment(fragment);
+                    return true;
+
+                case R.id.navigation_text:
+                    fragment = new TextFragment();
+                    //loadFragment(fragment);
+                    return true;
+
+            }
+
+            return false;
+        }
+    };
+
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+
+
 
     public void requestPermissions() {
         ActivityCompat.requestPermissions(MainMenu.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE,Manifest.permission.READ_SMS}, requestCode);

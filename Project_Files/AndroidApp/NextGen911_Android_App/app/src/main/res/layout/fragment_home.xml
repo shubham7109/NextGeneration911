@@ -1,0 +1,18 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="sb5.cs309.nextgen911.HomeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <Button
+        android:id="@+id/ems_button"
+        android:layout_width="186dp"
+        android:layout_height="155dp"
+        android:background="@android:color/holo_orange_dark"
+        android:text="@string/call_911"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+</FrameLayout>
