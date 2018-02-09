@@ -31,11 +31,13 @@ public class MainMenu extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     private Fragment fragment;
     private FragmentManager fragmentManager;
+    static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        MainMenu.context = getApplicationContext();
 
     }
 
@@ -93,5 +95,9 @@ public class MainMenu extends AppCompatActivity {
         boolean callPerm = ContextCompat.checkSelfPermission(MainMenu.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED;
         boolean smsPerm = ContextCompat.checkSelfPermission(MainMenu.this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED;
 
+    }
+
+    public static Context getAppContext() {
+        return MainMenu.context;
     }
 }
