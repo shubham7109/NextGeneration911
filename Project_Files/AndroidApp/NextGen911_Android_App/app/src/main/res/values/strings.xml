@@ -3,4 +3,6 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Personal Information</string>
     <string name="title_notifications">Message 911</string>
+    <string name="call_911">CALL 911</string>
+    <string name="reg_warning">Please Register This Device</string>
 </resources>

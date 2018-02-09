@@ -3,7 +3,7 @@
 
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_personal_info"
         android:icon="@drawable/info"
         android:title="@string/title_dashboard" />
 
@@ -14,7 +14,7 @@
 
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_text"
         android:icon="@drawable/text"
         android:title="@string/title_notifications" />
 
