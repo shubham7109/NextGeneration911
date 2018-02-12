@@ -95,4 +95,11 @@ public class MainMenu extends AppCompatActivity {
     public static Context getAppContext() {
         return MainMenu.context;
     }
+
+    public void onRegisterClick(View view){
+        Intent intent;
+
+        intent = new Intent(getAppContext(), RegistrationActivity.class);
+        startActivity(intent);
+    }
 }

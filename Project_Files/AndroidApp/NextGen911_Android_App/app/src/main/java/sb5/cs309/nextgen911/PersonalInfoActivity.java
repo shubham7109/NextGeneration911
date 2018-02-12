@@ -47,6 +47,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
+        PersonalInfoActivity.context = getApplicationContext();
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -55,7 +56,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     public static Context getAppContext() {
-        return MainMenu.context;
+        return PersonalInfoActivity.context;
     }
 
 }

@@ -9,10 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class Text911Activity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+public class RegistrationActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     static Context context;
+    private FirebaseAuth mAuth;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -33,7 +37,9 @@ public class Text911Activity extends AppCompatActivity {
                     overridePendingTransition(0, 0);
                     break;
                 case R.id.navigation_text:
-                    // Do nothing this is the current view
+                    intent = new Intent(getAppContext(), Text911Activity.class);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
                     break;
             }
 
@@ -41,20 +47,30 @@ public class Text911Activity extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_text911);
-        Text911Activity.context = getApplicationContext();
+        setContentView(R.layout.activity_registration);
+        RegistrationActivity.context = getApplicationContext();
+        mAuth = FirebaseAuth.getInstance();
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navigation_text);
     }
-
 
     public static Context getAppContext() {
-        return Text911Activity.context;
+        return RegistrationActivity.context;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 }
+
+
