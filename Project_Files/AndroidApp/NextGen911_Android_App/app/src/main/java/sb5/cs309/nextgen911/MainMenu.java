@@ -3,14 +3,13 @@ package sb5.cs309.nextgen911;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ public class MainMenu extends AppCompatActivity {
     public static final String regKey = "Registered";
     private static final int requestCode = 911;
     BottomNavigationView bottomNavigationView;
-    private FragmentManager fragmentManager;
     static Context context;
 
     @Override
@@ -39,38 +37,38 @@ public class MainMenu extends AppCompatActivity {
         MainMenu.context = getApplicationContext();
         bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
-        sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment, new HomeFragment());
-        transaction.commit();
+        sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        int permission = sharedPreferences.getInt(regKey, 0);
+        if(permission != 0){
+            findViewById(R.id.reg_button).setVisibility(View.INVISIBLE);
+        }
+
+        requestPermissions();
 
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        Fragment selectedFragment = null;
-                        Fragment extraFragment = null;
+                        Intent intent;
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
-                                selectedFragment = new HomeFragment();
-
-                                if(!sharedPreferences.contains(regKey))
-                                    extraFragment = new RegisterFragment();
-                                    //transaction.add(R.id.headFrag, extraFragment);
-
+                                // Do nothing this is the current view
                                 break;
+
                             case R.id.navigation_personal_info:
-                                selectedFragment = new PersonalInfoFragment();
+                                intent = new Intent(getAppContext(), PersonalInfoActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(0, 0);
                                 break;
                             case R.id.navigation_text:
-                                selectedFragment = new TextFragment();
+                                intent = new Intent(getAppContext(), Text911Activity.class);
+                                startActivity(intent);
+                                overridePendingTransition(0, 0);
                                 break;
                         }
 
-                        transaction.replace(R.id.fragment, selectedFragment);
-                        transaction.commit();
+
                         return true;
                     }
                 });
