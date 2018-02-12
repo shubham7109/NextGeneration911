@@ -15,38 +15,21 @@ import android.widget.Toast;
 
 
 public class HomeFragment extends Fragment {
-    final String mypreference = "911UserPrefs";
-    final String regKey = "Registered";
     final int requestCode = 911;
+    public HomeFragment(){
+        // Empty default constructor
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        SharedPreferences preferences = this.getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        requestPermissions();
-
-        /* Handle User Registration Should not block, access to 911
-           currently just a dummy registration
-         */
-
-
-        if (!preferences.contains(regKey)) {
-            // TODO Handle Registration steps
-
-
-        } else {
-            Button button = (Button) view.findViewById(R.id.reg_status);
-            button.setVisibility(View.INVISIBLE);
-        }
-
-
-        View myFragmentView = inflater.inflate(R.layout.fragment_home, container, false);
-        return myFragmentView;
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
-
 
 
     public void requestPermissions() {

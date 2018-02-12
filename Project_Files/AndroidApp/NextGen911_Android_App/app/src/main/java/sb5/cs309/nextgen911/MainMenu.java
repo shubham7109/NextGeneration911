@@ -29,7 +29,6 @@ public class MainMenu extends AppCompatActivity {
     public static final String regKey = "Registered";
     private static final int requestCode = 911;
     BottomNavigationView bottomNavigationView;
-    private Fragment fragment;
     private FragmentManager fragmentManager;
     static Context context;
 
@@ -38,46 +37,44 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         MainMenu.context = getApplicationContext();
+        bottomNavigationView = findViewById(R.id.navigation);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+        sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
 
-    }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
-            switch (item.getItemId()) {
-                case R.id.navigation_personal_info:
-                    fragment = new PersonalInfoFragment();
-                    //loadFragment(fragment);
-                    return true;
-
-                case R.id.navigation_home:
-                    fragment = new HomeFragment();
-                    //loadFragment(fragment);
-                    return true;
-
-                case R.id.navigation_text:
-                    fragment = new TextFragment();
-                    //loadFragment(fragment);
-                    return true;
-
-            }
-
-            return false;
-        }
-    };
-
-    private void loadFragment(Fragment fragment) {
-        // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
+        transaction.add(R.id.fragment, new HomeFragment());
         transaction.commit();
+
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        Fragment selectedFragment = null;
+                        Fragment extraFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.navigation_home:
+                                selectedFragment = new HomeFragment();
+
+                                if(!sharedPreferences.contains(regKey))
+                                    extraFragment = new RegisterFragment();
+                                    //transaction.add(R.id.headFrag, extraFragment);
+
+                                break;
+                            case R.id.navigation_personal_info:
+                                selectedFragment = new PersonalInfoFragment();
+                                break;
+                            case R.id.navigation_text:
+                                selectedFragment = new TextFragment();
+                                break;
+                        }
+
+                        transaction.replace(R.id.fragment, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
     }
-
-
 
 
     public void requestPermissions() {

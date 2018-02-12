@@ -17,19 +17,6 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/reg_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ems_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:text="@string/reg_warning"
-        app:layout_constraintLeft_toLeftOf="@id/ems_button"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ems_button" />
+
 
 </RelativeLayout>
