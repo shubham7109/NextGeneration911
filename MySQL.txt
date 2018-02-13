@@ -1,0 +1,27 @@
+Greetings Team SB-5,
+
+In addition to this server, you have been allocated 
+a database. The connection details for this MySQL 
+database is below.
+
+Host: mysql.cs.iastate.edu
+Schema: db309sb5
+User: dbu309sb5
+Pass: ZcCBwcrF
+
+For example, to use the MySQL command line client, 
+you would type:
+  mysql -h mysql.cs.iastate.edu -u dbu309sb5 -p db309sb5
+and type the password "ZcCBwcrF" when prompted.
+
+Let the SSG know if you have any questions or problems
+with this server or your MySQL database.
+
+Good luck on your project.
+
+Sincerely,
+
+The Computer Science System Support Group
+0125 Pearson Hall; B08/B09 Atanasoff Hall
+Email: coms-ssg@iastate.edu
+
