@@ -1,4 +1,4 @@
-package serverCode;
+package person;
 
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package serverCode;
+package person;
 
 public class Person {
 	

@@ -1,4 +1,4 @@
-package serverCode;
+package person;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
