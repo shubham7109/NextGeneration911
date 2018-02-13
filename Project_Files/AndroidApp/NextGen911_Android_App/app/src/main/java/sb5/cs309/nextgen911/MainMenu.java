@@ -23,7 +23,7 @@ import android.widget.Toast;
 public class MainMenu extends AppCompatActivity {
 
 
-    SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences;
     public static final String mypreference = "911UserPrefs";
     public static final String regKey = "Registered";
     private static final int requestCode = 911;
@@ -39,8 +39,8 @@ public class MainMenu extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
         sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        int permission = sharedPreferences.getInt(regKey, 0);
-        if(permission != 0){
+        String permission = sharedPreferences.getString(regKey, "");
+        if(permission.equals("")){
             findViewById(R.id.reg_button).setVisibility(View.INVISIBLE);
         }
 
@@ -101,5 +101,9 @@ public class MainMenu extends AppCompatActivity {
 
         intent = new Intent(getAppContext(), RegistrationActivity.class);
         startActivity(intent);
+    }
+
+    public static void register_device(String regCode){
+        sharedPreferences.edit().putString(regKey,regCode).apply();
     }
 }
