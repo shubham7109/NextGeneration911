@@ -3,77 +3,150 @@ package person;
 public class Person {
 	
 	private String id;
-	private String name;
-	private String DLnum; //Driver's License Number
-	private String medicalHistory;
-	private String dob; //date of birth TODO: consider date format in stead of string
+	private int phoneNumber;
+	private int gender; //0 for female, 1 for male
+	private String firstName;
+	private String middleName;
+	private String lastName;
+	private String homeAddress;
+	private String city;
+	private String state;
+	private String zipcode;
+	private String dateOfBirth;
+	private String licencePlateNumber;
+	private String vehicle;
 	private String bloodType;
-	private int age;
-	private int gender;
+	private int heightCentimeters;
+	private int weightKilograms;
 	
-	
-	public Person() {
-		
-	}
-	
-	public Person(String id, String name) {
+	public Person(String id, int phoneNumber, int gender, String firstName, String middleName, String lastName,
+			String homeAddress, String city, String state, String zipcode, String dateOfBirth,
+			String licencePlateNumber, String vehicle, String bloodType, int heightCentimeters, int weightKilograms) {
 		super();
 		this.id = id;
-		this.name = name;
-	}
-	
-	
-	public Person(String id, String name, String dLnum, String medicalHistory, String dob, String bloodType, int age,
-			int gender) {
-		super();
-		this.id = id;
-		this.name = name;
-		DLnum = dLnum;
-		this.medicalHistory = medicalHistory;
-		this.dob = dob;
-		this.bloodType = bloodType;
-		this.age = age;
+		this.phoneNumber = phoneNumber;
 		this.gender = gender;
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.homeAddress = homeAddress;
+		this.city = city;
+		this.state = state;
+		this.zipcode = zipcode;
+		this.dateOfBirth = dateOfBirth;
+		this.licencePlateNumber = licencePlateNumber;
+		this.vehicle = vehicle;
+		this.bloodType = bloodType;
+		this.heightCentimeters = heightCentimeters;
+		this.weightKilograms = weightKilograms;
 	}
-	
+
+	public Person() {
+		super();
+	}
+
 	public String getId() {
 		return id;
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
+
+	public int getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public String getDLnum() {
-		return DLnum;
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
-	public void setDLnum(String dLnum) {
-		DLnum = dLnum;
+	public int getGender() {
+		return gender;
 	}
 
-	public String getMedicalHistory() {
-		return medicalHistory;
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 
-	public void setMedicalHistory(String medicalHistory) {
-		this.medicalHistory = medicalHistory;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public String getDob() {
-		return dob;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public void setDob(String dob) {
-		this.dob = dob;
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getHomeAddress() {
+		return homeAddress;
+	}
+
+	public void setHomeAddress(String homeAddress) {
+		this.homeAddress = homeAddress;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getLicencePlateNumber() {
+		return licencePlateNumber;
+	}
+
+	public void setLicencePlateNumber(String licencePlateNumber) {
+		this.licencePlateNumber = licencePlateNumber;
+	}
+
+	public String getVehicle() {
+		return vehicle;
+	}
+
+	public void setVehicle(String vehicle) {
+		this.vehicle = vehicle;
 	}
 
 	public String getBloodType() {
@@ -84,21 +157,25 @@ public class Person {
 		this.bloodType = bloodType;
 	}
 
-	public int getAge() {
-		return age;
+	public int getHeightCentimeters() {
+		return heightCentimeters;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setHeightCentimeters(int heightCentimeters) {
+		this.heightCentimeters = heightCentimeters;
 	}
 
-	public int getGender() {
-		return gender;
+	public int getWeightKilograms() {
+		return weightKilograms;
 	}
 
-	public void setGender(int gender) {
-		this.gender = gender;
+	public void setWeightKilograms(int weightKilograms) {
+		this.weightKilograms = weightKilograms;
 	}
+	
+	
+	
+	
 	
 	
 	
