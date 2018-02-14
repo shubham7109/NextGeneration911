@@ -12,7 +12,7 @@ public class PersonController {
 	private PersonService personService;
 	
 	@RequestMapping("/persons/{id}")
-	public Person getPerson(@PathVariable("id") String id) {
+	public Person getPerson(@PathVariable("id") int id) {
 		return personService.getPerson(id);
 	}
 	

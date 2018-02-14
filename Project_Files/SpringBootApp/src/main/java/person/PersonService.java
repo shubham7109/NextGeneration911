@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 public class PersonService {
 	
 	
-	public Person getPerson(String id) {
+	public Person getPerson(int id) {
 		//TODO retrieve a person from database
-		return new Person(id, "testPerson");
+		return new Person(id);
 	}
 }

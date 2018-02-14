@@ -2,7 +2,7 @@ package person;
 
 public class Person {
 	
-	private String id;
+	private int id;
 	private int phoneNumber;
 	private int gender; //0 for female, 1 for male
 	private String firstName;
@@ -19,7 +19,7 @@ public class Person {
 	private int heightCentimeters;
 	private int weightKilograms;
 	
-	public Person(String id, int phoneNumber, int gender, String firstName, String middleName, String lastName,
+	public Person(int id, int phoneNumber, int gender, String firstName, String middleName, String lastName,
 			String homeAddress, String city, String state, String zipcode, String dateOfBirth,
 			String licencePlateNumber, String vehicle, String bloodType, int heightCentimeters, int weightKilograms) {
 		super();
@@ -44,12 +44,17 @@ public class Person {
 	public Person() {
 		super();
 	}
+	
+	public Person(int id) {
+		super();
+		this.id = id;
+	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
