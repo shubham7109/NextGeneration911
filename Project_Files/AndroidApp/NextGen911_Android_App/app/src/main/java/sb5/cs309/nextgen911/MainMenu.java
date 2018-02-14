@@ -39,8 +39,8 @@ public class MainMenu extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
         sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        String permission = sharedPreferences.getString(regKey, "");
-        if(permission.equals("")){
+        int permission = sharedPreferences.getInt(regKey, 0);
+        if(permission != 0){
             findViewById(R.id.reg_button).setVisibility(View.INVISIBLE);
         }
 
@@ -104,6 +104,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public static void register_device(String regCode){
-        sharedPreferences.edit().putString(regKey,regCode).apply();
+        sharedPreferences.edit().putInt(regKey,Integer.parseInt(regCode)).apply();
     }
 }

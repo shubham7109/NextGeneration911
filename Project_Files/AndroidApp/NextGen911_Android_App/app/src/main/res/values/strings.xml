@@ -11,4 +11,8 @@
     <string name="title_activity_personal_info">PersonalInfoActivity</string>
     <string name="title_activity_text911">Text911Activity</string>
     <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="name_field">Name</string>
+    <string name="dob_field">Date of Birth</string>
+    <string name="address_field">Home Address</string>
+    <string name="submit_button">Submit Changes</string>
 </resources>
