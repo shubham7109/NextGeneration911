@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="WindowsApp_Experimental">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/WindowsApp_Experimental_jar/WindowsApp_Experimental.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
