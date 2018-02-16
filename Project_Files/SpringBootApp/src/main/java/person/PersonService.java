@@ -26,4 +26,14 @@ public class PersonService {
 	public void addPerson(Person person) {
 		persons.add(person);
 	}
+	
+	public void updatePerson(int id, Person person) {
+		for (int i = 0; i < persons.size(); i++) {
+			Person p = persons.get(i);
+			if (p.getId() == id) {
+				persons.set(i, person);
+				return;
+			}
+		}
+	}
 }

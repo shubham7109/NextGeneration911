@@ -29,4 +29,9 @@ public class PersonController {
 	public void addPerson(@RequestBody Person person) {
 		personService.addPerson(person);
 	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/persons/{id}")
+	public void updatePerson(@RequestBody Person person, @PathVariable("id") int id) {
+		personService.updatePerson(id, person);
+	}
 }
