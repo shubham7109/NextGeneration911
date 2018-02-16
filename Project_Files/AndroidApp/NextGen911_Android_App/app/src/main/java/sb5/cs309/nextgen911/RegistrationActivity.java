@@ -190,36 +190,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent intent;
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    intent = new Intent(getAppContext(), MainMenu.class);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-                    break;
-
-                case R.id.navigation_personal_info:
-                    intent = new Intent(getAppContext(), PersonalInfoActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-                    break;
-                case R.id.navigation_text:
-                    intent = new Intent(getAppContext(), Text911Activity.class);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-                    break;
-            }
-
-            return true;
-        }
-    };
-
-
     public static Context getAppContext() {
         return RegistrationActivity.context;
     }

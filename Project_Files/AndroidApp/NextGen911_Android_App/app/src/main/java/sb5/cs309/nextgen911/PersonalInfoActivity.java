@@ -76,7 +76,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     public void check_DOB(){
-        EditText dob_box = findViewById(R.id.dob_box);
+        EditText dob_box = findViewById(R.id.dob_editText);
         String dtStart = dob_box.getText().toString();
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
