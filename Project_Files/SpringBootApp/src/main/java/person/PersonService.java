@@ -36,4 +36,13 @@ public class PersonService {
 			}
 		}
 	}
+	
+	public void deletePerson(int id) {
+		for (int i = 0; i < persons.size(); i++) {
+			Person p = persons.get(i);
+			if (p.getId() == id) {
+				persons.remove(i);
+			}
+		}
+	}
 }
