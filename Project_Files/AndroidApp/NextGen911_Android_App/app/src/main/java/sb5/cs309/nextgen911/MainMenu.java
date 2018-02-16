@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,7 +43,7 @@ public class MainMenu extends AppCompatActivity {
             findViewById(R.id.reg_button).setVisibility(View.INVISIBLE);
         }
 
-        requestPermissions();
+        Permissions.requestPermissions(MainMenu.this, requestCode);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -101,9 +100,12 @@ public class MainMenu extends AppCompatActivity {
 
         intent = new Intent(getAppContext(), RegistrationActivity.class);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
     public static void register_device(String regCode){
         sharedPreferences.edit().putInt(regKey,Integer.parseInt(regCode)).apply();
     }
+
+
 }
