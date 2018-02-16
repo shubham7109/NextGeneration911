@@ -3,8 +3,8 @@ Project: 911 User & Responder Tool
 This project aims to help a 911-emergency operator to locate a caller in seconds.
 Due to the use of outdated technology, more than 50% of the calls made to the emergency response team fails to locate the caller, and this project provides a solution, saving precious lives.
 
-Here are some helpful links:
-[Trello Project Board.](http://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/)
+Here are some helpful links
+[Trello Project Board](https://trello.com/b/UHxOeFVc/sb5nextgeneration911)
 [Git Cheat Sheet](https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf)
 
 This project can be divided into three major parts:

@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: UI_Window
+Main-Class: com.nextgen911.UI_Window
 
