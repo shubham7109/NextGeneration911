@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="911OperatorApp:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/911OperatorApp_jar</output-path>
-    <root id="archive" name="911OperatorApp.jar">
-      <element id="module-output" name="911OperatorApp" />
-    </root>
-  </artifact>
-</component>
