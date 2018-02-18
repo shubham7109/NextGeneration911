@@ -15,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.text.ParseException;
@@ -73,11 +75,31 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     public void submit_info(View view){
-        check_DOB();
-        check_ZIP();
-        check_phoneNumber();
+        if(check_DOB() && check_ZIP() && check_phoneNumber()){
+            JSONObject personalInfo = new JSONObject();
 
-        
+            try {
+                personalInfo.put("id", getID());
+                personalInfo.put("phoneNumber", getPhoneNumber());
+                personalInfo.put("firstName", getFirstName());
+                personalInfo.put("middleName", getMiddleName());
+                personalInfo.put("lastName", getLastName());
+                personalInfo.put("homeAddress", getAddress());
+                personalInfo.put("city", getCity());
+                personalInfo.put("state", getState());
+                personalInfo.put("zipcode", getZip());
+                personalInfo.put("dateOfBirth", getDOB());
+                personalInfo.put("licencePlateNumber", getLicencePlate());
+                personalInfo.put("vehicle", getVehicle());
+                personalInfo.put("bloodType", getBloodType());
+                personalInfo.put("heightCentimeters", getHeight());
+                personalInfo.put("weightKilograms", getWeight());
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
     }
 
     // Ensures that date of birth confirms to MM/DD/YYYY standards displays error on failure
@@ -176,15 +198,15 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return phoneNumber.replaceAll("[^\\d.]", ""); // Remove all non-numeric characters
     }
 
-    // Return 0 for male, 1 for female, -1 on no selection
+    // Return //0 for female, 1 for male, -1 on no selection
     public int getGender(){
         RadioButton male = findViewById(R.id.male);
         RadioButton female = findViewById(R.id.female);
 
         if(male.isChecked())
-            return 0;
-        if(female.isChecked())
             return 1;
+        if(female.isChecked())
+            return 0;
         else
             return -1;
     }
