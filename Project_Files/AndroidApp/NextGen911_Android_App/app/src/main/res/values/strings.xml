@@ -29,4 +29,15 @@
     <string name="no_field_can_be_empty">No field can be empty</string>
     <string name="passwords_must_be_the_same">Password and password again field must be the same</string>
     <string name="here_is_values">Here is values: %1$s</string>
+    <string name="firstName">First Name</string>
+    <string name="middleName">Middle Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="zipCode">ZIP Code</string>
+    <string name="licencePlateNumber">Licence Plate Number</string>
+    <string name="vehicle">Vehicle Make and Model</string>
+    <string name="bloodType">Blood Type (eg: A-)</string>
+    <string name="heightCentimeters">Height in Centimeters</string>
+    <string name="weightKilograms">Weight in Kilograms</string>
 </resources>

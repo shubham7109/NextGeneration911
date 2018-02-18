@@ -6,25 +6,25 @@
     android:orientation="vertical">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_width="413dp"
+        android:layout_height="492dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp">
+            android:layout_marginStart="24dp"
+            android:orientation="vertical">
 
 
             <EditText
-                android:id="@+id/firstname_edittext"
+                android:id="@+id/name_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:hint="@string/name_field" />
+
 
             <EditText
                 android:id="@+id/dob_editText"
@@ -33,50 +33,17 @@
                 android:layout_marginTop="20dp"
                 android:hint="@string/dob_field" />
 
-            <EditText
-                android:id="@+id/email_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:inputType="textEmailAddress"
-                android:hint="@string/address_field"/>
-
-
-            <EditText
-                android:id="@+id/password_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:inputType="textPassword"
-                android:hint="@string/password"/>
-
-            <EditText
-                android:id="@+id/password_again_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:inputType="textPassword"
-                android:hint="@string/password_again"/>
-
-            <EditText
-                android:id="@+id/birthday_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:layout_marginTop="20dp"
-                android:hint="@string/birthday"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="20dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/gender"/>
+                    android:text="@string/gender" />
 
                 <RadioGroup
                     android:id="@+id/gender_radiogroup"
@@ -88,17 +55,91 @@
                         android:id="@+id/male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/male"/>
+                        android:text="@string/male" />
 
                     <RadioButton
                         android:id="@+id/female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/female"/>
+                        android:text="@string/female" />
 
                 </RadioGroup>
 
             </LinearLayout>
+
+            <EditText
+                android:id="@+id/home_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/address_field" />
+
+
+            <EditText
+                android:id="@+id/city_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/city" />
+
+            <EditText
+                android:id="@+id/state_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/state" />
+
+            <EditText
+                android:id="@+id/zipCode_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:focusable="false"
+                android:hint="@string/zipCode"
+                android:inputType="number" />
+
+
+            <EditText
+                android:id="@+id/licencePlateNumber_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/licencePlateNumber"
+                android:inputType="number" />
+
+
+            <EditText
+                android:id="@+id/vehicle_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/vehicle" />
+
+            <EditText
+                android:id="@+id/heightCentimeters_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/heightCentimeters"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/weightKilograms_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/weightKilograms"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/spacer_hide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:focusable="false"
+                android:hint=""
+                android:inputType="number" />
+
 
         </LinearLayout>
     </ScrollView>
@@ -123,7 +164,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="20dp"
-        android:paddingTop="10dp"
+        android:paddingTop="20dp"
         android:text="@string/register"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintHorizontal_bias="0.0"
