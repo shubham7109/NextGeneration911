@@ -20,6 +20,11 @@ public class PersonService {
 	}
 	
 	public Person getPerson(int id) {
+		for(int i = 0; i < persons.size(); i++)
+		{
+			if(persons.get(i).getID() == id)
+				return persons.get(i); 
+		}
 		return new Person(id);
 	}
 	
