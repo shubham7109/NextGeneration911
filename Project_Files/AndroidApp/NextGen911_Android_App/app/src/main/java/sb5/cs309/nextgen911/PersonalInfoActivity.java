@@ -15,6 +15,16 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -23,12 +33,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class PersonalInfoActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private RequestQueue queue;
     static Context context;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -63,9 +75,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
         PersonalInfoActivity.context = getApplicationContext();
+        RequestQueue queue = Volley.newRequestQueue(this);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
@@ -81,6 +93,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             try {
                 personalInfo.put("id", getID());
                 personalInfo.put("phoneNumber", getPhoneNumber());
+                personalInfo.put("gender", getGender());
                 personalInfo.put("firstName", getFirstName());
                 personalInfo.put("middleName", getMiddleName());
                 personalInfo.put("lastName", getLastName());
@@ -98,6 +111,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
+
+            post(personalInfo);
 
         }
     }
@@ -117,10 +132,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         try {
             cal.setTime(sdf.parse(date));
-            CharSequence text = cal.get(cal.MONTH)+1 + "/" + cal.get(cal.DAY_OF_MONTH) + "/" + cal.get(cal.YEAR);
-
             // Handle wierd calendar bound issues
-            if(cal.get(cal.MONTH)>11 || cal.get(cal.DAY_OF_MONTH) > 31)
+            if(cal.get(Calendar.MONTH)>11 || cal.get(Calendar.DAY_OF_MONTH) > 31)
                 throw new ParseException("",0); //Exception values not used
 
             return true;
@@ -286,5 +299,27 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
 
+    // Attempt to post info to server
+    public void post(final JSONObject personalInfo){
+        String url = "localhost:8080/persons/" + getID();
 
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.POST, url, personalInfo, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // TODO Auto-generated method stub
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+
+        VolleyQueue.getInstance(this).addToRequestQueue(jsObjRequest);
+    }
 }
