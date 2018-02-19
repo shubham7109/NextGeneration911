@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 public class operatorsService {
 	
 	private List<Operators> operator = new ArrayList<>(Arrays.asList(
-			new Operators(123),
-			new Operators(456),
-			new Operators(789)
+			new Operators(123, "shubham", "password", "Shubham", "Sharma", 0),
+			new Operators(456, "paul", "password1", "Paul", "Biermann", 1),
+			new Operators(789, "mike", "password2", "Michael", "Onyszczak", 2)
 			));
 	
 	public List<Operators> getAllOperators() {
@@ -20,6 +20,11 @@ public class operatorsService {
 	}
 	
 	public Operators getOperator(int id) {
+		for(int i = 0; i < operator.size(); i++)
+		{
+			if(operator.get(i).getID() == id)
+				return operator.get(i); 
+		}
 		return new Operators(id);
 	}
 	

@@ -3,13 +3,13 @@ package Operators;
 public class Operators 
 {
 	private int id;
-	private String userName; 
+	private String userName;
 	private String password; 
 	private String firstName; 
 	private String lastName; 
-	private String status; 
+	private int status; 
 	
-	public Operators(int id, String userName, String password, String firstName, String lastName, String status)
+	public Operators(int id, String userName, String password, String firstName, String lastName, int status)
 	{
 		super();
 		this.id = id; 
@@ -20,14 +20,13 @@ public class Operators
 		this.status = status; 
 	}
 	
-	public Operators()
-	{
-		super();
-	}
-	
 	public Operators(int id)
 	{
 		super();
+		userName = "";
+		password = "";
+		firstName = "";
+		lastName = "";
 		this.id = id;
 	}
 	
@@ -71,7 +70,6 @@ public class Operators
 		return firstName;
 	}
 	
-	
 	public void setLastName(String lastName)
 	{
 		this.lastName = lastName;
@@ -82,12 +80,12 @@ public class Operators
 		return lastName;
 	}
 	
-	public void setStatus(String status)
+	public void setStatus(int status)
 	{
 		this.status = status;
 	}
 	
-	public String getStatus() 
+	public int getStatus() 
 	{
 		return status;
 	}

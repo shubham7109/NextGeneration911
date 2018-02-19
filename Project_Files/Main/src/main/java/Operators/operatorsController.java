@@ -21,25 +21,25 @@ public class operatorsController {
 		return operatorService.getAllOperators();
 	}
 	
-	@RequestMapping("/Operators/{id}")
+	@RequestMapping("/operators/{id}")
 	public Operators getOperators(@PathVariable("id") int id) 
 	{
 		return operatorService.getOperator(id);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/Operators")
+	@RequestMapping(method=RequestMethod.POST, value="/operators")
 	public void addOperators(@RequestBody Operators Operators) 
 	{
 		operatorService.addOperator(Operators);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT, value="/Operators/{id}")
+	@RequestMapping(method=RequestMethod.PUT, value="/operators/{id}")
 	public void updateOperators(@RequestBody Operators Operators, @PathVariable("id") int id) 
 	{
 		operatorService.updateOperator(id, Operators);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, value="/Operators/{id}")
+	@RequestMapping(method=RequestMethod.DELETE, value="/operators/{id}")
 	public void deleteOperators(@PathVariable("id") int id)
 	{
 		operatorService.deleteOperator(id);
