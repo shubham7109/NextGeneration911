@@ -50,6 +50,18 @@ public class Person {
    
    public Person(int id) {
       super();
+      phoneNumber = "";
+      gender = "";
+      firstName = "";
+      middleName = "";
+      lastName = "";
+      homeAddress = "";
+      city = "";
+      state = "";
+      dateOfBirth = "";
+      licencePlateNumber = "";
+      vehicle = "";
+      bloodType = "";
       this.id = id;
    }
 
