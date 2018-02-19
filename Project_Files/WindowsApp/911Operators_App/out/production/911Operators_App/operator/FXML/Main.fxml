@@ -13,9 +13,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="628.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Main">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="628.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Controllers.Controller">
    <children>
-      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar layoutY="3.0" prefHeight="26.0" prefWidth="1011.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -34,16 +34,16 @@
           </Menu>
         </menus>
       </MenuBar>
-      <SplitPane dividerPositions="0.2864321608040201" layoutX="499.0" layoutY="29.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
+      <SplitPane dividerPositions="0.34003350083752093" layoutX="499.0" layoutY="29.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Button layoutX="930.0" layoutY="23.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="169.0" text="Look up person" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="23.0" />
-                  <Button layoutX="930.0" layoutY="97.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="169.0" text="911 Operators List" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="56.0" />
-                  <ComboBox layoutX="36.0" layoutY="104.0" prefWidth="150.0" promptText="Choose Status" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="36.0" />
+                  <Button fx:id="lookUpPerson" layoutX="930.0" layoutY="23.0" mnemonicParsing="false" onAction="#openLookUpPerson" prefHeight="40.0" prefWidth="169.0" text="Look up person" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="23.0" />
+                  <Button fx:id="operatorList" layoutX="930.0" layoutY="97.0" mnemonicParsing="false" onAction="#openOperatorList" prefHeight="40.0" prefWidth="169.0" text="911 Operators List" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="56.0" />
+                  <ComboBox fx:id="operatorStatus" layoutX="36.0" layoutY="104.0" onAction="#setOperatorStatus" prefWidth="150.0" promptText="Choose Status" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="36.0" />
                   <ImageView fitHeight="63.0" fitWidth="88.0" layoutX="67.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="12.0">
                      <image>
-                        <Image url="@../res/drawable/avatar.png" />
+                        <Image url="@../../res/drawable/avatar.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="48.0" layoutY="89.0" text="Operator Name" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="80.0" />
@@ -51,7 +51,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TableView prefHeight="422.0" prefWidth="1155.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView prefHeight="397.0" prefWidth="1047.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
                         <TableColumn editable="false" prefWidth="75.0" text="Date &amp; Time" />
                         <TableColumn editable="false" prefWidth="295.9999694824219" text="Operator" />

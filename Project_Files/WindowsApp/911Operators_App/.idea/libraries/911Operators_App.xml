@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="911Operators_App">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/911Operators_App_jar/911Operators_App.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

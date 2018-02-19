@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 public class PersonService {
 	
 	private List<Person> persons = new ArrayList<>(Arrays.asList(
-			new Person(123),
-			new Person(456),
-			new Person(789)
+			new Person(123,123,0,"","","","","","","","","","","",162,75),
+			new Person(125,123,0,"","","","","","","","","","","",162,75),
+			new Person(127,123,0,"","","","","","","","","","","",162,75)
 			));
 	
 	public List<Person> getAllPersons() {

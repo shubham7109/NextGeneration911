@@ -19,9 +19,12 @@ public class Person {
 	private int heightCentimeters;
 	private int weightKilograms;
 	
-	public Person(int id, int phoneNumber, int gender, String firstName, String middleName, String lastName,
-			String homeAddress, String city, String state, String zipcode, String dateOfBirth,
-			String licencePlateNumber, String vehicle, String bloodType, int heightCentimeters, int weightKilograms) {
+	public Person(int id, int phoneNumber, int gender, String firstName,
+				  String middleName, String lastName,
+			String homeAddress, String city,
+				  String state, String zipcode, String dateOfBirth,
+			String licencePlateNumber, String vehicle, String bloodType,
+				  int heightCentimeters, int weightKilograms) {
 		super();
 		this.id = id;
 		this.phoneNumber = phoneNumber;
