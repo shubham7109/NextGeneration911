@@ -1,7 +1,12 @@
 package person;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Person {
 	
+	@Id
 	private int id;
 	private int phoneNumber;
 	private int gender; //0 for female, 1 for male
@@ -177,11 +182,5 @@ public class Person {
 	public void setWeightKilograms(int weightKilograms) {
 		this.weightKilograms = weightKilograms;
 	}
-	
-	
-	
-	
-	
-	
-	
+		
 }
