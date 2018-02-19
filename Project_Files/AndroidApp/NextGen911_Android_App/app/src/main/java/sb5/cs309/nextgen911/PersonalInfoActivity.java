@@ -1,12 +1,15 @@
 package sb5.cs309.nextgen911;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneNumberUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -20,15 +23,29 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -113,7 +130,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
             }
 
             post(personalInfo);
-
         }
     }
 
@@ -176,13 +192,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     }
 
-    // Returns last 4 digits of phone number as ID
-    // TODO create better ID method
-    public int getID(){
-        EditText phone_number_box = findViewById(R.id.phoneNumber_editText);
-        String phoneNumber = phone_number_box.getText().toString();
-        phoneNumber = phoneNumber.replaceAll("[^\\d.]", "");
-        return Integer.parseInt(phoneNumber.substring(6));
+    // Returns phone number as ID
+    public String getID(){
+        return getPhoneNumber();
     }
 
     public String getFirstName(){
@@ -212,16 +224,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     // Return //0 for female, 1 for male, -1 on no selection
-    public int getGender(){
+    public String getGender(){
         RadioButton male = findViewById(R.id.male);
         RadioButton female = findViewById(R.id.female);
 
         if(male.isChecked())
-            return 1;
+            return "MALE";
         if(female.isChecked())
-            return 0;
+            return "FEMALE";
         else
-            return -1;
+            return "";
     }
 
     public String getAddress(){
@@ -310,26 +322,38 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
 
     // Attempt to post info to server
-    public void post(final JSONObject personalInfo){
-        String url = "localhost:8080/persons/" + getID();
+    public void post(final JSONObject personalInfo) {
+        final String url = "http://10.0.2.2:8080/persons/";
 
+        Thread t = new Thread() {
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.POST, url, personalInfo, new Response.Listener<JSONObject>() {
+            public void run() {
+                Looper.prepare(); //For Preparing Message Pool for the child Thread
+                HttpClient client = new DefaultHttpClient();
+                HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); //Timeout Limit
+                HttpResponse response;
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // TODO Auto-generated method stub
+                try {
+                    HttpPost post = new HttpPost(url);
+
+                    StringEntity se = new StringEntity(personalInfo.toString());
+                    se.setContentType(new BasicHeader("Content-Type", "application/json"));
+                    post.setEntity(se);
+                    response = client.execute(post);
+
+                    /*Checking response */
+                    if (response != null) {
+                        InputStream in = response.getEntity().getContent(); //Get the data in the entity
                     }
-                }, new Response.ErrorListener() {
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                    }
-                });
+                Looper.loop(); //Loop in the message queue
+            }
+        };
 
-        VolleyQueue.getInstance(this).addToRequestQueue(jsObjRequest);
+        t.start();
     }
 }
