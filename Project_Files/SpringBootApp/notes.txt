@@ -17,11 +17,10 @@ bloodType varchar(45)
 heightCentimeters int(11)
 weightKilograms int(11)
 
+ssh paulmb@proj-309-sb-5.cs.iastate.edu
 
 mvn clean install
 java -jar target/jarname.jar
-
-
 
 It will show u a list of processes out of which one will be your executable jar.
 ps -ef | grep java
