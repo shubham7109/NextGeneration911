@@ -10,15 +10,15 @@ public class Person {
 	
 	@Id
 	private String id;
-	private int phoneNumber;
-	private int gender; //0 for female, 1 for male
+	private String phoneNumber;
+	private String gender;
 	private String firstName;
 	private String middleName;
 	private String lastName;
 	private String homeAddress;
 	private String city;
 	private String state;
-	private String zipcode;
+	private int zipcode;
 	private String dateOfBirth;
 	private String licencePlateNumber;
 	private String vehicle;
@@ -26,9 +26,29 @@ public class Person {
 	private int heightCentimeters;
 	private int weightKilograms;
 	
-	public Person(String id, int phoneNumber, int gender, String firstName, String middleName, String lastName,
-			String homeAddress, String city, String state, String zipcode, String dateOfBirth,
-			String licencePlateNumber, String vehicle, String bloodType, int heightCentimeters, int weightKilograms) {
+	public Person(String id) {
+		super();
+		this.id = id;
+		this.phoneNumber = "0";
+		this.gender = "";
+		this.firstName = "";
+		this.middleName = "";
+		this.lastName = "";
+		this.homeAddress = "";
+		this.city = "";
+		this.state = "";
+		this.zipcode = 0;
+		this.dateOfBirth = "";
+		this.licencePlateNumber = "";
+		this.vehicle = "";
+		this.bloodType = "";
+		this.heightCentimeters = 0;
+		this.weightKilograms = 0;
+	}
+
+	public Person(String id, String phoneNumber, String gender, String firstName, String middleName, String lastName,
+			String homeAddress, String city, String state, int zipcode, String dateOfBirth, String licencePlateNumber,
+			String vehicle, String bloodType, int heightCentimeters, int weightKilograms) {
 		super();
 		this.id = id;
 		this.phoneNumber = phoneNumber;
@@ -48,15 +68,6 @@ public class Person {
 		this.weightKilograms = weightKilograms;
 	}
 
-	public Person() {
-		super();
-	}
-	
-	public Person(String id) {
-		super();
-		this.id = id;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -65,19 +76,19 @@ public class Person {
 		this.id = id;
 	}
 
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -129,11 +140,11 @@ public class Person {
 		this.state = state;
 	}
 
-	public String getZipcode() {
+	public int getZipcode() {
 		return zipcode;
 	}
 
-	public void setZipcode(String zipcode) {
+	public void setZipcode(int zipcode) {
 		this.zipcode = zipcode;
 	}
 
@@ -184,5 +195,9 @@ public class Person {
 	public void setWeightKilograms(int weightKilograms) {
 		this.weightKilograms = weightKilograms;
 	}
-		
+	
+	
+	
+	
+	
 }
