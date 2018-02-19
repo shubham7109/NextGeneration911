@@ -16,3 +16,15 @@ vehicle varchar(45)
 bloodType varchar(45)
 heightCentimeters int(11)
 weightKilograms int(11)
+
+
+mvn clean install
+java -jar target/jarname.jar
+
+
+
+It will show u a list of processes out of which one will be your executable jar.
+ps -ef | grep java
+
+Just kill that process by its process id.
+sudo kill -9 <pid>
