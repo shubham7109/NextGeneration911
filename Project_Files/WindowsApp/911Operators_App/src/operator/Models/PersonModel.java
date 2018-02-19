@@ -5,15 +5,15 @@ import org.json.JSONObject;
 public class PersonModel {
 
     private int id;
-    private int phoneNumber;
-    private int gender; //0 for female, 1 for male
+    private String phoneNumber;
+    private String gender;
     private String firstName;
     private String middleName;
     private String lastName;
     private String homeAddress;
     private String city;
     private String state;
-    private String zipcode;
+    private int zipcode;
     private String dateOfBirth;
     private String licencePlateNumber;
     private String vehicle;
@@ -23,15 +23,15 @@ public class PersonModel {
 
     public PersonModel(JSONObject jsonObject){
         id = jsonObject.getInt("id");
-        phoneNumber = jsonObject.getInt("phoneNumber");
-        gender = jsonObject.getInt("gender");
+        phoneNumber = jsonObject.getString("phoneNumber");
+        gender = jsonObject.getString("gender");
         firstName = jsonObject.getString("firstName");
         middleName = jsonObject.getString("middleName");
         lastName = jsonObject.getString("lastName");
         homeAddress = jsonObject.getString("homeAddress");
         city = jsonObject.getString("city");
         state = jsonObject.getString("state");
-        zipcode = jsonObject.getString("zipcode");
+        zipcode = jsonObject.getInt("zipcode");
         dateOfBirth = jsonObject.getString("dateOfBirth");
         licencePlateNumber = jsonObject.getString("licencePlateNumber");
         vehicle = jsonObject.getString("vehicle");
@@ -44,11 +44,11 @@ public class PersonModel {
         return id;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
@@ -76,7 +76,7 @@ public class PersonModel {
         return state;
     }
 
-    public String getZipcode() {
+    public int getZipcode() {
         return zipcode;
     }
 

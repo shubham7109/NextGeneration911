@@ -22,7 +22,7 @@ public class Main extends Application {
     private final String URL = "http://localhost:8080/persons";
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("FXML/Main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
         personModels = new ArrayList<>();
 
         String response = getHTML(URL);

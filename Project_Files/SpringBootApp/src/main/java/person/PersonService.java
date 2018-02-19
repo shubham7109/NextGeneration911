@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 public class PersonService {
 	
 	private List<Person> persons = new ArrayList<>(Arrays.asList(
-			new Person(123,123,0,"","","","","","","","","","","",162,75),
-			new Person(125,123,0,"","","","","","","","","","","",162,75),
-			new Person(127,123,0,"","","","","","","","","","","",162,75)
+			new Person(123,"","","lol","","","","","",50010,"","","","",162,75),
+			new Person(456,"","","","","","","","",50111,"","","","",162,75),
+			new Person(789,"","","","","","","","",44444,"","","","",162,75)
 			));
 	
 	public List<Person> getAllPersons() {
@@ -20,6 +20,11 @@ public class PersonService {
 	}
 	
 	public Person getPerson(int id) {
+		for(int i=0; i<persons.size(); i++){
+			if(persons.get(i).getId() == id)
+				return persons.get(i);
+		}
+
 		return new Person(id);
 	}
 	
