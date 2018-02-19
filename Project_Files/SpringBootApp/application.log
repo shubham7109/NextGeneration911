@@ -66,3 +66,71 @@ Action:
 
 Consider defining a bean named 'entityManagerFactory' in your configuration.
 
+2018-02-19 11:03:11.566  INFO 11824 --- [main] person.Main                              : Starting Main on DESKTOP-72F8SL2 with PID 11824 (started by pmbie in C:\Users\pmbie\Google Drive\School\2018Spring\COM S 309\SB_5_NextGeneration911\Project_Files\SpringBootApp)
+2018-02-19 11:03:11.570  INFO 11824 --- [main] person.Main                              : No active profile set, falling back to default profiles: default
+2018-02-19 11:03:11.681  INFO 11824 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@34129c78: startup date [Mon Feb 19 11:03:11 CST 2018]; root of context hierarchy
+2018-02-19 11:03:13.851  INFO 11824 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$a06ffcd] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-02-19 11:03:14.532  INFO 11824 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-02-19 11:03:14.555  INFO 11824 --- [main] o.apache.catalina.core.StandardService   : Starting service Tomcat
+2018-02-19 11:03:14.557  INFO 11824 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.11
+2018-02-19 11:03:14.717  INFO 11824 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-02-19 11:03:14.730  INFO 11824 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3056 ms
+2018-02-19 11:03:15.004  INFO 11824 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-02-19 11:03:15.010  INFO 11824 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-02-19 11:03:15.010  INFO 11824 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-02-19 11:03:15.011  INFO 11824 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-02-19 11:03:15.012  INFO 11824 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-02-19 11:03:15.118  WARN 11824 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'personController': Unsatisfied dependency expressed through field 'personService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'personService': Unsatisfied dependency expressed through field 'personRepository'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'personRepository': Cannot create inner bean '(inner bean)#6a638c79' of type [org.springframework.orm.jpa.SharedEntityManagerCreator] while setting bean property 'entityManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name '(inner bean)#6a638c79': Cannot resolve reference to bean 'entityManagerFactory' while setting constructor argument; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'entityManagerFactory' available
+2018-02-19 11:03:15.124  INFO 11824 --- [main] o.apache.catalina.core.StandardService   : Stopping service Tomcat
+2018-02-19 11:03:15.167  INFO 11824 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2018-02-19 11:03:15.329 ERROR 11824 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field personRepository in person.PersonService required a bean named 'entityManagerFactory' that could not be found.
+
+
+Action:
+
+Consider defining a bean named 'entityManagerFactory' in your configuration.
+
+2018-02-19 11:05:49.796  INFO 2248 --- [main] person.Main                              : Starting Main on DESKTOP-72F8SL2 with PID 2248 (started by pmbie in C:\Users\pmbie\Google Drive\School\2018Spring\COM S 309\SB_5_NextGeneration911\Project_Files\SpringBootApp)
+2018-02-19 11:05:49.803  INFO 2248 --- [main] person.Main                              : No active profile set, falling back to default profiles: default
+2018-02-19 11:05:49.915  INFO 2248 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1fd14d74: startup date [Mon Feb 19 11:05:49 CST 2018]; root of context hierarchy
+2018-02-19 11:05:51.766  INFO 2248 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1e5d6dae] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-02-19 11:05:52.564  INFO 2248 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-02-19 11:05:52.582  INFO 2248 --- [main] o.apache.catalina.core.StandardService   : Starting service Tomcat
+2018-02-19 11:05:52.586  INFO 2248 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.11
+2018-02-19 11:05:52.729  INFO 2248 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-02-19 11:05:52.730  INFO 2248 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2825 ms
+2018-02-19 11:05:53.055  INFO 2248 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-02-19 11:05:53.062  INFO 2248 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-02-19 11:05:53.063  INFO 2248 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-02-19 11:05:53.064  INFO 2248 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-02-19 11:05:53.064  INFO 2248 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-02-19 11:05:53.156  WARN 2248 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'personController': Unsatisfied dependency expressed through field 'personService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'personService': Unsatisfied dependency expressed through field 'personRepository'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'personRepository': Cannot create inner bean '(inner bean)#feb98ef' of type [org.springframework.orm.jpa.SharedEntityManagerCreator] while setting bean property 'entityManager'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name '(inner bean)#feb98ef': Cannot resolve reference to bean 'entityManagerFactory' while setting constructor argument; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'entityManagerFactory' available
+2018-02-19 11:05:53.163  INFO 2248 --- [main] o.apache.catalina.core.StandardService   : Stopping service Tomcat
+2018-02-19 11:05:53.192  INFO 2248 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2018-02-19 11:05:53.368 ERROR 2248 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field personRepository in person.PersonService required a bean named 'entityManagerFactory' that could not be found.
+
+
+Action:
+
+Consider defining a bean named 'entityManagerFactory' in your configuration.
+
