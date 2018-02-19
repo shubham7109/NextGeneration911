@@ -167,8 +167,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
         String phoneNumber = phone_number_box.getText().toString();
         phoneNumber = phoneNumber.replaceAll("[^\\d.]", ""); // Remove all non-numeric characters
 
-        if(phoneNumber.length() != 10 ){
-            phone_number_box.setError("Phone Numbers must be 10 digits long");
+        if(phoneNumber.length() != 10){
+            phone_number_box.setError("Mandatory Field: Phone Numbers must be 10 digits long");
             return false;
         }
 
@@ -241,6 +241,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public int getZip(){
         EditText zip = findViewById(R.id.zipCode_editText);
+
+        if(zip.getText().toString().equals(""))
+            return 0;
+
         return Integer.parseInt(zip.getText().toString());
     }
 
@@ -256,11 +260,17 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public int getHeight(){
         EditText height = findViewById(R.id.heightCentimeters_editText);
+        if(height.getText().toString().equals(""))
+            return 0;
+
         return Integer.parseInt(height.getText().toString());
     }
 
     public int getWeight(){
         EditText weight = findViewById(R.id.weightKilograms_editText);
+        if(weight.getText().toString().equals(""))
+            return 0;
+
         return Integer.parseInt(weight.getText().toString());
     }
 
