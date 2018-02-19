@@ -7,7 +7,7 @@ import javax.persistence.Id;
 public class Person {
 	
 	@Id
-	private int id;
+	private String id;
 	private int phoneNumber;
 	private int gender; //0 for female, 1 for male
 	private String firstName;
@@ -24,7 +24,7 @@ public class Person {
 	private int heightCentimeters;
 	private int weightKilograms;
 	
-	public Person(int id, int phoneNumber, int gender, String firstName, String middleName, String lastName,
+	public Person(String id, int phoneNumber, int gender, String firstName, String middleName, String lastName,
 			String homeAddress, String city, String state, String zipcode, String dateOfBirth,
 			String licencePlateNumber, String vehicle, String bloodType, int heightCentimeters, int weightKilograms) {
 		super();
@@ -50,16 +50,16 @@ public class Person {
 		super();
 	}
 	
-	public Person(int id) {
+	public Person(String id) {
 		super();
 		this.id = id;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
