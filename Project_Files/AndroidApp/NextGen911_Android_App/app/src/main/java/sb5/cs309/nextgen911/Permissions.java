@@ -1,5 +1,7 @@
 package sb5.cs309.nextgen911;
 
+import android.*;
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -13,7 +15,7 @@ import android.widget.Toast;
 
 public class Permissions {
     public static void requestPermissions(Activity activity, int requestCode) {
-        ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.CALL_PHONE, android.Manifest.permission.READ_SMS}, requestCode);
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_PHONE_STATE,android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.CALL_PHONE, android.Manifest.permission.READ_SMS}, requestCode);
     }
 
 

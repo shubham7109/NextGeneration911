@@ -46,5 +46,6 @@
     <string name="bloodAB">AB</string>
     <string name="blood_rh">Rh Factor (postive)</string>
     <string name="phoneNumber">Phone Number</string>
+    <string name="PNTA">Not Specified</string>
 
 </resources>

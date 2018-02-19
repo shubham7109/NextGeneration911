@@ -1,33 +1,20 @@
 package sb5.cs309.nextgen911;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.PhoneNumberUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -38,26 +25,15 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-
 
 public class PersonalInfoActivity extends AppCompatActivity {
 
-    private RequestQueue queue;
     static Context context;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -92,7 +68,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
         PersonalInfoActivity.context = getApplicationContext();
-        RequestQueue queue = Volley.newRequestQueue(this);
+        prepopulate();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
@@ -129,7 +105,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
 
-            post(personalInfo);
+            Networking.post(personalInfo);
         }
     }
 
@@ -192,6 +168,18 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     }
 
+    public boolean check_gender(){
+        RadioButton male = findViewById(R.id.male);
+        RadioButton female = findViewById(R.id.female);
+        RadioButton none = findViewById(R.id.none);
+
+        if (male.isChecked() || female.isChecked() || none.isChecked())
+            return true;
+
+        none.setError("This is a required field");
+        return false;
+    }
+
     // Returns phone number as ID
     public String getID(){
         return getPhoneNumber();
@@ -220,7 +208,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public String getPhoneNumber(){
         EditText phone_number_box = findViewById(R.id.phoneNumber_editText);
         String phoneNumber = phone_number_box.getText().toString();
-        return phoneNumber.replaceAll("[^\\d.]", ""); // Remove all non-numeric characters
+        phoneNumber = phoneNumber.replaceAll("[^\\d.]", ""); // Remove all non-numeric characters
+
+        return phoneNumber;
     }
 
     // Return //0 for female, 1 for male, -1 on no selection
@@ -321,39 +311,163 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
 
-    // Attempt to post info to server
-    public void post(final JSONObject personalInfo) {
-        final String url = "http://10.0.2.2:8080/persons/";
+    public void prepopulate() {
+        String gender, firstName, middleName, lastName, homeAddress, city, state,
+                dateOfBirth, licencePlateNumber, vehicle, bloodType;
+        int zipcode, heightCentimeters, weightKilograms;
 
-        Thread t = new Thread() {
+        // TODO Shared Preferences failing
+        //Get Phone Number
+        String phoneNumber = "";
 
-            public void run() {
-                Looper.prepare(); //For Preparing Message Pool for the child Thread
-                HttpClient client = new DefaultHttpClient();
-                HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); //Timeout Limit
-                HttpResponse response;
+        // No Number on file
+        if (phoneNumber.equals(""))
+            return;
 
-                try {
-                    HttpPost post = new HttpPost(url);
 
-                    StringEntity se = new StringEntity(personalInfo.toString());
-                    se.setContentType(new BasicHeader("Content-Type", "application/json"));
-                    post.setEntity(se);
-                    response = client.execute(post);
+        //Make get request
+        JSONObject personalInfo = Networking.get(phoneNumber);
 
-                    /*Checking response */
-                    if (response != null) {
-                        InputStream in = response.getEntity().getContent(); //Get the data in the entity
-                    }
+        // No data returned
+        if(personalInfo == null){
+            return;
+        }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        // Load all JSON values
+        try {
+            gender = personalInfo.getString("gender");
+            firstName = personalInfo.getString("firstName");
+            middleName = personalInfo.getString("middleName");
+            lastName = personalInfo.getString("lastName");
+            homeAddress = personalInfo.getString("homeAddress");
+            city = personalInfo.getString("city");
+            state = personalInfo.getString("state");
+            zipcode = personalInfo.getInt("zipcode");
+            dateOfBirth = personalInfo.getString("dateOfBirth");
+            licencePlateNumber = personalInfo.getString("licencePlateNumber");
+            vehicle = personalInfo.getString("vehicle");
+            bloodType = personalInfo.getString("bloodType");
+            heightCentimeters = personalInfo.getInt("heightCentimeters");
+            weightKilograms = personalInfo.getInt("weightKilograms");
+        } catch (JSONException e) {
+            throw new RuntimeException(e); // Non-recoverable
+        }
 
-                Looper.loop(); //Loop in the message queue
-            }
-        };
 
-        t.start();
+        // Change hints for all fields
+        setGender(gender);
+        setFirstName(firstName);
+        setMiddleName(middleName);
+        setLastName(lastName);
+        setHomeAddress(homeAddress);
+        setCity(city);
+        setState(state);
+        setZIP(zipcode);
+        setDOB(dateOfBirth);
+        setLicence(licencePlateNumber);
+        setVehicle(vehicle);
+        setBloodType(bloodType);
+        setHeight(heightCentimeters);
+        setWeight(weightKilograms);
+    }
+
+    public void setFirstName(String firstName) {
+        EditText text = findViewById(R.id.firstName_editText);
+        text.setHint(firstName);
+    }
+
+    public void setMiddleName(String middleName) {
+        EditText text = findViewById(R.id.middleName_editText);
+        text.setHint(middleName);
+    }
+
+    public void setLastName(String lastName) {
+        EditText text = findViewById(R.id.lastName_editText);
+        text.setHint(lastName);
+    }
+
+    public void setHomeAddress(String homeAddress) {
+        EditText text = findViewById(R.id.home_editText);
+        text.setHint(homeAddress);
+    }
+
+    public void setCity(String city) {
+        EditText text = findViewById(R.id.city_editText);
+        text.setHint(city);
+    }
+
+    public void setState(String state) {
+        EditText text = findViewById(R.id.state_editText);
+        text.setHint(state);
+    }
+
+    public void setZIP(int ZIP) {
+        EditText text = findViewById(R.id.zipCode_editText);
+        text.setHint(ZIP);
+    }
+
+    public void setDOB(String DOB) {
+        EditText text = findViewById(R.id.dob_editText);
+        text.setHint(DOB);
+    }
+
+    public void setLicence(String licence) {
+        EditText text = findViewById(R.id.licencePlateNumber_editText);
+        text.setHint(licence);
+    }
+
+    public void setVehicle(String vehicle) {
+        EditText text = findViewById(R.id.vehicle_editText);
+        text.setHint(vehicle);
+    }
+
+    public void setBloodType(String bloodType){
+        CheckBox rh = findViewById(R.id.rh_checkBox);
+        if(bloodType.contains("+"))
+            rh.toggle();
+        bloodType = bloodType.replace("+","");
+        if(bloodType.equals("A")){
+            RadioButton a = findViewById(R.id.bloodA);
+            a.toggle();
+        }
+        if(bloodType.equals("B")){
+            RadioButton b = findViewById(R.id.bloodB);
+            b.toggle();
+        }
+        if(bloodType.equals("AB")){
+            RadioButton ab = findViewById(R.id.bloodAB);
+            ab.toggle();
+        }
+        if(bloodType.equals("O")){
+            RadioButton o = findViewById(R.id.bloodO);
+            o.toggle();
+        }
+
+    }
+
+    public void setGender(String gender){
+        if(gender.equals("MALE")){
+            RadioButton button = findViewById(R.id.male);
+            button.toggle();
+        }
+        if(gender.equals("FEMALE")){
+            RadioButton button = findViewById(R.id.female);
+            button.toggle();
+        }
+        if(gender.equals("")){
+            RadioButton button = findViewById(R.id.none);
+            button.toggle();
+        }
+
+    }
+
+    public void setHeight(int height){
+        EditText text = findViewById(R.id.heightCentimeters_editText);
+        text.setHint(height);
+    }
+
+    public void setWeight(int weight){
+        EditText text = findViewById(R.id.weightKilograms_editText);
+        text.setHint(weight);
     }
 }
