@@ -1,5 +1,6 @@
 package sb5.cs309.nextgen911;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +64,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
         PersonalInfoActivity.context = getApplicationContext();
-        prepopulate();
+        loadJson();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
@@ -90,6 +96,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 personalInfo.put("bloodType", getBloodType());
                 personalInfo.put("heightCentimeters", getHeight());
                 personalInfo.put("weightKilograms", getWeight());
+
+                id = getID();
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -290,21 +298,17 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
 
-    //TODO JSON get is not working
-    public void prepopulate() {
-        String gender, firstName, middleName, lastName, homeAddress, city, state,
-                dateOfBirth, licencePlateNumber, vehicle, bloodType, zipcode, heightCentimeters, weightKilograms;
-
-        if(id.equals(""))
+    public void loadJson() {
+        if (id.equals(""))
             return;
 
         //Make get request
-        JSONObject personalInfo = Networking.get(id);
+        get(id);
+    }
 
-        // No data returned
-        if(personalInfo == null){
-            return;
-        }
+    public void populateJSONValues(JSONObject personalInfo){
+        String gender, firstName, middleName, lastName, homeAddress, city, state,
+                dateOfBirth, licencePlateNumber, vehicle, bloodType, zipcode, heightCentimeters, weightKilograms;
 
         // Load all JSON values
         try {
@@ -442,5 +446,26 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public void setWeight(String weight){
         EditText text = findViewById(R.id.weightKilograms_editText);
         text.setText(weight);
+    }
+
+    public void get(final String ID){
+        String tag_json_obj ="json_obj_req";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, Networking.base_url + ID, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        populateJSONValues(response);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        AppController.getInstance().addToRequestQueue(jsObjRequest, tag_json_obj);
+
     }
 }

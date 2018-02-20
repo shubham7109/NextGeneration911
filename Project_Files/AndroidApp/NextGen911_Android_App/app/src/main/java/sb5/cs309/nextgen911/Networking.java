@@ -1,6 +1,16 @@
 package sb5.cs309.nextgen911;
 
 import android.os.Looper;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -13,9 +23,11 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 
+import static sb5.cs309.nextgen911.AppController.TAG;
+
 public class Networking {
 
-    private static final String base_url = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
+    public static final String base_url = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
 
 
 
@@ -56,10 +68,25 @@ public class Networking {
 
 
 
-    public static JSONObject get(final String ID){
-        JSONObject response = null;
+    public static void get(final String ID){
+        String tag_json_obj ="json_obj_req";
 
-        return  response;
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, base_url + ID, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(PersonalInfoActivity.context,"Response: " + response.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        AppController.getInstance().addToRequestQueue(jsObjRequest, tag_json_obj);
+
     }
 
 
