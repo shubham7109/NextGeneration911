@@ -1,5 +1,6 @@
 package person;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,12 @@ public class PersonController {
 	private PersonService personService;
 	
 	@RequestMapping("/persons")
-	public List<Person> getAllPersons() {
+	public Iterable<Person> getAllPersons() {
 		return personService.getAllPersons();
 	}
 	
 	@RequestMapping("/persons/{id}")
-	public Person getPerson(@PathVariable("id") int id) {
+	public Person getPerson(@PathVariable("id") String id) {
 		return personService.getPerson(id);
 	}
 	
@@ -36,7 +37,7 @@ public class PersonController {
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/persons/{id}")
-	public void deletePerson(@PathVariable("id") int id) {
+	public void deletePerson(@PathVariable("id") String id) {
 		personService.deletePerson(id);
 	}
 }
