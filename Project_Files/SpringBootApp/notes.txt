@@ -27,3 +27,13 @@ ps -ef | grep java
 
 Just kill that process by its process id.
 sudo kill -9 <pid>
+
+===keep a process running after ssh disconnection===
+https://unix.stackexchange.com/questions/89483/keeping-a-process-running-after-putty-or-terminal-has-been-closed/89487
+If you're running bash a shell, you can alternatively use the disown command which will have the same result than the nohup command except it takes the first running program it finds. For example :
+
+$ command &
+$ disown
+Or maybe you can create a script that forks your process and kills the father so that the child is inherited by init. That's what I do for scripts for example. It's not simpler but when you launch it, it automatically goes to background and doesn't terminate if you log off.
+
+Another solution would be to create a service file and enable it so you can start, stop, restart or whatever with a simple command. (but I don't really know if debian is using systemd since I'm on archlinux)
