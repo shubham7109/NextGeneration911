@@ -184,7 +184,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     // Returns phone number as ID
     public String getID(){
-        id = getPhoneNumber().
         return getPhoneNumber().substring(6);
     }
 
