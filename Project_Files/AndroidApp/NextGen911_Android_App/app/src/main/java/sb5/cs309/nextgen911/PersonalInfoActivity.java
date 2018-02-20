@@ -35,6 +35,7 @@ import java.util.Locale;
 public class PersonalInfoActivity extends AppCompatActivity {
 
     static Context context;
+    static String id = "";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -68,7 +69,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
         PersonalInfoActivity.context = getApplicationContext();
-        //prepopulate();
+        prepopulate();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
@@ -183,7 +184,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     // Returns phone number as ID
     public String getID(){
-        return getPhoneNumber();
+        id = getPhoneNumber().
+        return getPhoneNumber().substring(6);
     }
 
     public String getFirstName(){
@@ -242,13 +244,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return state.getText().toString();
     }
 
-    public int getZip(){
+    public String getZip(){
         EditText zip = findViewById(R.id.zipCode_editText);
 
         if(zip.getText().toString().equals(""))
-            return 0;
+            return "0";
 
-        return Integer.parseInt(zip.getText().toString());
+        return zip.getText().toString();
     }
 
     public String getLicencePlate(){
@@ -261,20 +263,20 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return vehicle.getText().toString();
     }
 
-    public int getHeight(){
+    public String getHeight(){
         EditText height = findViewById(R.id.heightCentimeters_editText);
         if(height.getText().toString().equals(""))
-            return 0;
+            return "0";
 
-        return Integer.parseInt(height.getText().toString());
+        return height.getText().toString();
     }
 
-    public int getWeight(){
+    public String getWeight(){
         EditText weight = findViewById(R.id.weightKilograms_editText);
         if(weight.getText().toString().equals(""))
-            return 0;
+            return "0";
 
-        return Integer.parseInt(weight.getText().toString());
+        return weight.getText().toString();
     }
 
     public String getBloodType(){
@@ -317,17 +319,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 dateOfBirth, licencePlateNumber, vehicle, bloodType;
         int zipcode, heightCentimeters, weightKilograms;
 
-        // TODO Shared Preferences failing
-        //Get Phone Number
-        String phoneNumber = "";
-
-        // No Number on file
-        if (phoneNumber.equals(""))
+        if(id.equals(""))
             return;
 
-
         //Make get request
-        JSONObject personalInfo = Networking.get(phoneNumber);
+        //JSONObject personalInfo = Networking.get(ID);
+        JSONObject personalInfo = null;
 
         // No data returned
         if(personalInfo == null){
@@ -374,52 +371,52 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public void setFirstName(String firstName) {
         EditText text = findViewById(R.id.firstName_editText);
-        text.setHint(firstName);
+        text.setText(firstName);
     }
 
     public void setMiddleName(String middleName) {
         EditText text = findViewById(R.id.middleName_editText);
-        text.setHint(middleName);
+        text.setText(middleName);
     }
 
     public void setLastName(String lastName) {
         EditText text = findViewById(R.id.lastName_editText);
-        text.setHint(lastName);
+        text.setText(lastName);
     }
 
     public void setHomeAddress(String homeAddress) {
         EditText text = findViewById(R.id.home_editText);
-        text.setHint(homeAddress);
+        text.setText(homeAddress);
     }
 
     public void setCity(String city) {
         EditText text = findViewById(R.id.city_editText);
-        text.setHint(city);
+        text.setText(city);
     }
 
     public void setState(String state) {
         EditText text = findViewById(R.id.state_editText);
-        text.setHint(state);
+        text.setText(state);
     }
 
     public void setZIP(int ZIP) {
         EditText text = findViewById(R.id.zipCode_editText);
-        text.setHint(ZIP);
+        text.setText(ZIP);
     }
 
     public void setDOB(String DOB) {
         EditText text = findViewById(R.id.dob_editText);
-        text.setHint(DOB);
+        text.setText(DOB);
     }
 
     public void setLicence(String licence) {
         EditText text = findViewById(R.id.licencePlateNumber_editText);
-        text.setHint(licence);
+        text.setText(licence);
     }
 
     public void setVehicle(String vehicle) {
         EditText text = findViewById(R.id.vehicle_editText);
-        text.setHint(vehicle);
+        text.setText(vehicle);
     }
 
     public void setBloodType(String bloodType){
@@ -464,11 +461,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public void setHeight(int height){
         EditText text = findViewById(R.id.heightCentimeters_editText);
-        text.setHint(height);
+        text.setText(height);
     }
 
     public void setWeight(int weight){
         EditText text = findViewById(R.id.weightKilograms_editText);
-        text.setHint(weight);
+        text.setText(weight);
     }
 }
