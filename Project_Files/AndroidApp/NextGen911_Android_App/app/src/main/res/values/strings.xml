@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name" translatable="false">Next Generation 911</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Personal Information</string>
+    <string name="title_notifications">Message 911</string>
+    <string name="call_911">CALL 911</string>
+    <string name="reg_warning">Please Register This Device</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_personal_info">PersonalInfoActivity</string>
+    <string name="title_activity_text911">Text911Activity</string>
+    <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="name_field">Name</string>
+    <string name="dob_field">Date of Birth (MM/DD/YYYY)</string>
+    <string name="address_field">Home Address</string>
+    <string name="submit_button">Submit Changes</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="password">Password</string>
+    <string name="password_again">Password Again</string>
+    <string name="email">Email</string>
+    <string name="birthday">Birthday</string>
+    <string name="gender">Gender : </string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="register">Register</string>
+    <string name="register_form_text">You need to fill up below register form.</string>
+    <string name="no_field_can_be_empty">No field can be empty</string>
+    <string name="passwords_must_be_the_same">Password and password again field must be the same</string>
+    <string name="here_is_values">Here is values: %1$s</string>
+    <string name="firstName">First Name</string>
+    <string name="middleName">Middle Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="zipCode">ZIP Code</string>
+    <string name="licencePlateNumber">Licence Plate Number</string>
+    <string name="vehicle">Vehicle Make and Model</string>
+    <string name="bloodType">Blood Type</string>
+    <string name="heightCentimeters">Height in Centimeters</string>
+    <string name="weightKilograms">Weight in Kilograms</string>
+    <string name="bloodO">O</string>
+    <string name="bloodA">A</string>
+    <string name="bloodB">B</string>
+    <string name="bloodAB">AB</string>
+    <string name="blood_rh">Rh Factor (postive)</string>
+    <string name="phoneNumber">Phone Number</string>
+    <string name="PNTA">Not Specified</string>
+
+</resources>
