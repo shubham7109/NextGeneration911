@@ -15,6 +15,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,10 +23,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Networking {
 
-    private static final String url = "http://proj-309-sb-5.cs.iastate.edu:8081/persons/";
+    private static final String base_url = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
 
 
     // Attempt to post json to server
@@ -41,7 +44,7 @@ public class Networking {
                 HttpResponse response;
 
                 try {
-                    HttpPost post = new HttpPost(url);
+                    HttpPost post = new HttpPost(base_url);
 
                     StringEntity se = new StringEntity(personalInfo.toString());
                     se.setContentType(new BasicHeader("Content-Type", "application/json"));
@@ -63,10 +66,44 @@ public class Networking {
         t.start();
     }
 
-    public static JSONObject get(String phoneNumber){
-        // TODO
-        return null;
-    }
+
+    /*
+    public static JSONObject get(final String ID){
+
+
+
+        Thread t = new Thread() {
+
+            public void run() {
+                Looper.prepare(); //For Preparing Message Pool for the child Thread
+                HttpClient client = new DefaultHttpClient();
+                HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); //Timeout Limit
+                HttpResponse response;
+                JSONObject result = null;
+
+                try {
+                    HttpGet get = new HttpGet(base_url + ID);
+
+                    get.addHeader("accept", "application/json");
+                    response = client.execute(get);
+                    String json = response.toString();
+
+                    if (response != null) {
+                        InputStream in = response.getEntity().getContent(); //Get the data in the entity
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Looper.loop(); //Loop in the message queue
+            }
+        };
+
+        t.start();
+
+    }*/
+
 
 
 
