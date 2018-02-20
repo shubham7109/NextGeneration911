@@ -7,7 +7,7 @@
 
     <ScrollView
         android:layout_width="413dp"
-        android:layout_height="492dp">
+        android:layout_height="550dp">
 
 
         <LinearLayout
@@ -23,27 +23,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:maxLines="1"
+                android:hint="@string/firstName"
                 android:inputType="text"
-                android:hint="@string/firstName" />
+                android:maxLines="1" />
 
             <EditText
                 android:id="@+id/middleName_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:maxLines="1"
+                android:hint="@string/middleName"
                 android:inputType="text"
-                android:hint="@string/middleName" />
+                android:maxLines="1" />
 
             <EditText
                 android:id="@+id/lastName_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:maxLines="1"
+                android:hint="@string/lastName"
                 android:inputType="text"
-                android:hint="@string/lastName" />
+                android:maxLines="1" />
 
 
             <EditText
@@ -91,6 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/female" />
+
                     <RadioButton
                         android:id="@+id/none"
                         android:layout_width="wrap_content"
@@ -106,9 +107,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:maxLines="1"
+                android:hint="@string/address_field"
                 android:inputType="text"
-                android:hint="@string/address_field" />
+                android:maxLines="1" />
 
 
             <EditText
@@ -116,18 +117,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:maxLines="1"
+                android:hint="@string/city"
                 android:inputType="text"
-                android:hint="@string/city" />
+                android:maxLines="1" />
 
             <EditText
                 android:id="@+id/state_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:maxLines="1"
+                android:hint="@string/state"
                 android:inputType="text"
-                android:hint="@string/state" />
+                android:maxLines="1" />
 
             <EditText
                 android:id="@+id/zipCode_editText"
@@ -144,8 +145,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:hint="@string/licencePlateNumber"
-                android:maxLines="1"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxLines="1" />
 
 
             <EditText
@@ -153,9 +154,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:maxLines="1"
+                android:hint="@string/vehicle"
                 android:inputType="text"
-                android:hint="@string/vehicle" />
+                android:maxLines="1" />
 
             <EditText
                 android:id="@+id/heightCentimeters_editText"
@@ -224,17 +225,21 @@
                     android:text="@string/blood_rh" />
 
 
-
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/spacer_hide"
+            <Button
+                android:id="@+id/register_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:focusable="false"
-                android:hint=""
-                android:inputType="number" />
+                android:gravity="center"
+                android:onClick="submit_info"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
+                android:text="@string/register"
+                app:layout_constraintBottom_toTopOf="@+id/navigation"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
 
 
         </LinearLayout>
@@ -254,19 +259,7 @@
 
     </android.support.design.widget.BottomNavigationView>
 
-    <Button
-        android:id="@+id/register_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:onClick="submit_info"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:text="@string/register"
-        app:layout_constraintBottom_toTopOf="@+id/navigation"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+
 
 
 

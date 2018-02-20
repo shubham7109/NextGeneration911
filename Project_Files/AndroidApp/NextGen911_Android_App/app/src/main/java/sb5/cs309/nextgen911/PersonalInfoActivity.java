@@ -2,9 +2,7 @@ package sb5.cs309.nextgen911;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -13,20 +11,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -170,18 +159,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     }
 
-    public boolean check_gender(){
-        RadioButton male = findViewById(R.id.male);
-        RadioButton female = findViewById(R.id.female);
-        RadioButton none = findViewById(R.id.none);
-
-        if (male.isChecked() || female.isChecked() || none.isChecked())
-            return true;
-
-        none.setError("This is a required field");
-        return false;
-    }
-
     // Returns phone number as ID
     public String getID(){
         return getPhoneNumber().substring(6);
@@ -313,17 +290,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
 
+    //TODO JSON get is not working
     public void prepopulate() {
         String gender, firstName, middleName, lastName, homeAddress, city, state,
-                dateOfBirth, licencePlateNumber, vehicle, bloodType;
-        int zipcode, heightCentimeters, weightKilograms;
+                dateOfBirth, licencePlateNumber, vehicle, bloodType, zipcode, heightCentimeters, weightKilograms;
 
         if(id.equals(""))
             return;
 
         //Make get request
-        //JSONObject personalInfo = Networking.get(ID);
-        JSONObject personalInfo = null;
+        JSONObject personalInfo = Networking.get(id);
 
         // No data returned
         if(personalInfo == null){
@@ -339,13 +315,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
             homeAddress = personalInfo.getString("homeAddress");
             city = personalInfo.getString("city");
             state = personalInfo.getString("state");
-            zipcode = personalInfo.getInt("zipcode");
+            zipcode = personalInfo.getString("zipcode");
             dateOfBirth = personalInfo.getString("dateOfBirth");
             licencePlateNumber = personalInfo.getString("licencePlateNumber");
             vehicle = personalInfo.getString("vehicle");
             bloodType = personalInfo.getString("bloodType");
-            heightCentimeters = personalInfo.getInt("heightCentimeters");
-            weightKilograms = personalInfo.getInt("weightKilograms");
+            heightCentimeters = personalInfo.getString("heightCentimeters");
+            weightKilograms = personalInfo.getString("weightKilograms");
         } catch (JSONException e) {
             throw new RuntimeException(e); // Non-recoverable
         }
@@ -398,7 +374,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         text.setText(state);
     }
 
-    public void setZIP(int ZIP) {
+    public void setZIP(String ZIP) {
         EditText text = findViewById(R.id.zipCode_editText);
         text.setText(ZIP);
     }
@@ -458,12 +434,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     }
 
-    public void setHeight(int height){
+    public void setHeight(String height){
         EditText text = findViewById(R.id.heightCentimeters_editText);
         text.setText(height);
     }
 
-    public void setWeight(int weight){
+    public void setWeight(String weight){
         EditText text = findViewById(R.id.weightKilograms_editText);
         text.setText(weight);
     }
