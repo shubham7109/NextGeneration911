@@ -24,7 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class Networking {
-    private static final String url = "http://10.0.2.2:8080/persons/";
+    private static final String url = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
 
 
 
