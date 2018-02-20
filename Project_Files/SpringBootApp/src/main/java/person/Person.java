@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "persons")
+@Table(name = "person")
 public class Person {
 	
 	@Id
@@ -18,13 +18,17 @@ public class Person {
 	private String homeAddress;
 	private String city;
 	private String state;
-	private int zipcode;
+	private String zipcode;
 	private String dateOfBirth;
 	private String licencePlateNumber;
 	private String vehicle;
 	private String bloodType;
-	private int heightCentimeters;
-	private int weightKilograms;
+	private String heightCentimeters;
+	private String weightKilograms;
+	
+	public Person() {
+		super();
+	}
 	
 	public Person(String id) {
 		super();
@@ -37,18 +41,21 @@ public class Person {
 		this.homeAddress = "";
 		this.city = "";
 		this.state = "";
-		this.zipcode = 0;
+		this.zipcode = "";
 		this.dateOfBirth = "";
 		this.licencePlateNumber = "";
 		this.vehicle = "";
 		this.bloodType = "";
-		this.heightCentimeters = 0;
-		this.weightKilograms = 0;
+		this.heightCentimeters = "";
+		this.weightKilograms = "";
 	}
+	
+	
 
 	public Person(String id, String phoneNumber, String gender, String firstName, String middleName, String lastName,
-			String homeAddress, String city, String state, int zipcode, String dateOfBirth, String licencePlateNumber,
-			String vehicle, String bloodType, int heightCentimeters, int weightKilograms) {
+			String homeAddress, String city, String state, String zipcode, String dateOfBirth,
+			String licencePlateNumber, String vehicle, String bloodType, String heightCentimeters,
+			String weightKilograms) {
 		super();
 		this.id = id;
 		this.phoneNumber = phoneNumber;
@@ -140,11 +147,11 @@ public class Person {
 		this.state = state;
 	}
 
-	public int getZipcode() {
+	public String getZipcode() {
 		return zipcode;
 	}
 
-	public void setZipcode(int zipcode) {
+	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
 
@@ -180,22 +187,22 @@ public class Person {
 		this.bloodType = bloodType;
 	}
 
-	public int getHeightCentimeters() {
+	public String getHeightCentimeters() {
 		return heightCentimeters;
 	}
 
-	public void setHeightCentimeters(int heightCentimeters) {
+	public void setHeightCentimeters(String heightCentimeters) {
 		this.heightCentimeters = heightCentimeters;
 	}
 
-	public int getWeightKilograms() {
+	public String getWeightKilograms() {
 		return weightKilograms;
 	}
 
-	public void setWeightKilograms(int weightKilograms) {
+	public void setWeightKilograms(String weightKilograms) {
 		this.weightKilograms = weightKilograms;
 	}
-	
+
 	
 	
 	

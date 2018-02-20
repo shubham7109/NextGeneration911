@@ -1,5 +1,6 @@
 package person;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class PersonController {
 	private PersonService personService;
 	
 	@RequestMapping("/persons")
-	public List<Person> getAllPersons() {
+	public Iterable<Person> getAllPersons() {
 		return personService.getAllPersons();
 	}
 	
