@@ -68,7 +68,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
         PersonalInfoActivity.context = getApplicationContext();
-        prepopulate();
+        //prepopulate();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
@@ -104,6 +104,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
+            Toast.makeText(context, "Submitted", Toast.LENGTH_LONG).show();
 
             Networking.post(personalInfo);
         }
