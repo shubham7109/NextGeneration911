@@ -12,15 +12,15 @@ public class operatorsService {
 	
 	@Autowired
 	private OperatorsRepository operatorsRepository;
-	
-	/*
+
+
 	private List<Operators> operator = new ArrayList<>(Arrays.asList(
-			new Operators(123, "shubham", "password", "Shubham", "Sharma", 0),
-			new Operators(456, "paul", "password1", "Paul", "Biermann", 1),
-			new Operators(789, "mike", "password2", "Michael", "Onyszczak", 2)
+			new Operators("123", "shubham", "password", "Shubham", "Sharma", "Freddy Court","0nline"),
+			new Operators("456", "paul", "password1", "Paul", "Biermann", "Wallace Hall","Offline"),
+			new Operators("789", "mike", "password2", "Michael", "Onyszczak", "Empire State","On call")
 			));
-			*/
-	
+
+
 	public List<Operators> getAllOperators() {
 		List<Operators> persons = new ArrayList<>();
 		operatorsRepository.findAll().forEach(persons::add);

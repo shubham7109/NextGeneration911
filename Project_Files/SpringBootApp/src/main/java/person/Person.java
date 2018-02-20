@@ -155,7 +155,7 @@ public class Person {
 		this.zipcode = zipcode;
 	}
 
-	public String getDateOfBirth() {
+	public String getDateOfBioperatorsrth() {
 		return dateOfBirth;
 	}
 

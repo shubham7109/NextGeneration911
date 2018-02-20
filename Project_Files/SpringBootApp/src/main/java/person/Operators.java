@@ -13,10 +13,11 @@ public class Operators
 	private String userName; 
 	private String password; 
 	private String firstName; 
-	private String lastName; 
+	private String lastName;
+	private String location;
 	private String status; 
 	
-	public Operators(String id, String userName, String password, String firstName, String lastName, String status)
+	public Operators(String id, String userName, String password, String firstName, String lastName,  String location, String status)
 	{
 		super();
 		this.id = id; 
@@ -24,6 +25,7 @@ public class Operators
 		this.password = password; 
 		this.firstName = firstName; 
 		this.lastName = lastName;
+		this.location = location;
 		this.status = status; 
 	}
 	
@@ -34,6 +36,7 @@ public class Operators
 		password = "";
 		firstName = "";
 		lastName = "";
+		location = "";
 		this.id = id;
 	}
 	
@@ -90,6 +93,10 @@ public class Operators
 	{
 		return lastName;
 	}
+
+	public void setLocation(String location){ this.location = location; }
+
+	public String getLocation(){ return location; }
 	
 	public void setStatus(String status)
 	{
