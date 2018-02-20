@@ -24,8 +24,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class Networking {
-    private static final String url = "http://proj-309-sb-5.cs.iastate.edu:8081/persons/";
 
+    private static final String url = "http://proj-309-sb-5.cs.iastate.edu:8081/persons/";
 
 
     // Attempt to post json to server
