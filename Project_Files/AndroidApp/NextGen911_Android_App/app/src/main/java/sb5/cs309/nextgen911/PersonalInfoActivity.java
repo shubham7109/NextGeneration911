@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -14,9 +15,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
@@ -25,7 +28,9 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class PersonalInfoActivity extends AppCompatActivity {
 
@@ -104,7 +109,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             }
             Toast.makeText(context, "Submitted", Toast.LENGTH_LONG).show();
 
-            Networking.post(personalInfo);
+            post(personalInfo);
         }
     }
 
@@ -467,5 +472,35 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 });
         AppController.getInstance().addToRequestQueue(jsObjRequest, tag_json_obj);
 
+    }
+
+    public void post(JSONObject personalInfo){
+        String tag_json_obj ="json_obj_post";
+
+        JsonObjectRequest req = new JsonObjectRequest(Networking.base_url, personalInfo,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            VolleyLog.v("Response:%n %s", response.toString(4));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        }){
+        @Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            Map<String, String>  params = new HashMap<String, String>();
+            params.put("Content-Type", "application/json");
+
+            return params;
+        }};
+
+        AppController.getInstance().addToRequestQueue(req, tag_json_obj);
     }
 }
