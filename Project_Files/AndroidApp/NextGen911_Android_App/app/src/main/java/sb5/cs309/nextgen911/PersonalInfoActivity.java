@@ -1,40 +1,41 @@
 package sb5.cs309.nextgen911;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.params.HttpConnectionParams;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class PersonalInfoActivity extends AppCompatActivity {
 
     static Context context;
+    static String id = "";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -68,7 +69,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
         PersonalInfoActivity.context = getApplicationContext();
-        //prepopulate();
+        loadJson();
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
@@ -101,12 +102,14 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 personalInfo.put("heightCentimeters", getHeight());
                 personalInfo.put("weightKilograms", getWeight());
 
+                id = getID();
+
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
             Toast.makeText(context, "Submitted", Toast.LENGTH_LONG).show();
 
-            Networking.post(personalInfo);
+            post(personalInfo);
         }
     }
 
@@ -169,21 +172,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     }
 
-    public boolean check_gender(){
-        RadioButton male = findViewById(R.id.male);
-        RadioButton female = findViewById(R.id.female);
-        RadioButton none = findViewById(R.id.none);
-
-        if (male.isChecked() || female.isChecked() || none.isChecked())
-            return true;
-
-        none.setError("This is a required field");
-        return false;
-    }
-
     // Returns phone number as ID
     public String getID(){
-        return getPhoneNumber();
+        return getPhoneNumber().substring(6);
     }
 
     public String getFirstName(){
@@ -242,13 +233,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return state.getText().toString();
     }
 
-    public int getZip(){
+    public String getZip(){
         EditText zip = findViewById(R.id.zipCode_editText);
 
         if(zip.getText().toString().equals(""))
-            return 0;
+            return "0";
 
-        return Integer.parseInt(zip.getText().toString());
+        return zip.getText().toString();
     }
 
     public String getLicencePlate(){
@@ -261,20 +252,20 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return vehicle.getText().toString();
     }
 
-    public int getHeight(){
+    public String getHeight(){
         EditText height = findViewById(R.id.heightCentimeters_editText);
         if(height.getText().toString().equals(""))
-            return 0;
+            return "0";
 
-        return Integer.parseInt(height.getText().toString());
+        return height.getText().toString();
     }
 
-    public int getWeight(){
+    public String getWeight(){
         EditText weight = findViewById(R.id.weightKilograms_editText);
         if(weight.getText().toString().equals(""))
-            return 0;
+            return "0";
 
-        return Integer.parseInt(weight.getText().toString());
+        return weight.getText().toString();
     }
 
     public String getBloodType(){
@@ -312,27 +303,17 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
 
-    public void prepopulate() {
-        String gender, firstName, middleName, lastName, homeAddress, city, state,
-                dateOfBirth, licencePlateNumber, vehicle, bloodType;
-        int zipcode, heightCentimeters, weightKilograms;
-
-        // TODO Shared Preferences failing
-        //Get Phone Number
-        String phoneNumber = "";
-
-        // No Number on file
-        if (phoneNumber.equals(""))
+    public void loadJson() {
+        if (id.equals(""))
             return;
-
 
         //Make get request
-        JSONObject personalInfo = Networking.get(phoneNumber);
+        get(id);
+    }
 
-        // No data returned
-        if(personalInfo == null){
-            return;
-        }
+    public void populateJSONValues(JSONObject personalInfo){
+        String gender, firstName, middleName, lastName, homeAddress, city, state,
+                dateOfBirth, licencePlateNumber, vehicle, bloodType, zipcode, heightCentimeters, weightKilograms;
 
         // Load all JSON values
         try {
@@ -343,13 +324,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
             homeAddress = personalInfo.getString("homeAddress");
             city = personalInfo.getString("city");
             state = personalInfo.getString("state");
-            zipcode = personalInfo.getInt("zipcode");
+            zipcode = personalInfo.getString("zipcode");
             dateOfBirth = personalInfo.getString("dateOfBirth");
             licencePlateNumber = personalInfo.getString("licencePlateNumber");
             vehicle = personalInfo.getString("vehicle");
             bloodType = personalInfo.getString("bloodType");
-            heightCentimeters = personalInfo.getInt("heightCentimeters");
-            weightKilograms = personalInfo.getInt("weightKilograms");
+            heightCentimeters = personalInfo.getString("heightCentimeters");
+            weightKilograms = personalInfo.getString("weightKilograms");
         } catch (JSONException e) {
             throw new RuntimeException(e); // Non-recoverable
         }
@@ -374,52 +355,52 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public void setFirstName(String firstName) {
         EditText text = findViewById(R.id.firstName_editText);
-        text.setHint(firstName);
+        text.setText(firstName);
     }
 
     public void setMiddleName(String middleName) {
         EditText text = findViewById(R.id.middleName_editText);
-        text.setHint(middleName);
+        text.setText(middleName);
     }
 
     public void setLastName(String lastName) {
         EditText text = findViewById(R.id.lastName_editText);
-        text.setHint(lastName);
+        text.setText(lastName);
     }
 
     public void setHomeAddress(String homeAddress) {
         EditText text = findViewById(R.id.home_editText);
-        text.setHint(homeAddress);
+        text.setText(homeAddress);
     }
 
     public void setCity(String city) {
         EditText text = findViewById(R.id.city_editText);
-        text.setHint(city);
+        text.setText(city);
     }
 
     public void setState(String state) {
         EditText text = findViewById(R.id.state_editText);
-        text.setHint(state);
+        text.setText(state);
     }
 
-    public void setZIP(int ZIP) {
+    public void setZIP(String ZIP) {
         EditText text = findViewById(R.id.zipCode_editText);
-        text.setHint(ZIP);
+        text.setText(ZIP);
     }
 
     public void setDOB(String DOB) {
         EditText text = findViewById(R.id.dob_editText);
-        text.setHint(DOB);
+        text.setText(DOB);
     }
 
     public void setLicence(String licence) {
         EditText text = findViewById(R.id.licencePlateNumber_editText);
-        text.setHint(licence);
+        text.setText(licence);
     }
 
     public void setVehicle(String vehicle) {
         EditText text = findViewById(R.id.vehicle_editText);
-        text.setHint(vehicle);
+        text.setText(vehicle);
     }
 
     public void setBloodType(String bloodType){
@@ -462,13 +443,64 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     }
 
-    public void setHeight(int height){
+    public void setHeight(String height){
         EditText text = findViewById(R.id.heightCentimeters_editText);
-        text.setHint(height);
+        text.setText(height);
     }
 
-    public void setWeight(int weight){
+    public void setWeight(String weight){
         EditText text = findViewById(R.id.weightKilograms_editText);
-        text.setHint(weight);
+        text.setText(weight);
+    }
+
+    public void get(final String ID){
+        String tag_json_obj ="json_obj_req";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, Networking.base_url + ID, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        populateJSONValues(response);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        AppController.getInstance().addToRequestQueue(jsObjRequest, tag_json_obj);
+
+    }
+
+    public void post(JSONObject personalInfo){
+        String tag_json_obj ="json_obj_post";
+
+        JsonObjectRequest req = new JsonObjectRequest(Networking.base_url, personalInfo,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            VolleyLog.v("Response:%n %s", response.toString(4));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        }){
+        @Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            Map<String, String>  params = new HashMap<String, String>();
+            params.put("Content-Type", "application/json");
+
+            return params;
+        }};
+
+        AppController.getInstance().addToRequestQueue(req, tag_json_obj);
     }
 }

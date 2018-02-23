@@ -2,30 +2,33 @@ package sb5.cs309.nextgen911;
 
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+
+import static sb5.cs309.nextgen911.AppController.TAG;
 
 public class Networking {
 
-    private static final String url = "http://proj-309-sb-5.cs.iastate.edu:8081/persons/";
+    public static final String base_url = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
+
 
 
     // Attempt to post json to server
@@ -41,7 +44,7 @@ public class Networking {
                 HttpResponse response;
 
                 try {
-                    HttpPost post = new HttpPost(url);
+                    HttpPost post = new HttpPost(base_url);
 
                     StringEntity se = new StringEntity(personalInfo.toString());
                     se.setContentType(new BasicHeader("Content-Type", "application/json"));
@@ -63,10 +66,33 @@ public class Networking {
         t.start();
     }
 
-    public static JSONObject get(String phoneNumber){
-        // TODO
-        return null;
+
+
+    public static void get(final String ID){
+        String tag_json_obj ="json_obj_req";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, base_url + ID, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(PersonalInfoActivity.context,"Response: " + response.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        AppController.getInstance().addToRequestQueue(jsObjRequest, tag_json_obj);
+
     }
+
+
+
+
+
 
 
 
