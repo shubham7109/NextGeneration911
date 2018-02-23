@@ -9,8 +9,8 @@ Here are some helpful links
 
 This project can be divided into three major parts:
 1.	Windows Application for the 911 Operator to access the caller’s location and information.
-2.	An SQL Database and a Web API to help to store information and send the caller’s geographic location, respectively. 
-3.	Android App for the user to send the operator information, location when 911 is dialed. 
+2.	An SQL Database and a Web API to help to store information and send the caller’s geographic location, respectively.
+3.	Android App for the user to send the operator information, location when 911 is dialed.
 
 The features of these parts are discussed below in detail:
 
@@ -28,7 +28,7 @@ o	Name
 o	Date of Birth
 o	Blood Type
 o	Medical History
-o	Age 
+o	Age
 o	Gender
 •	Some kind of API which as capable to connect to the Android device, receive its location and send it to the 911 operator’s Windows application.
 
@@ -36,7 +36,7 @@ Android App
 •	Should be basic and user friendly, so users at any age can use it.
 •	Large and clear button to dial 911
 •	Should be able to find the user’s location and send it to the Web API
-•	Option to add information like Name, DOB, Blood Type, Medical History… 
+•	Option to add information like Name, DOB, Blood Type, Medical History…
 •	SMS verification code to verify user’s phone number during setup. [So we know the user calling is not a robot/scam]
 •	Grant access of the mobile features to the app. E.g. Access to location and the dialer.
 •	Implement material design but should be quick and responsive, as the app should not waste any time calling 911.
@@ -47,4 +47,3 @@ Shubham Sharma: shubham@iastate.edu
 Paul Biermann: paulmb@iastate.edu
 Rishab Narendra:  rishabn@iastate.edu
 Michael Onyszczak:  mikeonys@iastate.edu
-
