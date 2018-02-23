@@ -1,1 +1,35 @@
-This folder shall keep track of all the versions of the Server Client Code.
+===== Deploy SpringBootApp on Server =====
+
+In Project Root Directory:
+$ mvn clean install
+
+Test that it runs
+$ java -jar target/jarname.jar
+
+Kill the code running on the server by:
+	$ ssh paulmb@proj-309-sb-5.cs.iastate.edu
+	$ ps -A | grep java
+	This will output something like:
+		13785 ?        00:05:03 java
+	The first number is the pid (process id)
+	$ sudo kill -9 pid
+
+In fileZilla, connect with
+	Host: sftp://proj-309-sb-5.cs.iastate.edu
+	Username: Net ID
+	Password: Net ID Password
+	Port: Not needed
+
+Use fileZilla to put the jar on the server in the folder:
+	/var/www/html/
+
+Remove the old version of the jar
+	$ cd /var/www/html
+	$ rm jarname.jar
+
+Run the jar, and disown the process. This is necessary so that
+	the process doesn't end when you disconnect the ssh connection.
+	The & allows you to keep typing into the terminal as the
+	process runs.
+	$ java -jar jarname.jar &
+	$ disown
