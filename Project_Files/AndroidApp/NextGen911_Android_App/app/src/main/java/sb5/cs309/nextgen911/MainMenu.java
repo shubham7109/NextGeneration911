@@ -10,7 +10,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import org.linphone.core.LinphoneCore;
 
 
 public class MainMenu extends AppCompatActivity {
@@ -78,6 +77,14 @@ public class MainMenu extends AppCompatActivity {
         intent = new Intent(getAppContext(), RegistrationActivity.class);
         startActivity(intent);
         overridePendingTransition(0, 0);
+    }
+
+    public void onCallClick(View view){
+        Intent intent;
+
+        intent = new Intent(getAppContext(), CallActivity.class);
+        startActivity(intent);
+        overridePendingTransition(0,0);
     }
 
     public static void register_device(String regCode){

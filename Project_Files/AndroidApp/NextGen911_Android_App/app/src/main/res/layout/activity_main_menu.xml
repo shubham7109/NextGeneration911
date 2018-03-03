@@ -24,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
+        android:onClick="onCallClick"
         android:text="@string/call_911"
         app:layout_constraintBottom_toTopOf="@+id/reg_button"
         app:layout_constraintHorizontal_bias="0.5"

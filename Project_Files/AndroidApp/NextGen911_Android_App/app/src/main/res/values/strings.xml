@@ -48,5 +48,8 @@
     <string name="phoneNumber">Phone Number</string>
     <string name="PNTA">Not Specified</string>
     <string name="personsURL">http://proj-309-sb-5.cs.iastate.edu:8080/persons/</string>
+    <string name="SIP_username">cs309</string>
+    <string name="SIP_domain">sip.linphone.org</string>
+    <string name="SIP_password">password</string>
 
 </resources>
