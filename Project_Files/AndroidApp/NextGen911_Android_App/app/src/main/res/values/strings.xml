@@ -47,5 +47,6 @@
     <string name="blood_rh">Rh Factor (postive)</string>
     <string name="phoneNumber">Phone Number</string>
     <string name="PNTA">Not Specified</string>
+    <string name="personsURL">\"http://proj-309-sb-5.cs.iastate.edu:8080/persons/\"</string>
 
 </resources>

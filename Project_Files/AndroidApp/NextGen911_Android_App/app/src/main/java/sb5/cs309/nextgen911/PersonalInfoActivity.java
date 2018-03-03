@@ -457,7 +457,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         String tag_json_obj ="json_obj_req";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, Networking.base_url + ID, null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, getResources().getString(R.string.personsURL)+ ID, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -477,7 +477,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public void post(JSONObject personalInfo){
         String tag_json_obj ="json_obj_post";
 
-        JsonObjectRequest req = new JsonObjectRequest(Networking.base_url, personalInfo,
+        JsonObjectRequest req = new JsonObjectRequest(getResources().getString(R.string.personsURL), personalInfo,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
