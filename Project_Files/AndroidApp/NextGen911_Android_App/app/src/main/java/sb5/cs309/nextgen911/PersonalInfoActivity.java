@@ -17,10 +17,12 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +38,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     static Context context;
     static String id = "";
+    RequestQueue mQueue;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -68,6 +71,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
+        mQueue = Volley.newRequestQueue(getApplicationContext());
         PersonalInfoActivity.context = getApplicationContext();
         loadJson();
 
@@ -80,8 +84,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return PersonalInfoActivity.context;
     }
 
-    public void submit_info(View view){
-        if(check_DOB() && check_ZIP() && check_phoneNumber()){
+    public void submit_info(View view) {
+        if (check_DOB() && check_ZIP() && check_phoneNumber()) {
             JSONObject personalInfo = new JSONObject();
 
             try {
@@ -114,11 +118,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     // Ensures that date of birth confirms to MM/DD/YYYY standards displays error on failure
-    public boolean check_DOB(){
+    public boolean check_DOB() {
         EditText dob_box = findViewById(R.id.dob_editText);
         String date = dob_box.getText().toString();
 
-        if(date.equals("")){
+        if (date.equals("")) {
             return true;
         }
 
@@ -129,8 +133,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
         try {
             cal.setTime(sdf.parse(date));
             // Handle wierd calendar bound issues
-            if(cal.get(Calendar.MONTH)>11 || cal.get(Calendar.DAY_OF_MONTH) > 31)
-                throw new ParseException("",0); //Exception values not used
+            if (cal.get(Calendar.MONTH) > 11 || cal.get(Calendar.DAY_OF_MONTH) > 31)
+                throw new ParseException("", 0); //Exception values not used
 
             return true;
 
@@ -142,15 +146,15 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     // Ensures 5 digit zip code is entered displays error on failure
-    public boolean check_ZIP(){
+    public boolean check_ZIP() {
         EditText zip_box = findViewById(R.id.zipCode_editText);
 
-        if(zip_box.getText().toString().length()==0) {
+        if (zip_box.getText().toString().length() == 0) {
             return true;
         }
 
 
-        if(zip_box.getText().toString().length()!=5){
+        if (zip_box.getText().toString().length() != 5) {
             zip_box.setError("ZIP Code must be 5 digits long");
             return false;
         }
@@ -158,12 +162,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     // Ensures 10 digit phone number is entered displays error on failure
-    public boolean check_phoneNumber(){
+    public boolean check_phoneNumber() {
         EditText phone_number_box = findViewById(R.id.phoneNumber_editText);
         String phoneNumber = phone_number_box.getText().toString();
         phoneNumber = phoneNumber.replaceAll("[^\\d.]", ""); // Remove all non-numeric characters
 
-        if(phoneNumber.length() != 10){
+        if (phoneNumber.length() != 10) {
             phone_number_box.setError("Mandatory Field: Phone Numbers must be 10 digits long");
             return false;
         }
@@ -173,31 +177,31 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     // Returns phone number as ID
-    public String getID(){
+    public String getID() {
         return getPhoneNumber().substring(6);
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         EditText name = findViewById(R.id.firstName_editText);
         return name.getText().toString();
     }
 
-    public String getMiddleName(){
+    public String getMiddleName() {
         EditText name = findViewById(R.id.middleName_editText);
         return name.getText().toString();
     }
 
-    public String getLastName(){
+    public String getLastName() {
         EditText name = findViewById(R.id.lastName_editText);
         return name.getText().toString();
     }
 
-    public String getDOB(){
+    public String getDOB() {
         EditText dob = findViewById(R.id.dob_editText);
         return dob.getText().toString();
     }
 
-    public String getPhoneNumber(){
+    public String getPhoneNumber() {
         EditText phone_number_box = findViewById(R.id.phoneNumber_editText);
         String phoneNumber = phone_number_box.getText().toString();
         phoneNumber = phoneNumber.replaceAll("[^\\d.]", ""); // Remove all non-numeric characters
@@ -206,94 +210,94 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     // Return //0 for female, 1 for male, -1 on no selection
-    public String getGender(){
+    public String getGender() {
         RadioButton male = findViewById(R.id.male);
         RadioButton female = findViewById(R.id.female);
 
-        if(male.isChecked())
+        if (male.isChecked())
             return "MALE";
-        if(female.isChecked())
+        if (female.isChecked())
             return "FEMALE";
         else
             return "";
     }
 
-    public String getAddress(){
+    public String getAddress() {
         EditText address = findViewById(R.id.home_editText);
         return address.getText().toString();
     }
 
-    public String getCity(){
+    public String getCity() {
         EditText city = findViewById(R.id.city_editText);
         return city.getText().toString();
     }
 
-    public String getState(){
+    public String getState() {
         EditText state = findViewById(R.id.state_editText);
         return state.getText().toString();
     }
 
-    public String getZip(){
+    public String getZip() {
         EditText zip = findViewById(R.id.zipCode_editText);
 
-        if(zip.getText().toString().equals(""))
+        if (zip.getText().toString().equals(""))
             return "0";
 
         return zip.getText().toString();
     }
 
-    public String getLicencePlate(){
+    public String getLicencePlate() {
         EditText plate = findViewById(R.id.licencePlateNumber_editText);
         return plate.getText().toString();
     }
 
-    public String getVehicle(){
+    public String getVehicle() {
         EditText vehicle = findViewById(R.id.vehicle_editText);
         return vehicle.getText().toString();
     }
 
-    public String getHeight(){
+    public String getHeight() {
         EditText height = findViewById(R.id.heightCentimeters_editText);
-        if(height.getText().toString().equals(""))
+        if (height.getText().toString().equals(""))
             return "0";
 
         return height.getText().toString();
     }
 
-    public String getWeight(){
+    public String getWeight() {
         EditText weight = findViewById(R.id.weightKilograms_editText);
-        if(weight.getText().toString().equals(""))
+        if (weight.getText().toString().equals(""))
             return "0";
 
         return weight.getText().toString();
     }
 
-    public String getBloodType(){
+    public String getBloodType() {
         RadioButton a = findViewById(R.id.bloodA);
         RadioButton b = findViewById(R.id.bloodB);
         RadioButton ab = findViewById(R.id.bloodAB);
         RadioButton o = findViewById(R.id.bloodO);
         CheckBox rh = findViewById(R.id.rh_checkBox);
 
-        if(a.isChecked()){
-            if(rh.isChecked())
+        if (a.isChecked()) {
+            if (rh.isChecked())
                 return "A+";
             else
                 return "A-";
         }
-        if(b.isChecked()) {
+        if (b.isChecked()) {
             if (rh.isChecked())
                 return "B+";
             else
                 return "B-";
         }
-        if(ab.isChecked()) {
+        if (ab.isChecked()) {
             if (rh.isChecked())
                 return "AB+";
             else
                 return "AB-";
         }
-        if(o.isChecked()) {
+        if (o.isChecked()) {
             if (rh.isChecked())
                 return "O+";
             else
@@ -311,7 +315,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         get(id);
     }
 
-    public void populateJSONValues(JSONObject personalInfo){
+    public void populateJSONValues(JSONObject personalInfo) {
         String gender, firstName, middleName, lastName, homeAddress, city, state,
                 dateOfBirth, licencePlateNumber, vehicle, bloodType, zipcode, heightCentimeters, weightKilograms;
 
@@ -403,61 +407,59 @@ public class PersonalInfoActivity extends AppCompatActivity {
         text.setText(vehicle);
     }
 
-    public void setBloodType(String bloodType){
+    public void setBloodType(String bloodType) {
         CheckBox rh = findViewById(R.id.rh_checkBox);
-        if(bloodType.contains("+"))
+        if (bloodType.contains("+"))
             rh.toggle();
-        bloodType = bloodType.replace("+","");
-        if(bloodType.equals("A")){
+        bloodType = bloodType.replace("+", "");
+        if (bloodType.equals("A")) {
             RadioButton a = findViewById(R.id.bloodA);
             a.toggle();
         }
-        if(bloodType.equals("B")){
+        if (bloodType.equals("B")) {
             RadioButton b = findViewById(R.id.bloodB);
             b.toggle();
         }
-        if(bloodType.equals("AB")){
+        if (bloodType.equals("AB")) {
             RadioButton ab = findViewById(R.id.bloodAB);
             ab.toggle();
         }
-        if(bloodType.equals("O")){
+        if (bloodType.equals("O")) {
             RadioButton o = findViewById(R.id.bloodO);
             o.toggle();
         }
 
     }
 
-    public void setGender(String gender){
-        if(gender.equals("MALE")){
+    public void setGender(String gender) {
+        if (gender.equals("MALE")) {
             RadioButton button = findViewById(R.id.male);
             button.toggle();
         }
-        if(gender.equals("FEMALE")){
+        if (gender.equals("FEMALE")) {
             RadioButton button = findViewById(R.id.female);
             button.toggle();
         }
-        if(gender.equals("")){
+        if (gender.equals("")) {
             RadioButton button = findViewById(R.id.none);
             button.toggle();
         }
 
     }
 
-    public void setHeight(String height){
+    public void setHeight(String height) {
         EditText text = findViewById(R.id.heightCentimeters_editText);
         text.setText(height);
     }
 
-    public void setWeight(String weight){
+    public void setWeight(String weight) {
         EditText text = findViewById(R.id.weightKilograms_editText);
         text.setText(weight);
     }
 
-    public void get(final String ID){
-        String tag_json_obj ="json_obj_req";
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, getResources().getString(R.string.personsURL)+ ID, null, new Response.Listener<JSONObject>() {
+    public void get(final String ID) {
+        JsonObjectRequest req = new JsonObjectRequest
+                (Request.Method.GET, getResources().getString(R.string.personsURL) + ID, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -470,12 +472,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
                     }
                 });
-        AppController.getInstance().addToRequestQueue(jsObjRequest, tag_json_obj);
-
+        mQueue.add(req);
     }
 
-    public void post(JSONObject personalInfo){
-        String tag_json_obj ="json_obj_post";
+    public void post(JSONObject personalInfo) {
 
         JsonObjectRequest req = new JsonObjectRequest(getResources().getString(R.string.personsURL), personalInfo,
                 new Response.Listener<JSONObject>() {
@@ -492,15 +492,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
             }
-        }){
-        @Override
-        public Map<String, String> getHeaders() throws AuthFailureError {
-            Map<String, String>  params = new HashMap<String, String>();
-            params.put("Content-Type", "application/json");
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json");
 
-            return params;
-        }};
+                return params;
+            }
+        };
 
-        AppController.getInstance().addToRequestQueue(req, tag_json_obj);
+        mQueue.add(req);
     }
 }
