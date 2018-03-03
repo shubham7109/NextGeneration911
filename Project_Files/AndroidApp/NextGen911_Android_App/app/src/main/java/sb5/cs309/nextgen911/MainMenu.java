@@ -10,6 +10,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import org.linphone.core.LinphoneCore;
 
 
 public class MainMenu extends AppCompatActivity {
