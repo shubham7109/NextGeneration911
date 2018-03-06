@@ -10,15 +10,17 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 public class MainMenu extends AppCompatActivity {
 
 
-    private static SharedPreferences sharedPreferences;
+    public static SharedPreferences sharedPreferences;
     public static final String mypreference = "911UserPrefs";
     public static final String regKey = "Registered";
     public static final String phonekey = "phNum";
+    public static final String idKey = "ID";
     private static final int requestCode = 911;
     BottomNavigationView bottomNavigationView;
     static Context context;
@@ -33,6 +35,7 @@ public class MainMenu extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         int registered = sharedPreferences.getInt(regKey, 0);
+        Toast.makeText(getApplicationContext(),"Current Ph# = " + sharedPreferences.getString(idKey, ""), Toast.LENGTH_LONG).show();
         if(registered != 0){
             findViewById(R.id.reg_button).setVisibility(View.INVISIBLE);
         }

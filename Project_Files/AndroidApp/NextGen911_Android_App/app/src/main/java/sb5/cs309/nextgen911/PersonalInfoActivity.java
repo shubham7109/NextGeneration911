@@ -34,10 +34,14 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static sb5.cs309.nextgen911.MainMenu.idKey;
+import static sb5.cs309.nextgen911.MainMenu.phonekey;
+import static sb5.cs309.nextgen911.MainMenu.regKey;
+import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
+
 public class PersonalInfoActivity extends AppCompatActivity {
 
     static Context context;
-    static String id = "";
     RequestQueue mQueue;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -106,12 +110,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 personalInfo.put("heightCentimeters", getHeight());
                 personalInfo.put("weightKilograms", getWeight());
 
-                id = getID();
-
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
             Toast.makeText(context, "Submitted", Toast.LENGTH_LONG).show();
+            sharedPreferences.edit().putString(idKey, getID()).apply();
 
             post(personalInfo);
         }
@@ -308,6 +311,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
 
     public void loadJson() {
+        String id = sharedPreferences.getString(idKey, "");
+        
         if (id.equals(""))
             return;
 
