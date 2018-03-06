@@ -32,7 +32,7 @@ public class LatLongFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        googleMapView.addMapInitializedListener(() -> configureMap());
+        googleMapView.addMapInializedListener(() -> configureMap());
     }
 
     protected void configureMap() {
