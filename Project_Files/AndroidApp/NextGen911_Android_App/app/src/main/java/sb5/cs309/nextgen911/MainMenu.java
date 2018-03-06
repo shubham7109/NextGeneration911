@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.telecom.Call;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -90,7 +91,9 @@ public class MainMenu extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), (3-clickCount) +" more taps to call 911", Toast.LENGTH_SHORT).show();
                     clickCount++;
                 }else{
-                    Toast.makeText(getBaseContext(), "911 Called", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getAppContext(), CallActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
                 }
 
             }
@@ -99,17 +102,22 @@ public class MainMenu extends AppCompatActivity {
         call911.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(getBaseContext(), "911 Called", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getAppContext(), CallActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
                 return true;
             }
         });
 
     }
 
-    public void onRegisterClick(View view) {
-        Intent intent;
+    protected void onResume(){
+        super.onResume();
+        clickCount = 0;
+    }
 
-        intent = new Intent(getAppContext(), RegistrationActivity.class);
+    public void onRegisterClick(View view) {
+        Intent intent = new Intent(getAppContext(), RegistrationActivity.class);
         startActivity(intent);
         overridePendingTransition(0, 0);
     }

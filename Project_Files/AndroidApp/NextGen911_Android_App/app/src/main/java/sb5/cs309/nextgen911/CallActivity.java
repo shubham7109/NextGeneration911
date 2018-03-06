@@ -20,9 +20,9 @@ public class CallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call);
 
-        register();
-        String address = getAddress();
-        call(address);
+        //register();
+        //String address = getAddress();
+        //call(address);
     }
 
     protected void register() {
