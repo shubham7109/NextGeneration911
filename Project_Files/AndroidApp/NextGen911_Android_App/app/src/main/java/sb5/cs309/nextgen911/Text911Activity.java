@@ -28,7 +28,7 @@ public class Text911Activity extends AppCompatActivity {
                     break;
 
                 case R.id.navigation_personal_info:
-                    intent = new Intent(getAppContext(), PersonalInfoActivity.class);
+                    intent = new Intent(getAppContext(), FingerPrintActivity.class);
                     startActivity(intent);
                     overridePendingTransition(0, 0);
                     break;

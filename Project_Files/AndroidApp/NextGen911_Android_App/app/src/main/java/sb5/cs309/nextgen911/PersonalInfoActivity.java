@@ -75,6 +75,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
+
         mQueue = Volley.newRequestQueue(getApplicationContext());
         PersonalInfoActivity.context = getApplicationContext();
         loadJson();
@@ -312,7 +313,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public void loadJson() {
         String id = sharedPreferences.getString(idKey, "");
-        
+
         if (id.equals(""))
             return;
 

@@ -10,20 +10,27 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 
 public class MainMenu extends AppCompatActivity {
 
 
-    public static SharedPreferences sharedPreferences;
     public static final String mypreference = "911UserPrefs";
     public static final String regKey = "Registered";
     public static final String phonekey = "phNum";
     public static final String idKey = "ID";
     private static final int requestCode = 911;
-    BottomNavigationView bottomNavigationView;
+    public static SharedPreferences sharedPreferences;
     static Context context;
+    BottomNavigationView bottomNavigationView;
+
+    public static Context getAppContext() {
+        return MainMenu.context;
+    }
+
+    public static void register_device(String regCode) {
+        sharedPreferences.edit().putInt(regKey, Integer.parseInt(regCode)).apply();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +42,7 @@ public class MainMenu extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         int registered = sharedPreferences.getInt(regKey, 0);
-        Toast.makeText(getApplicationContext(),"Current Ph# = " + sharedPreferences.getString(idKey, ""), Toast.LENGTH_LONG).show();
-        if(registered != 0){
+        if (registered != 0) {
             findViewById(R.id.reg_button).setVisibility(View.INVISIBLE);
         }
 
@@ -53,7 +59,7 @@ public class MainMenu extends AppCompatActivity {
                                 break;
 
                             case R.id.navigation_personal_info:
-                                intent = new Intent(getAppContext(), PersonalInfoActivity.class);
+                                intent = new Intent(getAppContext(), FingerPrintActivity.class);
                                 startActivity(intent);
                                 overridePendingTransition(0, 0);
                                 break;
@@ -70,11 +76,7 @@ public class MainMenu extends AppCompatActivity {
                 });
     }
 
-    public static Context getAppContext() {
-        return MainMenu.context;
-    }
-
-    public void onRegisterClick(View view){
+    public void onRegisterClick(View view) {
         Intent intent;
 
         intent = new Intent(getAppContext(), RegistrationActivity.class);
@@ -82,15 +84,11 @@ public class MainMenu extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    public void onCallClick(View view){
+    public void onCallClick(View view) {
         Intent intent;
 
         intent = new Intent(getAppContext(), CallActivity.class);
         startActivity(intent);
-        overridePendingTransition(0,0);
-    }
-
-    public static void register_device(String regCode){
-        sharedPreferences.edit().putInt(regKey,Integer.parseInt(regCode)).apply();
+        overridePendingTransition(0, 0);
     }
 }
