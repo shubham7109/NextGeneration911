@@ -6,8 +6,8 @@
         <option name="appClass" value="operator.Main" />
         <option name="description" value="" />
         <option name="htmlPlaceholderId" value="" />
-        <option name="title" value="" />
-        <option name="vendor" value="" />
+        <option name="title" value="NextGen911" />
+        <option name="vendor" value="SB5" />
         <option name="version" value="" />
       </options>
     </properties>
@@ -15,7 +15,7 @@
       <element id="archive" name="Operator911_App.jar">
         <element id="module-output" name="Operator911_App" />
         <element id="directory" name="META-INF">
-          <element id="file-copy" path="$PROJECT_DIR$/src/resources/MANIFEST.MF" />
+          <element id="file-copy" path="$PROJECT_DIR$/src/operator/META-INF/MANIFEST.MF" />
         </element>
       </element>
     </root>
