@@ -10,6 +10,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainMenu extends AppCompatActivity {
@@ -21,6 +23,7 @@ public class MainMenu extends AppCompatActivity {
     public static final String idKey = "ID";
     private static final int requestCode = 911;
     public static SharedPreferences sharedPreferences;
+    public static int clickCount;
     static Context context;
     BottomNavigationView bottomNavigationView;
 
@@ -74,20 +77,39 @@ public class MainMenu extends AppCompatActivity {
                         return true;
                     }
                 });
+
+
+        clickCount = 0;
+        Button call911 =findViewById(R.id.call_911_button);
+        call911.isClickable();
+
+        call911.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickCount < 3){
+                    Toast.makeText(getBaseContext(), (3-clickCount) +" more taps to call 911", Toast.LENGTH_SHORT).show();
+                    clickCount++;
+                }else{
+                    Toast.makeText(getBaseContext(), "911 Called", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+        call911.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getBaseContext(), "911 Called", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+
     }
 
     public void onRegisterClick(View view) {
         Intent intent;
 
         intent = new Intent(getAppContext(), RegistrationActivity.class);
-        startActivity(intent);
-        overridePendingTransition(0, 0);
-    }
-
-    public void onCallClick(View view) {
-        Intent intent;
-
-        intent = new Intent(getAppContext(), CallActivity.class);
         startActivity(intent);
         overridePendingTransition(0, 0);
     }
