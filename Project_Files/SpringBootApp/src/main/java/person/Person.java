@@ -1,8 +1,21 @@
 package person;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import address.*;
+import callLog.*;
+import car.*;
+import contact.*;
+import emergencyContact.*;
+import medical.*;
+import operator.*;
+import textLog.*;
 
 @Entity
 @Table(name = "person")
@@ -15,17 +28,19 @@ public class Person {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private String homeAddress;
-	private String city;
-	private String state;
-	private String zipcode;
+	
 	private String dateOfBirth;
 	private String licencePlateNumber;
 	private String vehicle;
 	private String bloodType;
 	private String heightCentimeters;
 	private String weightKilograms;
+
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="address_FK")
+	private Address address;
 	
+
 	public Person() {
 		super();
 	}
@@ -38,10 +53,7 @@ public class Person {
 		this.firstName = "";
 		this.middleName = "";
 		this.lastName = "";
-		this.homeAddress = "";
-		this.city = "";
-		this.state = "";
-		this.zipcode = "";
+
 		this.dateOfBirth = "";
 		this.licencePlateNumber = "";
 		this.vehicle = "";
@@ -63,10 +75,7 @@ public class Person {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
-		this.homeAddress = homeAddress;
-		this.city = city;
-		this.state = state;
-		this.zipcode = zipcode;
+
 		this.dateOfBirth = dateOfBirth;
 		this.licencePlateNumber = licencePlateNumber;
 		this.vehicle = vehicle;
@@ -123,38 +132,6 @@ public class Person {
 		this.lastName = lastName;
 	}
 
-	public String getHomeAddress() {
-		return homeAddress;
-	}
-
-	public void setHomeAddress(String homeAddress) {
-		this.homeAddress = homeAddress;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getZipcode() {
-		return zipcode;
-	}
-
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
-
 	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -201,6 +178,14 @@ public class Person {
 
 	public void setWeightKilograms(String weightKilograms) {
 		this.weightKilograms = weightKilograms;
+	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	
