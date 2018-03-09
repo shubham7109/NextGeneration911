@@ -1,14 +1,19 @@
 package operator.Controllers;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import operator.Models.PersonModel;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -38,14 +43,34 @@ public class LookUpPerson_Controller {
     @FXML private TextField heightCentimeters;
     @FXML private TextField weightKilograms;
 
+    @FXML private Button lookButton;
 
     private PersonModel personModel;
 
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons";
 
-    @FXML
-    private void searchID(ActionEvent event) throws Exception {
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
 
+        // set handlers
+        lookButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                try {
+                    searchPerson();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @FXML
+    public void onEnter(ActionEvent ae) throws Exception {
+        searchPerson();
+    }
+
+    private void searchPerson() throws Exception {
         URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/"+ID_text.getText();
         String response = getHTML(URL);
         if(response.length() == 0 || ID_text.getText().length() == 0){
@@ -85,10 +110,9 @@ public class LookUpPerson_Controller {
             System.out.println(jsonObject);
         }
 
-
     }
 
-    public static String getHTML(String urlToRead) throws Exception {
+    private static String getHTML(String urlToRead) throws Exception {
         StringBuilder result = new StringBuilder();
         java.net.URL url = new URL(urlToRead);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

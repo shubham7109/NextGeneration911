@@ -7,8 +7,8 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="269.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Controllers.LookUpPerson_Controller">
    <children>
-      <Button layoutX="583.0" layoutY="88.0" mnemonicParsing="false" onAction="#searchID" text="Look up person" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="88.0" />
-      <TextField fx:id="ID_text" alignment="TOP_CENTER" layoutX="556.0" layoutY="35.0" promptText="Enter ID of person" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="35.0" />
+      <TextField fx:id="ID_text" alignment="TOP_CENTER" layoutX="556.0" layoutY="35.0" onAction="#onEnter" promptText="Enter ID of person" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="35.0" />
+      <Button fx:id="lookButton" layoutX="583.0" layoutY="88.0" mnemonicParsing="false" onAction="#onEnter" text="Look up person" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="88.0" />
       <Label layoutX="28.0" layoutY="40.0" text="Phone#" AnchorPane.topAnchor="40.0" />
       <Label layoutX="28.0" layoutY="72.0" text="Gender" AnchorPane.topAnchor="70.0" />
       <Label layoutX="28.0" layoutY="93.0" text="First Name" AnchorPane.topAnchor="100.0" />

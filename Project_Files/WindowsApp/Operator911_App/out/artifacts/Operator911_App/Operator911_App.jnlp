@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Operator911_App.jnlp">
   <information>
-    <title>Operator911_App</title>
-    <vendor>Unknown</vendor>
+    <title>NexGen911</title>
+    <vendor>SB5</vendor>
     <description>Operator911_App</description>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Operator911_App.jar" size="10009598" download="eager" />
+    <jar href="Operator911_App.jar" size="10011622" download="eager" />
   </resources>
   <jfx:javafx-desc  width="600" height="400" main-class="operator.Main"  name="Operator911_App" />
   <update check="background"/>
