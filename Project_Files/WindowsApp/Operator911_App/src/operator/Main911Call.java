@@ -19,10 +19,10 @@ public class Main911Call extends Application {
                 System.out.println("Stage is closing");
 
                 Stage stage = new Stage();
-                stage.setTitle("Look Up Person");
-                Main main = new Main();
+                stage.setTitle("Operator");
+                LoggedInView loggedInView = new LoggedInView();
                 try {
-                    main.start(stage);
+                    loggedInView.start(stage);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }

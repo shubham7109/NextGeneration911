@@ -187,7 +187,7 @@ public class Controller {
 
 
                 Stage stage = new Stage();
-                stage.setTitle("Look Up Person");
+                stage.setTitle("On Call");
                 Main911Call main911Call = new Main911Call();
                 try {
                     main911Call.start(stage);

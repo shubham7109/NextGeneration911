@@ -46,7 +46,7 @@
               </image>
             </ImageView>
             <Label text="Operator Name" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="80.0" />
-            <Button layoutX="371.0" layoutY="80.0" mnemonicParsing="false" onAction="#simulateCallPress" prefHeight="40.0" prefWidth="129.0" text="SImulate Call" />
+            <Button layoutX="371.0" layoutY="80.0" mnemonicParsing="false" onAction="#simulateCallPress" prefHeight="40.0" prefWidth="129.0" text="Simulate Call" />
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
