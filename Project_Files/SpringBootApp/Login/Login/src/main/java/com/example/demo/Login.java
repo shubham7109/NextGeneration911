@@ -23,6 +23,20 @@ public class Login {
 		this.location = location;
 		this.status = status;
 	}
+	
+	public Login(String id)
+	{
+		super();
+		firstName = "";
+		lastName = "";
+		accesibility = "";
+		userName = "";
+		password = "";
+		this.id = id;
+		location = "";
+		status = 0;
+	}
+
 
 	public void setID(String id)
 	{
