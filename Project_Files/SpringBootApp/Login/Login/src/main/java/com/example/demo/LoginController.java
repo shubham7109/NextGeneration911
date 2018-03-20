@@ -38,6 +38,12 @@ public class LoginController {
 	{
 		LoginService.deleteLogin(id);
 	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="/login/{username}/{password}")
+	public void login(@RequestBody String username, String password)
+	{
+		LoginService.checkPassword(username, password);
+	}
 
 }
 
