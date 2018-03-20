@@ -2,6 +2,7 @@ package com.example.demo;
 
 public class Login {
 
+	private String id; 
 	private String firstName;
 	private String lastName;
 	private String accesibility; 
@@ -10,9 +11,10 @@ public class Login {
 	private String location;
 	private int status;
 	
-	public Login(String firstName, String lastName, String accesibility, String userName, String password, String location, int status)
+	public Login(String id, String firstName, String lastName, String accesibility, String userName, String password, String location, int status)
 	{
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.accesibility = accesibility; 
@@ -22,6 +24,16 @@ public class Login {
 		this.status = status;
 	}
 
+	public void setID(String id)
+	{
+		this.id = id;
+	}
+	
+	public String getID()
+	{
+		return id; 
+	}
+	
 	public void setFirstName(String firstName)
 	{
 		this.firstName = firstName;
