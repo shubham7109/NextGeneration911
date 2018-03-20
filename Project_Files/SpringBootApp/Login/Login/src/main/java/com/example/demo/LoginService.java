@@ -25,7 +25,7 @@ public class LoginService {
 	{
 		for(int i = 0; i < login.size(); i++)
 		{
-			if(login.get(i).getID() == id)
+			if(login.get(i).getID().equals(id))
 				return login.get(i); 
 		}
 		return null;
