@@ -29,7 +29,7 @@ public class Login {
 		super();
 		firstName = "";
 		lastName = "";
-		accesibility = "";
+		accesibility = 0;
 		userName = "";
 		password = "";
 		this.id = id;
