@@ -59,4 +59,19 @@ public class LoginService {
 			}
 		}
 	}
+	
+	public Login checkPassword(String username, String password)
+	{
+		for(int i = 0; i < login.size(); i++)
+		{
+			if(username.equals(login.get(i).getUserName()))
+			{
+				if(password.equals(login.get(i).getPassword()))
+				{
+					return login.get(i);
+				}
+			}
+		}
+		return null;
+	}
 }
