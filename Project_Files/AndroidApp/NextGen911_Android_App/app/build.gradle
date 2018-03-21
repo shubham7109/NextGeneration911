@@ -32,6 +32,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:11.8.0'
     compile 'com.android.volley:volley:1.0.0'
     implementation project(':liblinphone-android-sdk')
+    implementation files('libs/jain-sip-ri-1.2.344.jar')
 }
 
 

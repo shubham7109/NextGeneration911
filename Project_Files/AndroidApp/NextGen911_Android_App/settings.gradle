@@ -1,1 +1,1 @@
-include ':app', ':liblinphone-android-sdk'
+include ':app', ':liblinphone-android-sdk', ':jain-sip-ri-1.2.344'
