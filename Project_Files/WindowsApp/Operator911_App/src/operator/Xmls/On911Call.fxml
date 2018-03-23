@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import com.lynden.gmapsfx.GoogleMapView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Controllers.On911Call">
+<AnchorPane id="AnchorPane" prefHeight="443.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Controllers.On911Call">
    <children>
-      <Label layoutX="115.0" layoutY="187.0" text="Google Maps API and SIP trunking will be here" textAlignment="CENTER" />
+      <GoogleMapView fx:id="mapView" layoutX="412.0" layoutY="-244.0" prefHeight="206.0" prefWidth="299.0" AnchorPane.bottomAnchor="237.0" AnchorPane.leftAnchor="412.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>
