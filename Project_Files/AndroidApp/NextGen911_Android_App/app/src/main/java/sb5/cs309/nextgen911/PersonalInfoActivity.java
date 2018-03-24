@@ -110,8 +110,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 personalInfo.put("bloodType", getBloodType());
                 personalInfo.put("heightCentimeters", getHeight());
                 personalInfo.put("weightKilograms", getWeight());
-                personalInfo.put("lat", "0"); // Null Value
-                personalInfo.put("long", "0"); // Null Value
+                personalInfo.put("latitude", "0"); // Null Value
+                personalInfo.put("longitude", "0"); // Null Value
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -320,7 +320,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
             return;
 
         //Make get request
-        get(id);
+        AppController.VolleyResponseListener listener = new AppController.VolleyResponseListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                populateJSONValues(response);
+            }
+        };
+        Networking.get(id, listener);
     }
 
     public void populateJSONValues(JSONObject personalInfo) {
@@ -463,23 +469,5 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public void setWeight(String weight) {
         EditText text = findViewById(R.id.weightKilograms_editText);
         text.setText(weight);
-    }
-
-    public void get(final String ID) {
-        JsonObjectRequest req = new JsonObjectRequest
-                (Request.Method.GET, getResources().getString(R.string.personsURL) + ID, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        populateJSONValues(response);
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        mQueue.add(req);
     }
 }

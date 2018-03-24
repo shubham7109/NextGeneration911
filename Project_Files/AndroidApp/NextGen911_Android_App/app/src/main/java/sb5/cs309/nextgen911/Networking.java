@@ -1,6 +1,7 @@
 package sb5.cs309.nextgen911;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -46,4 +47,23 @@ public class Networking {
 
         PersonalInfoActivity.mQueue.add(req);
     }
+
+    public static void get(final String ID, final AppController.VolleyResponseListener listener) {
+        JsonObjectRequest req = new JsonObjectRequest
+                (Request.Method.GET, PersonalInfoActivity.context.getResources().getString(R.string.personsURL) + ID, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        listener.onResponse(response);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        PersonalInfoActivity.mQueue.add(req);
+    }
+
 }
