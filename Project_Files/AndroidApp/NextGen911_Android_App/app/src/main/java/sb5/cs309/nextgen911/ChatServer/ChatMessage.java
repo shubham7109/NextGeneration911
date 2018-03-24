@@ -1,4 +1,7 @@
-package sb5.cs309.nextgen911;
+package sb5.cs309.nextgen911.ChatServer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
 
@@ -44,5 +47,18 @@ public class ChatMessage {
 
     public void setMessageTime(long messageTime) {
         this.messageTime = messageTime;
+    }
+
+    public JSONObject getJSON(){
+        JSONObject message = new JSONObject();
+
+        try {
+            message.put("name", getMessageUser());
+            message.put("time", getMessageTime());
+            message.put("text", getMessageText());
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return message;
     }
 }

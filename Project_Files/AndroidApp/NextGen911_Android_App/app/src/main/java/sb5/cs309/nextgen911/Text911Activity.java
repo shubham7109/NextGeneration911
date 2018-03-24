@@ -10,14 +10,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import sb5.cs309.nextgen911.ChatServer.ChatMessage;
+import sb5.cs309.nextgen911.ChatServer.Client;
+
+import static sb5.cs309.nextgen911.MainMenu.idKey;
+import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
+
 public class Text911Activity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private EditText inputBox;
     static Context context;
+    private ListView list_of_messages;
+    ArrayList<String> messageList = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -52,49 +64,34 @@ public class Text911Activity extends AppCompatActivity {
         setContentView(R.layout.activity_text911);
         Text911Activity.context = getApplicationContext();
 
-        mTextMessage = findViewById(R.id.message);
+        inputBox = findViewById(R.id.input);
+        list_of_messages = findViewById(R.id.list_of_messages);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_text);
-
+        adapter = new ArrayAdapter<String>(getAppContext(),R.layout.activity_text911,messageList);
+        list_of_messages.setAdapter(adapter);
         FloatingActionButton fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText input = findViewById(R.id.input);
-                input.setText("");
+                String message = sharedPreferences.getString(idKey, "");
+                message += inputBox.getText().toString();
+                inputBox.setText("");
+
+                messageList.add(message);
+                adapter.notifyDataSetChanged();
             }
         });
+
+
+
     }
-
-    protected displayChatMessages(){
-        ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
-
-        adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
-                R.layout.message, FirebaseDatabase.getInstance().getReference()) {
-            @Override
-            protected void populateView(View v, ChatMessage model, int position) {
-                // Get references to the views of message.xml
-                TextView messageText = (TextView)v.findViewById(R.id.message_text);
-                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
-                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
-
-                // Set their text
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
-
-                // Format the date before showing it
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
-                        model.getMessageTime()));
-            }
-        };
-
-        listOfMessages.setAdapter(adapter);
-    }
-
-
+    
     public static Context getAppContext() {
         return Text911Activity.context;
     }
 }
+
+
