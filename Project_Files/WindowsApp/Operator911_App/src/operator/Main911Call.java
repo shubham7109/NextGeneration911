@@ -30,6 +30,9 @@ public class Main911Call extends Application {
         });
 
         stage.setScene(new Scene(root));
+        stage.setMaximized(true);
+
         stage.show();
+
     }
 }
