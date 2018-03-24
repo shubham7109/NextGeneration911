@@ -1,4 +1,4 @@
-package com.example.demo;
+package person;
 
 import java.util.ArrayList;
 import java.util.Arrays;
