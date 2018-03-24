@@ -245,7 +245,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public String getZip() {
         EditText zip = findViewById(R.id.zipCode_editText);
-        
+
         return zip.getText().toString();
     }
 
