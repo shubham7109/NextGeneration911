@@ -31,6 +31,10 @@ public class Login {
 		this.status = status;
 	}
 	
+	public Login() {
+		super();
+	}
+	
 	public Login(String id)
 	{
 		super();

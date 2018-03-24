@@ -23,6 +23,10 @@ public class Deploy {
 		this.latitude = latitude;
 		this.longitude = longitude; 
 	}
+	
+	public Deploy() {
+		super();
+	}
 
 	public void setID(String id)
 	{
