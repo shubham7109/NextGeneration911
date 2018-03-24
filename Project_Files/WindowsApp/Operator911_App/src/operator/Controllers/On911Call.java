@@ -21,8 +21,6 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     @FXML
     protected GoogleMapView mapView;
     @FXML
-    private ResourceBundle resources;
-    @FXML
     private URL location;
 
     private double LAT = 42.033996;
