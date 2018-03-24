@@ -1,4 +1,4 @@
-package com.example.demo;
+package person;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
