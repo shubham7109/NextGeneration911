@@ -27,6 +27,7 @@ public class Text911Activity extends AppCompatActivity {
     private ListView list_of_messages;
     ArrayList<String> messageList;
     ArrayAdapter<String> adapter;
+    Client clientConnection;
 
 
 
@@ -44,6 +45,7 @@ public class Text911Activity extends AppCompatActivity {
         list_of_messages = findViewById(R.id.list_of_messages);
         list_of_messages.setAdapter(adapter);
         FloatingActionButton fab = findViewById(R.id.fab);
+        clientConnection = createClient();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
