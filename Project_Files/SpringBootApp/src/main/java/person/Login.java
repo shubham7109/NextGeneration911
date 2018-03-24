@@ -1,7 +1,14 @@
-package person;
+package com.example.demo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "login")
 public class Login {
 
+	@Id
 	private String id; 
 	private String firstName;
 	private String lastName;
@@ -29,12 +36,12 @@ public class Login {
 		super();
 		firstName = "";
 		lastName = "";
-		accesibility = 0;
+		accesibility = "";
 		userName = "";
 		password = "";
 		this.id = id;
 		location = "";
-		status = "";
+		status = 0;
 	}
 
 
