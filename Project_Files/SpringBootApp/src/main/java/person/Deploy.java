@@ -25,7 +25,6 @@ public class Deploy {
 	}
 	
 	public Deploy() {
-		super();
 	}
 
 	public void setID(String id)

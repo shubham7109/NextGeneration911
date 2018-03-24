@@ -32,7 +32,6 @@ public class Login {
 	}
 	
 	public Login() {
-		super();
 	}
 	
 	public Login(String id)
