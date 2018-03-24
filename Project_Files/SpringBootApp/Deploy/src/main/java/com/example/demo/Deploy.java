@@ -1,7 +1,14 @@
 package com.example.demo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "deploy")
 public class Deploy {
 
+	@Id
 	private String id; 
 	// Ambulance, fire brigade, first responders, state troopers, county officers, swat team
 	private String type;
