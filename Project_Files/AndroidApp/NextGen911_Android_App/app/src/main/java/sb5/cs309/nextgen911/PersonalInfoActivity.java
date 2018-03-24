@@ -42,7 +42,7 @@ import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 public class PersonalInfoActivity extends AppCompatActivity {
 
     static Context context;
-    RequestQueue mQueue;
+    static RequestQueue mQueue;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -110,6 +110,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 personalInfo.put("bloodType", getBloodType());
                 personalInfo.put("heightCentimeters", getHeight());
                 personalInfo.put("weightKilograms", getWeight());
+                personalInfo.put("lat", "0"); // Null Value
+                personalInfo.put("long", "0"); // Null Value
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -117,7 +119,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             Toast.makeText(context, "Submitted", Toast.LENGTH_LONG).show();
             sharedPreferences.edit().putString(idKey, getID()).apply();
 
-            post(personalInfo);
+            Networking.post(personalInfo);
         }
     }
 
@@ -478,36 +480,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
                     }
                 });
-        mQueue.add(req);
-    }
-
-    public void post(JSONObject personalInfo) {
-
-        JsonObjectRequest req = new JsonObjectRequest(getResources().getString(R.string.personsURL), personalInfo,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            VolleyLog.v("Response:%n %s", response.toString(4));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-
-                return params;
-            }
-        };
-
         mQueue.add(req);
     }
 }
