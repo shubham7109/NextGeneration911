@@ -16,7 +16,7 @@ public class DeployController {
 	private DeployService deployService; 
 	
 	@RequestMapping("/deploy")
-	public List<Deploy> getAllDeploys()
+	public Iterable<Deploy> getAllDeploys()
 	{
 		return deployService.getAllDeploys();
 	}
