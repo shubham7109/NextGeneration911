@@ -26,6 +26,12 @@ public class LoginController {
 		return loginService.getLogin(id);
 	}
 	
+	@RequestMapping(method=RequestMethod.POST, value="/login/{userName}/{password}")
+	public void login(@RequestBody String username, String password)
+	{
+		loginService.checkPassword(username, password);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST, value="/login")
 	public void addLogin(@RequestBody Login log) 
 	{
@@ -43,12 +49,5 @@ public class LoginController {
 	{
 		loginService.deleteLogin(id);
 	}
-	
-	@RequestMapping(method=RequestMethod.POST, value="/login/{username}/{password}")
-	public void login(@RequestBody String username, String password)
-	{
-		loginService.checkPassword(username, password);
-	}
-
 }
 

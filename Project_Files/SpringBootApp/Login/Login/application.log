@@ -1,0 +1,90 @@
+2018-03-24 14:17:22.395  INFO 1148 --- [main] com.example.demo.LoginApplication        : Starting LoginApplication on DESKTOP-TH2F83A with PID 1148 (C:\Users\rishabn\Desktop\COMS309\SB_5_NextGeneration911\Project_Files\SpringBootApp\Login\Login\target\classes started by rishabn in C:\Users\rishabn\Desktop\COMS309\SB_5_NextGeneration911\Project_Files\SpringBootApp\Login\Login)
+2018-03-24 14:17:22.402  INFO 1148 --- [main] com.example.demo.LoginApplication        : No active profile set, falling back to default profiles: default
+2018-03-24 14:17:22.639  INFO 1148 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1b083826: startup date [Sat Mar 24 14:17:22 CDT 2018]; root of context hierarchy
+2018-03-24 14:17:23.514  INFO 1148 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4abcdb23] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-03-24 14:17:23.871  INFO 1148 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-03-24 14:17:23.871  INFO 1148 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-03-24 14:17:23.871  INFO 1148 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.27
+2018-03-24 14:17:23.965  INFO 1148 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-03-24 14:17:23.965  INFO 1148 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1326 ms
+2018-03-24 14:17:24.105  INFO 1148 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-03-24 14:17:24.105  INFO 1148 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-03-24 14:17:24.105  INFO 1148 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-03-24 14:17:24.105  INFO 1148 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-03-24 14:17:24.105  INFO 1148 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-03-24 14:17:25.075  INFO 1148 --- [main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-03-24 14:17:25.081  INFO 1148 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-03-24 14:17:25.175  INFO 1148 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.12.Final}
+2018-03-24 14:17:25.175  INFO 1148 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-03-24 14:17:25.191  INFO 1148 --- [main] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2018-03-24 14:17:25.238  INFO 1148 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-03-24 14:17:25.410  INFO 1148 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2018-03-24 14:17:25.566  INFO 1148 --- [main] org.hibernate.tool.hbm2ddl.SchemaUpdate  : HHH000228: Running hbm2ddl schema update
+2018-03-24 14:17:25.675  INFO 1148 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 14:17:26.332  INFO 1148 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1b083826: startup date [Sat Mar 24 14:17:22 CDT 2018]; root of context hierarchy
+2018-03-24 14:17:26.477  INFO 1148 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}]}" onto public com.example.demo.Login com.example.demo.LoginController.getLogin(java.lang.String)
+2018-03-24 14:17:26.477  INFO 1148 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{username}/{password}],methods=[POST]}" onto public void com.example.demo.LoginController.login(java.lang.String,java.lang.String)
+2018-03-24 14:17:26.477  INFO 1148 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[POST]}" onto public void com.example.demo.LoginController.addLogin(com.example.demo.Login)
+2018-03-24 14:17:26.477  INFO 1148 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[DELETE]}" onto public void com.example.demo.LoginController.deleteLogin(java.lang.String)
+2018-03-24 14:17:26.477  INFO 1148 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[PUT]}" onto public void com.example.demo.LoginController.updateLogin(com.example.demo.Login,java.lang.String)
+2018-03-24 14:17:26.477  INFO 1148 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login]}" onto public java.util.List<com.example.demo.Login> com.example.demo.LoginController.getAllLogins()
+2018-03-24 14:17:26.477  INFO 1148 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-03-24 14:17:26.477  INFO 1148 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-03-24 14:17:26.524  INFO 1148 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 14:17:26.524  INFO 1148 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 14:17:26.571  INFO 1148 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 14:17:26.602  WARN 1148 --- [main] .t.AbstractTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2018-03-24 14:17:27.430  INFO 1148 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-03-24 14:17:27.662  INFO 1148 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
+2018-03-24 14:17:27.678  INFO 1148 --- [main] com.example.demo.LoginApplication        : Started LoginApplication in 5.564 seconds (JVM running for 6.309)
+2018-03-24 14:17:35.702  INFO 1148 --- [http-nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-03-24 14:17:35.709  INFO 1148 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-03-24 14:17:35.734  INFO 1148 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 25 ms
+2018-03-24 14:17:55.284  WARN 1148 --- [http-nio-8080-exec-10] o.s.web.servlet.PageNotFound             : Request method 'GET' not supported
+2018-03-24 14:18:46.750  INFO 1148 --- [RMI TCP Connection(10)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2018-03-24 14:18:46.752  INFO 1148 --- [RMI TCP Connection(10)-127.0.0.1] ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1b083826: startup date [Sat Mar 24 14:17:22 CDT 2018]; root of context hierarchy
+2018-03-24 14:18:46.754  INFO 1148 --- [RMI TCP Connection(10)-127.0.0.1] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-03-24 14:18:46.754  INFO 1148 --- [RMI TCP Connection(10)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 14:19:29.677  INFO 7820 --- [main] com.example.demo.LoginApplication        : Starting LoginApplication on DESKTOP-TH2F83A with PID 7820 (C:\Users\rishabn\Desktop\COMS309\SB_5_NextGeneration911\Project_Files\SpringBootApp\Login\Login\target\classes started by rishabn in C:\Users\rishabn\Desktop\COMS309\SB_5_NextGeneration911\Project_Files\SpringBootApp\Login\Login)
+2018-03-24 14:19:29.693  INFO 7820 --- [main] com.example.demo.LoginApplication        : No active profile set, falling back to default profiles: default
+2018-03-24 14:19:29.974  INFO 7820 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1b083826: startup date [Sat Mar 24 14:19:29 CDT 2018]; root of context hierarchy
+2018-03-24 14:19:30.847  INFO 7820 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$213be61b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-03-24 14:19:31.204  INFO 7820 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-03-24 14:19:31.219  INFO 7820 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-03-24 14:19:31.219  INFO 7820 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.27
+2018-03-24 14:19:31.297  INFO 7820 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-03-24 14:19:31.297  INFO 7820 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1338 ms
+2018-03-24 14:19:31.438  INFO 7820 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-03-24 14:19:31.438  INFO 7820 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-03-24 14:19:31.438  INFO 7820 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-03-24 14:19:31.438  INFO 7820 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-03-24 14:19:31.438  INFO 7820 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-03-24 14:19:33.579  INFO 7820 --- [main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-03-24 14:19:33.613  INFO 7820 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-03-24 14:19:33.691  INFO 7820 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.12.Final}
+2018-03-24 14:19:33.691  INFO 7820 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-03-24 14:19:33.691  INFO 7820 --- [main] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2018-03-24 14:19:33.738  INFO 7820 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-03-24 14:19:33.831  INFO 7820 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2018-03-24 14:19:33.972  INFO 7820 --- [main] org.hibernate.tool.hbm2ddl.SchemaUpdate  : HHH000228: Running hbm2ddl schema update
+2018-03-24 14:19:34.128  INFO 7820 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 14:19:34.402  INFO 7820 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1b083826: startup date [Sat Mar 24 14:19:29 CDT 2018]; root of context hierarchy
+2018-03-24 14:19:34.511  INFO 7820 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}]}" onto public com.example.demo.Login com.example.demo.LoginController.getLogin(java.lang.String)
+2018-03-24 14:19:34.511  INFO 7820 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login]}" onto public java.util.List<com.example.demo.Login> com.example.demo.LoginController.getAllLogins()
+2018-03-24 14:19:34.511  INFO 7820 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[DELETE]}" onto public void com.example.demo.LoginController.deleteLogin(java.lang.String)
+2018-03-24 14:19:34.511  INFO 7820 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{userName}/{password}],methods=[POST]}" onto public void com.example.demo.LoginController.login(java.lang.String,java.lang.String)
+2018-03-24 14:19:34.511  INFO 7820 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[POST]}" onto public void com.example.demo.LoginController.addLogin(com.example.demo.Login)
+2018-03-24 14:19:34.511  INFO 7820 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[PUT]}" onto public void com.example.demo.LoginController.updateLogin(com.example.demo.Login,java.lang.String)
+2018-03-24 14:19:34.511  INFO 7820 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-03-24 14:19:34.511  INFO 7820 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-03-24 14:19:34.558  INFO 7820 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 14:19:34.558  INFO 7820 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 14:19:34.589  INFO 7820 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 14:19:34.615  WARN 7820 --- [main] .t.AbstractTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2018-03-24 14:19:35.068  INFO 7820 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-03-24 14:19:35.115  INFO 7820 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
+2018-03-24 14:19:35.130  INFO 7820 --- [main] com.example.demo.LoginApplication        : Started LoginApplication in 5.71 seconds (JVM running for 6.414)
