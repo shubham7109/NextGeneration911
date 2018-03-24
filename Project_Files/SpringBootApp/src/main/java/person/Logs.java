@@ -1,4 +1,4 @@
-package com.example.demo;
+package person;
 
 public class Logs {
 
