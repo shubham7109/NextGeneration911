@@ -16,7 +16,7 @@ public class LoginController {
 	private LoginService loginService; 
 	
 	@RequestMapping("/login")
-	public List<Login> getAllLogins()
+	public Iterable<Login> getAllLogins()
 	{
 		return loginService.getAllLogins();
 	}
