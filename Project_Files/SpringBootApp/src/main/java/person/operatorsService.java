@@ -22,9 +22,9 @@ public class operatorsService {
 			*/
 	
 	public List<Operators> getAllOperators() {
-		List<Operators> persons = new ArrayList<>();
-		operatorsRepository.findAll().forEach(persons::add);
-		return persons;
+		List<Operators> operators = new ArrayList<>();
+		operatorsRepository.findAll().forEach(operators::add);
+		return operators;
 	}
 	
 	public Operators getOperator(String id) {
