@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Operator911_App" level="project" />
     <orderEntry type="module" module-name="artifacts" />
+    <orderEntry type="module" module-name="artifacts" />
   </component>
 </module>
