@@ -26,10 +26,10 @@ public class LoginController {
 		return loginService.getLogin(id);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/login/{userName}/{password}")
-	public void login(@RequestBody String username, String password)
+	@RequestMapping("/login/{userName}/{password}")
+	public Login checkPassword(@PathVariable("userName") String userName, @PathVariable("password") String password)
 	{
-		loginService.checkPassword(username, password);
+		return loginService.checkPassword(userName, password);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/login")
