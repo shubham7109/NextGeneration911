@@ -34,9 +34,8 @@ public class LoggedInView extends Application{
                 personModels.add(new PersonModel(jsonObject));
 
             }
-
+            primaryStage.setMaximized(true);
             primaryStage.setTitle("911 Operator");
-            //primaryStage.setMaximized(false););
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
         }

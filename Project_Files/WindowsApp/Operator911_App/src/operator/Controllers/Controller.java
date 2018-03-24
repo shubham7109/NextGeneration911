@@ -29,14 +29,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimerTask;
 
 public class Controller {
 
     @FXML public ComboBox operatorStatus;
 
     @FXML private TableView<LogModel> logView;
-
+    @FXML private Label timeLabel;
     @FXML private TableColumn<LogModel, String> date;
     @FXML private TableColumn<LogModel, String> time;
     @FXML private TableColumn<LogModel, String> callLength;
@@ -65,6 +68,7 @@ public class Controller {
 
         }
 
+
         ObservableList<LogModel> observableList = FXCollections.observableArrayList(logModels);
 
         date = new TableColumn("Date");
@@ -92,6 +96,15 @@ public class Controller {
         logView.setItems(observableList);
         logView.getColumns().add(phoneNumber);
 
+    }
+
+    class UpdateTime extends TimerTask {
+        public void run() {
+            
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            System.out.println( sdf.format(cal.getTime()) );
+        }
     }
 
     public static String getHTML(String urlToRead) throws Exception {

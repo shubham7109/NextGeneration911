@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -55,8 +56,9 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private double LAT = 42.033996;
     private double LONG = -93.641397;
     private PersonModel personModel;
+    private String IP;
 
-    private boolean isServer = false    ;
+    private boolean isServer = true    ;
     private NetworkConnection connection = isServer ? createServer() : createClient();
 
     @Override
@@ -113,7 +115,10 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapView.addMapInializedListener(this);
+
+
         try {
+            IP = InetAddress.getLocalHost().getHostAddress();
             connection.startConnection();
         } catch (Exception e) {
             e.printStackTrace();
