@@ -30,6 +30,10 @@ public class Operators
 		this.location = location;
 		this.ipAddress = ipAddress;
 	}
+	
+	public Operators() {
+		super();
+	}
 
 	public String getId() {
 		return id;
