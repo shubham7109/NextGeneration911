@@ -114,6 +114,9 @@ public class MainMenu extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         clickCount = 0;
+
+        bottomNavigationView = findViewById(R.id.navigation);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
     }
 
     public void onRegisterClick(View view) {
