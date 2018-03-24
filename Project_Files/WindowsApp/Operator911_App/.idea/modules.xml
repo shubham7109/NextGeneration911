@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Operator911_App.iml" filepath="$PROJECT_DIR$/Operator911_App.iml" />
-      <module fileurl="file://$PROJECT_DIR$/out/artifacts/artifacts.iml" filepath="$PROJECT_DIR$/out/artifacts/artifacts.iml" />
     </modules>
   </component>
 </project>
