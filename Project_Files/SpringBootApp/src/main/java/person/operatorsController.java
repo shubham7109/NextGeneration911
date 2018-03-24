@@ -16,7 +16,7 @@ public class operatorsController {
 	private operatorsService operatorService; 
 	
 	@RequestMapping("/operators")
-	public List<Operators> getAllOperators()
+	public Iterable<Operators> getAllOperators()
 	{
 		return operatorService.getAllOperators();
 	}
