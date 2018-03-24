@@ -16,9 +16,10 @@ public class Operators
 	private String lastName;
 	private String status;
 	private String location;
-
-	public Operators(String id, String userName, String password, String firstName, String lastName, String status, String location)
-	{
+	private String ipAddress;
+	
+	public Operators(String id, String userName, String password, String firstName, String lastName, String status,
+			String location, String ipAddress) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -27,88 +28,74 @@ public class Operators
 		this.lastName = lastName;
 		this.status = status;
 		this.location = location;
+		this.ipAddress = ipAddress;
 	}
 
-	public Operators(String id)
-	{
-		super();
-		userName = "";
-		password = "";
-		firstName = "";
-		lastName = "";
-		this.id = id;
-		location = "";
-	}
-
-	public Operators() {
-		super();
-	}
-
-	public void setLocation(String location)
-	{
-		this.location = location;
-	}
-	public String getLocation()
-	{
-		return location;
-	}
-	public void setID(String id)
-	{
-		this.id = id;
-	}
-
-	public String getID()
-	{
+	public String getId() {
 		return id;
 	}
 
-	public void setUserName(String userName)
-	{
-		this.userName = userName;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getUserName()
-	{
+	public String getUserName() {
 		return userName;
 	}
 
-	public void setPassword(String password)
-	{
-		this.password = password;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getPassword()
-	{
+	public String getPassword() {
 		return password;
 	}
 
-	public void setFirstName(String firstName)
-	{
-		this.firstName = firstName;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getFirstName()
-	{
+	public String getFirstName() {
 		return firstName;
 	}
 
-	public void setLastName(String lastName)
-	{
-		this.lastName = lastName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLastName()
-	{
+	public String getLastName() {
 		return lastName;
 	}
 
-	public void setStatus(String status)
-	{
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public String getStatus()
-	{
-		return status;
+	public String getLocation() {
+		return location;
 	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
+	
+	
+
+	
 }
