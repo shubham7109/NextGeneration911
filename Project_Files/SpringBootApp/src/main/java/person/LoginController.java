@@ -13,37 +13,41 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
 	@Autowired
-	private LoginService LoginService; 
+	private LoginService loginService; 
 	
 	@RequestMapping("/login")
 	public List<Login> getAllLogins()
 	{
-		return LoginService.getAllLogins();
+		return loginService.getAllLogins();
+	}
+	
+	@RequestMapping("/login/{id}")
+	public Login getLogin(@PathVariable("id") String id) {
+		return loginService.getLogin(id);
+	}
+	
+	@RequestMapping("/login/{userName}/{password}")
+	public Login checkPassword(@PathVariable("userName") String userName, @PathVariable("password") String password)
+	{
+		return loginService.checkPassword(userName, password);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/login")
 	public void addLogin(@RequestBody Login log) 
 	{
-		LoginService.addLogin(log);
+		loginService.addLogin(log);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/login/{id}")
 	public void updateLogin(@RequestBody Login login, @PathVariable("id") String id) 
 	{
-		LoginService.updateLogin(id, login);
+		loginService.updateLogin(id, login);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/login/{id}")
 	public void deleteLogin(@PathVariable("id") String id)
 	{
-		LoginService.deleteLogin(id);
+		loginService.deleteLogin(id);
 	}
-	
-	@RequestMapping(method=RequestMethod.POST, value="/login/{username}/{password}")
-	public void login(@RequestBody String username, String password)
-	{
-		LoginService.checkPassword(username, password);
-	}
-
 }
 
