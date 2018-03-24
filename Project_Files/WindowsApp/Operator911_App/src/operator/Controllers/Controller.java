@@ -1,5 +1,6 @@
 package operator.Controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -32,6 +33,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class Controller {
@@ -45,8 +47,11 @@ public class Controller {
     @FXML private TableColumn<LogModel, String> callLength;
     @FXML private TableColumn<LogModel, String> operatorName;
     @FXML private TableColumn<LogModel, String> phoneNumber;
+
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/logs";
     private ArrayList<LogModel> logModels;
+    private Timer timer;
+
     @FXML
     public void initialize() {
         operatorStatus.getItems().removeAll(operatorStatus.getItems());
@@ -68,7 +73,20 @@ public class Controller {
 
         }
 
-
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yy");
+                    String time =sdf.format(cal.getTime()) + "\n";
+                    sdf = new SimpleDateFormat("HH:mm:ss");
+                    time =  time + sdf.format(cal.getTime());
+                    timeLabel.setText(time);
+                });
+            }
+        }, 1000, 1000);
         ObservableList<LogModel> observableList = FXCollections.observableArrayList(logModels);
 
         date = new TableColumn("Date");
@@ -96,15 +114,6 @@ public class Controller {
         logView.setItems(observableList);
         logView.getColumns().add(phoneNumber);
 
-    }
-
-    class UpdateTime extends TimerTask {
-        public void run() {
-            
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            System.out.println( sdf.format(cal.getTime()) );
-        }
     }
 
     public static String getHTML(String urlToRead) throws Exception {
@@ -211,7 +220,6 @@ public class Controller {
                 newWindow.close();
 
                 Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
-                primaryStage.close();
             }
         });
 

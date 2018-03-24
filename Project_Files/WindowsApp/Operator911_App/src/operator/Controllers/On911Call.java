@@ -12,8 +12,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import operator.Client;
 import operator.Models.PersonModel;
 import operator.NetworkConnection;
@@ -25,7 +29,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class On911Call implements Initializable, MapComponentInitializedListener, DirectionsServiceCallback {
@@ -51,6 +59,8 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     @FXML private TextField bloodType;
     @FXML private TextField heightCentimeters;
     @FXML private TextField weightKilograms;
+    @FXML private Label timeElapsed;
+    @FXML private Button closeButton;
 
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
     private double LAT = 42.033996;
@@ -112,10 +122,28 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         connection.send(message);
     }
 
+    @FXML
+    public void handleCloseButtonAction(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapView.addMapInializedListener(this);
 
+        Timer timer = new Timer();
+        timeElapsed.setAlignment(Pos.CENTER);
+        long startTime = System.currentTimeMillis();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    timeElapsed.setText("On Call for:\n"+(System.currentTimeMillis() - startTime)/1000 + " seconds");
+                });
+            }
+        }, 1000, 1000);
 
         try {
             IP = InetAddress.getLocalHost().getHostAddress();

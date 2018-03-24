@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.lynden.gmapsfx.GoogleMapView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -9,12 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<?import com.lynden.gmapsfx.GoogleMapView?>
-<AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Controllers.On911Call">
+<AnchorPane id="AnchorPane" prefHeight="680.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Controllers.On911Call">
     <children>
       <SplitPane dividerPositions="0.20668058455114824" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane fx:id="callTimer" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                    <Label layoutX="28.0" layoutY="40.0" text="Phone#" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="40.0" />
                    <Label layoutX="28.0" layoutY="72.0" text="Gender" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="70.0" />
@@ -48,7 +48,7 @@
                    <TextField fx:id="bloodType" editable="false" layoutX="454.0" layoutY="155.0" AnchorPane.leftAnchor="132.0" AnchorPane.topAnchor="400.0" />
                    <TextField fx:id="heightCentimeters" editable="false" layoutX="454.0" layoutY="185.0" AnchorPane.leftAnchor="132.0" AnchorPane.topAnchor="430.0" />
                    <TextField fx:id="weightKilograms" editable="false" layoutX="454.0" layoutY="215.0" AnchorPane.leftAnchor="132.0" AnchorPane.topAnchor="460.0" />
-                  <Button layoutX="54.0" layoutY="558.0" mnemonicParsing="false" text="End 911 Session" textAlignment="CENTER" textFill="#942c2c" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="54.0">
+                  <Button fx:id="closeButton" layoutX="54.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" text="End 911 Session" textAlignment="CENTER" textFill="#942c2c" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="54.0">
                      <font>
                         <Font name="AdobeDevanagari-Bold" size="22.0" />
                      </font>
@@ -56,6 +56,11 @@
                   <Label fx:id="timerLabel" layoutX="61.0" layoutY="509.0" prefHeight="49.0" prefWidth="142.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="61.0">
                      <font>
                         <Font name="Arial" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="timeElapsed" layoutX="63.0" layoutY="528.0" prefHeight="71.0" prefWidth="165.0" text="On Call for:" textAlignment="CENTER" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="63.0">
+                     <font>
+                        <Font name="Century Gothic Bold" size="18.0" />
                      </font>
                   </Label>
                </children></AnchorPane>

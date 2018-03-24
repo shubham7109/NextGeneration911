@@ -11,6 +11,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="873.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Controllers.Controller">
   <children>
@@ -39,14 +40,21 @@
           <children>
             <Button fx:id="lookUpPerson" mnemonicParsing="false" onAction="#openLookUpPerson" prefHeight="40.0" prefWidth="169.0" text="Look up person" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="23.0" />
             <Button fx:id="operatorList" mnemonicParsing="false" onAction="#openOperatorList" prefHeight="40.0" prefWidth="169.0" text="911 Operators List" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="87.0" />
-            <ComboBox fx:id="operatorStatus" prefWidth="150.0" promptText="Choose Status" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="122.0" />
+            <ComboBox fx:id="operatorStatus" layoutX="37.0" layoutY="142.0" prefWidth="150.0" promptText="Choose Status" AnchorPane.leftAnchor="37.0" AnchorPane.topAnchor="142.0" />
             <ImageView fitHeight="63.0" fitWidth="88.0" layoutX="80.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="12.0">
               <image>
                 <Image url="@../../res/drawable/avatar.png" />
               </image>
             </ImageView>
-            <Label layoutX="49.0" layoutY="86.0" text="Operator Name" AnchorPane.leftAnchor="49.0" AnchorPane.topAnchor="86.0" />
-            <Button layoutX="371.0" layoutY="102.0" mnemonicParsing="false" onAction="#simulateCallPress" prefHeight="40.0" prefWidth="129.0" text="Simulate Call" AnchorPane.topAnchor="102.0" />
+            <Label layoutX="27.0" layoutY="87.0" prefHeight="40.0" prefWidth="169.0" text="Operator Name" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="87.0">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font></Label>
+            <Button layoutX="582.0" layoutY="127.0" mnemonicParsing="false" onAction="#simulateCallPress" prefHeight="40.0" prefWidth="129.0" text="Simulate Call" AnchorPane.leftAnchor="582.0" AnchorPane.topAnchor="127.0" />
+                  <Label fx:id="timeLabel" layoutX="602.0" layoutY="32.0" prefHeight="63.0" prefWidth="129.0" textAlignment="CENTER" AnchorPane.leftAnchor="602.0" AnchorPane.topAnchor="32.0">
+                     <font>
+                        <Font name="System Italic" size="23.0" />
+                     </font></Label>
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

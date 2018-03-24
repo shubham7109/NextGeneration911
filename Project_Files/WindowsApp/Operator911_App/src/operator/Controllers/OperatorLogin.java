@@ -80,7 +80,11 @@ public class OperatorLogin {
             loginError.setText("Username or password cannot be empty");
             return false;
         }
-        //TODO
+
+        
+
+
+
         loginError.setText("Incorrect username or password!");
         //return false;
         return true;
