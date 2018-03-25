@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -361,21 +362,14 @@ public class Controller {
 
         button_accept.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("Sample.fxml"));
-
                 // Create a controller instance
-                On911Call controller = new On911Call(username, "4145155");
-                // Set it in the FXMLLoader
-                loader.setController(controller);
-                FlowPane flowPane = null;
+                Stage stage = new Stage();
+                stage.setTitle("Welcome");
                 try {
-                    flowPane = loader.load();
-                    Scene scene = new Scene(flowPane, 200, 200);
-                    
-                    primaryStage.setScene(scene);
-                    primaryStage.show();
-                } catch (IOException e1) {
+                    Main911Call main911Call = new Main911Call(username,"4145155");
+                    updateStatus();
+                    main911Call.start(stage);
+                } catch (Exception e1) {
                     e1.printStackTrace();
                 }
 
@@ -388,13 +382,33 @@ public class Controller {
                 newWindow.close();
             }
         });
-
-
-
     }
 
 
+    private void updateStatus() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",operator.getId());
+        jsonObject.put("firstName",operator.getFirstName());
+        jsonObject.put("lastName",operator.getLastName());
+        jsonObject.put("accesibility",operator.getAccesibility());
+        jsonObject.put("userName",operator.getUserName());
+        jsonObject.put("password",operator.getPassword());
+        jsonObject.put("location",operator.getLocation());
+        jsonObject.put("status",2);
+        jsonObject.put("ipAddress", InetAddress.getLocalHost().getHostAddress());
+        jsonObject.put("image",operator.getImage());
 
-
+        URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/login/" + operator.getId());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("PUT");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+        OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+        osw.write(String.format(jsonObject.toString()));
+        osw.flush();
+        osw.close();
+        System.err.println(connection.getResponseCode());
+    }
 
 }

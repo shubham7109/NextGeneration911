@@ -21,6 +21,8 @@ public class PersonModel {
     private String bloodType;
     private String heightCentimeters;
     private String weightKilograms;
+    private String latitude;
+    private String longitude;
 
     public PersonModel(JSONObject jsonObject) throws JSONException {
         id = jsonObject.getString("id");
@@ -39,6 +41,16 @@ public class PersonModel {
         bloodType = jsonObject.getString("bloodType");
         heightCentimeters = jsonObject.getString("heightCentimeters");
         weightKilograms = jsonObject.getString("weightKilograms");
+        latitude = jsonObject.getString("latitude");
+        longitude = jsonObject.getString("longitude");
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
     }
 
     public String getId() {

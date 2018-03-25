@@ -15,10 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -27,6 +24,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import operator.Client;
 import operator.Models.DeployModel;
+import operator.Models.OperatorModel;
 import operator.Models.PersonModel;
 import operator.NetworkConnection;
 import operator.Server;
@@ -51,7 +49,9 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     @FXML protected GoogleMapView mapView;
     @FXML private TextArea messages;
     @FXML private TextField input;
-
+    @FXML private SplitPane splitPane1;
+    @FXML private SplitPane splitPane2;
+    @FXML private SplitPane splitPane3;
     @FXML private TextField ID_text;
     @FXML private TextField id;
     @FXML private TextField phoneNumber;
@@ -79,8 +79,8 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     @FXML private Button firstResponders;
     private String time;
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
-    private double LAT = 42.033996;
-    private double LONG = -93.641397;
+    private double LAT;
+    private double LONG;
     private PersonModel personModel;
     private String IP;
     private boolean isServer = true    ;
@@ -103,7 +103,10 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         }
     }
 
-    public On911Call(String operatorUserName, String personNumber) {
+    public On911Call(OperatorModel operatorModel, PersonModel personModel) {
+        LAT = Double.parseDouble(personModel.getLatitude());
+        LONG = Double.parseDouble(personModel.getLongitude());
+
     }
 
     @Override
@@ -164,7 +167,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         newWindow.setScene(scene);
 
         for (int i=0; i<ambulanceArray.size(); i++){
-            Double distance = ambulanceArray.get(i).distance(LAT,LONG,"M");
+            Double distance = Math.round(ambulanceArray.get(i).distance(LAT,LONG,"M") * 1000.0)/1000.0;
             Label label = new Label("Ambulance available "+distance+" miles from caller");
             label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(label,0,i,1,1);
@@ -190,7 +193,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         newWindow.setScene(scene);
 
         for (int i=0; i<fireBrigadeArray.size(); i++){
-            Double distance = fireBrigadeArray.get(i).distance(LAT,LONG,"M");
+            Double distance = Math.round(fireBrigadeArray.get(i).distance(LAT,LONG,"M") * 1000.0)/1000.0;
             Label label = new Label("Fire Brigade available "+distance+" miles from caller");
             label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(label,0,i,1,1);
@@ -217,7 +220,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         newWindow.setScene(scene);
 
         for (int i=0; i<stateTroopersArray.size(); i++){
-            Double distance = stateTroopersArray.get(i).distance(LAT,LONG,"M");
+            Double distance = Math.round(stateTroopersArray.get(i).distance(LAT,LONG,"M") * 1000.0)/1000.0;
             Label label = new Label("State Troopers available "+distance+" miles from caller");
             label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(label,0,i,1,1);
@@ -243,7 +246,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         newWindow.setScene(scene);
 
         for (int i=0; i<countyOfficersArray.size(); i++){
-            Double distance = countyOfficersArray.get(i).distance(LAT,LONG,"M");
+            Double distance = Math.round(countyOfficersArray.get(i).distance(LAT,LONG,"M") * 1000.0)/1000.0;
             Label label = new Label("County Officers available "+distance+" miles from caller");
             label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(label,0,i,1,1);
@@ -270,7 +273,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         newWindow.setScene(scene);
 
         for (int i=0; i<swatTeamArray.size(); i++){
-            Double distance = swatTeamArray.get(i).distance(LAT,LONG,"M");
+            Double distance = Math.round(swatTeamArray.get(i).distance(LAT,LONG,"M") * 1000.0)/1000.0;
             Label label = new Label("S.W.A.T. Team available "+distance+" miles from caller");
             label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(label,0,i,1,1);
@@ -296,7 +299,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         newWindow.setScene(scene);
 
         for (int i=0; i<firstRespondersArray.size(); i++){
-            Double distance = firstRespondersArray.get(i).distance(LAT,LONG,"M");
+            Double distance = Math.round(firstRespondersArray.get(i).distance(LAT,LONG,"M") * 1000.0)/1000.0;
             Label label = new Label("First Responders available "+distance+" miles from caller");
             label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(label,0,i,1,1);
@@ -387,6 +390,9 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             try {
                 setPerons();
                 setDeploys();
+                splitPane1.setDividerPosition(0,0.23);
+                splitPane2.setDividerPosition(0,0.70);
+                splitPane3.setDividerPosition(0,0.70);
             } catch (Exception e) {
                 e.printStackTrace();
             }
