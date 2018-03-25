@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class LogsController {
 
 	@Autowired
-	private LogsService LogsService; 
+	private LogsService logsService;
 	
 	@RequestMapping("/logs")
 	public List<Logs> getAllLogs()
 	{
-		return LogsService.getAllLogs();
+		return logsService.getAllLogs();
 	}
 	
 
 	@RequestMapping(method=RequestMethod.POST, value="/logs")
 	public void addLogs(@RequestBody Logs logs)
 	{
-		LogsService.addLogs(logs);
+		logsService.addLogs(logs);
 	}
 }
