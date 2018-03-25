@@ -40,10 +40,13 @@ public class LoginService {
 		loginRepository.delete(id);
 	}
 	
-	public Login checkPassword(String userName, String password)
+	public boolean checkPassword(String userName, String password)
 	{
-		if(loginRepository.findOne(userName).getPassword().equals(password)) 
-			return loginRepository.findOne(userName);
-		return null;
+		List<Login> login;
+		login = getAllLogins();
+		for(int i = 0; i < login.size(); i++)
+			if(login.get(i).getUserName().equals(userName) && login.get(i).getPassword().equals(password))
+				return true;
+		return false;
 	}
 }
