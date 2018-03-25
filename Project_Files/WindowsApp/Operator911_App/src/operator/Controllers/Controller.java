@@ -50,9 +50,15 @@ public class Controller {
     @FXML private TableColumn<LogModel, String> operatorName;
     @FXML private TableColumn<LogModel, String> phoneNumber;
 
+    private String username;
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/logs";
     private ArrayList<LogModel> logModels;
     private Timer timer;
+
+    public Controller(String username){
+        this.username = username;
+        System.out.println(this.username);
+    }
 
     @FXML
     public void initialize() {

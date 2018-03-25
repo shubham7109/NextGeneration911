@@ -116,7 +116,7 @@ public class OperatorLogin {
     private void loginEnter(){
         Stage stage = new Stage();
         stage.setTitle("Operator");
-        LoggedInView loggedInView = new LoggedInView();
+        LoggedInView loggedInView = new LoggedInView(userTextField.getText());
         try {
             loggedInView.start(stage);
         } catch (Exception e1) {

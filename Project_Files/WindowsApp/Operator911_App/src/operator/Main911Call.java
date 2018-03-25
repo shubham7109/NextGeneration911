@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public class Main911Call extends Application {
@@ -21,16 +20,9 @@ public class Main911Call extends Application {
 
                 Stage stage = new Stage();
                 stage.setTitle("Operator");
-                LoggedInView loggedInView = new LoggedInView();
-                try {
-                    loggedInView.start(stage);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
             }
         });
 
-        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root));
         stage.setMaximized(true);
 
