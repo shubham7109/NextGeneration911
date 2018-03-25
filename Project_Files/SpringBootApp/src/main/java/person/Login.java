@@ -130,13 +130,11 @@ public class Login {
 		return status;
 	}
 
-	public void setIpAddress(String ipAddress)
-	{
-		this.ipAddress = ipAddress;
+	public String getIpAddress() {
+		return ipAddress;
 	}
 
-	public String ipAddress()
-	{
-		return ipAddress;
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
 	}
 }
