@@ -81,7 +81,6 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
     private double LAT;
     private double LONG;
-    private PersonModel personModel;
     private String IP;
     private boolean isServer = true    ;
     private NetworkConnection connection;
@@ -92,8 +91,8 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private ArrayList<DeployModel> countyOfficersArray;
     private ArrayList<DeployModel> swatTeamArray;
     private ArrayList<DeployModel> firstRespondersArray;
-
-
+    private OperatorModel operatorModel;
+    private PersonModel personModel;
 
     {
         try {
@@ -106,7 +105,8 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     public On911Call(OperatorModel operatorModel, PersonModel personModel) {
         LAT = Double.parseDouble(personModel.getLatitude());
         LONG = Double.parseDouble(personModel.getLongitude());
-
+        this.personModel = personModel;
+        this.operatorModel = operatorModel;
     }
 
     @Override
@@ -450,8 +450,6 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     }
 
     private void setPerons() throws Exception {
-        JSONObject jsonObject = new JSONObject(getHTML(URL));
-        personModel= new PersonModel(jsonObject);
         id.setText(String.valueOf(personModel.getId()));
         id.deselect();
         phoneNumber.setText(String.valueOf(personModel.getPhoneNumber()));
@@ -469,7 +467,6 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         bloodType.setText(personModel.getBloodType());
         heightCentimeters.setText(personModel.getHeightCentimeters());
         weightKilograms.setText(personModel.getWeightKilograms());
-        System.out.println(jsonObject);
     }
 
     private void setUpUrl(int id){
