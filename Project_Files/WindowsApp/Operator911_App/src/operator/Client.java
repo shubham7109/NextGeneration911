@@ -1,6 +1,7 @@
 package operator;
 
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.util.function.Consumer;
 
 public class Client extends NetworkConnection {

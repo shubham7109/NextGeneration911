@@ -12,16 +12,25 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import operator.Client;
+import operator.Models.DeployModel;
 import operator.Models.PersonModel;
 import operator.NetworkConnection;
 import operator.Server;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,11 +41,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 
 public class On911Call implements Initializable, MapComponentInitializedListener, DirectionsServiceCallback {
@@ -64,6 +71,12 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     @FXML private TextField weightKilograms;
     @FXML private Label timeElapsed;
     @FXML private Button closeButton;
+    @FXML private Button ambulance;
+    @FXML private Button fireBrigade;
+    @FXML private Button stateTroopers;
+    @FXML private Button countyOfficers;
+    @FXML private Button swatTeam;
+    @FXML private Button firstResponders;
     private String time;
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
     private double LAT = 42.033996;
@@ -71,7 +84,24 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private PersonModel personModel;
     private String IP;
     private boolean isServer = true    ;
-    private NetworkConnection connection = isServer ? createServer() : createClient();
+    private NetworkConnection connection;
+    private ArrayList<DeployModel> deployModels;
+    private ArrayList<DeployModel> ambulanceArray;
+    private ArrayList<DeployModel> stateTroopersArray;
+    private ArrayList<DeployModel> fireBrigadeArray;
+    private ArrayList<DeployModel> countyOfficersArray;
+    private ArrayList<DeployModel> swatTeamArray;
+    private ArrayList<DeployModel> firstRespondersArray;
+
+
+
+    {
+        try {
+            connection = isServer ? createServer() : createClient();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void mapInitialized() {
@@ -108,11 +138,66 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         });
     }
 
-    private Client createClient(){
-        return new Client("10.26.17.136", 5555, data ->{
+    private Client createClient() throws UnknownHostException {
+        return new Client(InetAddress.getLocalHost().getHostAddress(), 5555, data ->{
             messages.appendText(data.toString() + "\n");
         });
     }
+
+    @FXML void ambulanceOnClick(ActionEvent ae){
+
+        Stage newWindow = new Stage();
+        newWindow.setResizable(false);
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+
+        Scene scene = new Scene(grid, 500, 200);
+        newWindow.setTitle("Incoming Call");
+        newWindow.setScene(scene);
+
+        Text scenetitle = new Text("Incoming call from: (847)-943-7754");
+        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
+        grid.add(scenetitle, 0, 0, 2, 1);
+
+        Button button_accept = new Button("Accept Call");
+        button_accept.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
+        HBox hbBtn_accept = new HBox(10);
+        hbBtn_accept.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn_accept.getChildren().add(button_accept);
+        grid.add(hbBtn_accept, 1, 4);
+
+        Button button_decline = new Button("Decline Call");
+        button_decline.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
+        HBox hbBtn_decline = new HBox(10);
+        hbBtn_decline.setAlignment(Pos.BOTTOM_LEFT);
+        hbBtn_decline.getChildren().add(button_decline);
+        grid.add(hbBtn_decline, 2, 4);
+
+        newWindow.show();
+    }
+
+    @FXML void fireBrigadeOnClick(ActionEvent ae){
+
+    }
+
+    @FXML void stateTroopersOnClick(ActionEvent ae){
+
+    }
+
+    @FXML void countyOfficersOnClick(ActionEvent ae){
+
+    }
+
+    @FXML void swatTeamOnClick(ActionEvent ae){
+
+    }
+    @FXML void firstRespondersOnClick(ActionEvent ae){
+
+    }
+
 
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
@@ -191,10 +276,61 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             setUpUrl(id);
             try {
                 setPerons();
+                setDeploys();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void setDeploys() throws Exception {
+        JSONArray deployArray = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/deploy"));
+        deployModels = new ArrayList<>();
+        for(int i=0; i< deployArray.length(); i++){
+            deployModels.add(new DeployModel(deployArray.getJSONObject(i)));
+        }
+
+        ambulanceArray = new ArrayList<>();
+        for(int i=0; i< deployModels.size(); i++){
+            if(deployModels.get(i).getType().equals("Ambulance")){
+                ambulanceArray.add(deployModels.get(i));
+            }
+        }
+
+        stateTroopersArray = new ArrayList<>();
+        for(int i=0; i< deployModels.size(); i++){
+            if(deployModels.get(i).getType().equals("State Troopers")){
+                stateTroopersArray.add(deployModels.get(i));
+            }
+        }
+
+        countyOfficersArray = new ArrayList<>();
+        for(int i=0; i< deployModels.size(); i++){
+            if(deployModels.get(i).getType().equals("County Officers")){
+                countyOfficersArray.add(deployModels.get(i));
+            }
+        }
+
+        swatTeamArray = new ArrayList<>();
+        for(int i=0; i< deployModels.size(); i++){
+            if(deployModels.get(i).getType().equals("Swat Team")){
+                swatTeamArray.add(deployModels.get(i));
+            }
+        }
+
+        fireBrigadeArray = new ArrayList<>();
+        for(int i=0; i< deployModels.size(); i++){
+            if(deployModels.get(i).getType().equals("Fire Brigade")){
+                fireBrigadeArray.add(deployModels.get(i));
+            }
+        }
+
+        firstRespondersArray = new ArrayList<>();
+        for(int i=0; i< deployModels.size(); i++){
+            if(deployModels.get(i).getType().equals("First Responders")){
+                firstRespondersArray.add(deployModels.get(i));
+            }
+        }
     }
 
     private void setPerons() throws Exception {

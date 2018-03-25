@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -114,7 +115,7 @@ public class OperatorLogin {
         jsonObject.put("password",operator.getPassword());
         jsonObject.put("location",operator.getLocation());
         jsonObject.put("status",0);
-        jsonObject.put("ipAddress",operator.getIpAddress());
+        jsonObject.put("ipAddress", InetAddress.getLocalHost().getHostAddress());
         jsonObject.put("image",operator.getImage());
 
         URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/login/" + operator.getId());
