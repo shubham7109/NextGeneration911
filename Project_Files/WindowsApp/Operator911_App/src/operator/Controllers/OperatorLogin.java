@@ -2,6 +2,9 @@ package operator.Controllers; /**
  * Sample Skeleton for 'Login.fxml' Controller Class
  */
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -50,7 +53,7 @@ public class OperatorLogin {
 
     private boolean loginAuth = false;
     @FXML
-    public void onEnter(ActionEvent ae){
+    public void onEnter(ActionEvent ae) throws Exception {
         loginAuth = checkLogin();
         if(loginAuth)
             loginEnter();
@@ -64,7 +67,11 @@ public class OperatorLogin {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER)  {
-                    loginAuth = checkLogin();
+                    try {
+                        loginAuth = checkLogin();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     if(loginAuth)
                         loginEnter();
 
@@ -73,7 +80,7 @@ public class OperatorLogin {
         });
     }
 
-    private boolean checkLogin(){
+    private boolean checkLogin() throws Exception {
         loginError.setFill(Color.FIREBRICK);
         if(userTextField.getText().equals("") || pwBox.getText().equals(""))
         {
@@ -81,13 +88,29 @@ public class OperatorLogin {
             return false;
         }
 
-        
+        /*String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/login/" + userTextField.getText() + "/" + pwBox.getText();
+         if(getHTML(URL).equals("true")){
+             return true;
+         }
+         else
+         {
+             loginError.setText("Incorrect username or password!");*/
+             return true;
 
+    }
 
-
-        loginError.setText("Incorrect username or password!");
-        //return false;
-        return true;
+    private static String getHTML(String urlToRead) throws Exception {
+        StringBuilder result = new StringBuilder();
+        java.net.URL url = new URL(urlToRead);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line;
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+        rd.close();
+        return result.toString();
     }
 
     private void loginEnter(){

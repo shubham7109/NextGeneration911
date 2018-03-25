@@ -11,7 +11,7 @@ public class OperatorModel {
     private String firstName;
     private String lastName;
     private String location;
-    private String status;
+    private int status;
 
     public OperatorModel(JSONObject jsonObject) throws JSONException {
         id = jsonObject.getString("id");
@@ -20,7 +20,7 @@ public class OperatorModel {
         firstName = jsonObject.getString("firstName");
         lastName = jsonObject.getString("lastName");
         location = jsonObject.getString("location");
-        status = jsonObject.getString("status");
+        status = jsonObject.getInt("status");
 
 
     }
@@ -49,7 +49,7 @@ public class OperatorModel {
         return location;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 

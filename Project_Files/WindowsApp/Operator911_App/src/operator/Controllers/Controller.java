@@ -1,6 +1,8 @@
 package operator.Controllers;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -13,13 +15,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import operator.Main911Call;
 import operator.Models.LogModel;
 import org.json.JSONArray;
@@ -55,11 +57,64 @@ public class Controller {
     @FXML
     public void initialize() {
         operatorStatus.getItems().removeAll(operatorStatus.getItems());
-        operatorStatus.getItems().addAll("Online", "Offline", "OnCall");
-        operatorStatus.getSelectionModel().select("Choose Status");
-        operatorStatus.getSelectionModel().select("Choose Status");
+        operatorStatus.getItems().addAll("Available", "Unavailable");
 
+        operatorStatus.getSelectionModel().select(0);
+        operatorStatus.buttonCellProperty().bind(
+                Bindings.createObjectBinding(() -> {
+                    StackPane arrowButton = (StackPane) operatorStatus.lookup(".arrow-button");
+                    return new ListCell<String>() {
 
+                        @Override
+                        protected void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+
+                            if (empty || item == null) {
+                                setBackground(Background.EMPTY);
+                                setText("");
+                            } else {
+                                if(item.equals("Available"))
+                                    setTextFill(Color.GREEN);
+                                else
+                                    setTextFill(Color.RED);
+                                setText(item);
+                            }
+                            // Set the background of the arrow also
+                            if (arrowButton != null)
+                                arrowButton.setBackground(getBackground());
+                        }
+
+                    };
+                }, operatorStatus.valueProperty()));
+        operatorStatus.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override public ListCell<String> call(ListView<String> param) {
+                final ListCell<String> cell = new ListCell<String>() {
+                    {
+                        super.setPrefWidth(100);
+                    }
+                    @Override public void updateItem(String item,
+                                                     boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            setText(item);
+                            if (item.contains("Unavailable")) {
+                                setTextFill(Color.RED);
+                            }
+                            else if (item.contains("Available")){
+                                setTextFill(Color.GREEN);
+                            }
+                            else {
+                                setTextFill(Color.BLACK);
+                            }
+                        }
+                        else {
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
         logModels = new ArrayList<>();
         try{
             String response = getHTML(URL);
