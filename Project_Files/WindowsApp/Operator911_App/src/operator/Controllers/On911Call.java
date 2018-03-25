@@ -22,10 +22,13 @@ import operator.Client;
 import operator.Models.PersonModel;
 import operator.NetworkConnection;
 import operator.Server;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
@@ -61,13 +64,12 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     @FXML private TextField weightKilograms;
     @FXML private Label timeElapsed;
     @FXML private Button closeButton;
-
+    private String time;
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
     private double LAT = 42.033996;
     private double LONG = -93.641397;
     private PersonModel personModel;
     private String IP;
-
     private boolean isServer = true    ;
     private NetworkConnection connection = isServer ? createServer() : createClient();
 
@@ -123,9 +125,39 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     }
 
     @FXML
-    public void handleCloseButtonAction(ActionEvent event) {
+    public void handleCloseButtonAction(ActionEvent event) throws IOException, JSONException {
         Stage stage = (Stage) closeButton.getScene().getWindow();
+        putRequest("http://proj-309-sb-5.cs.iastate.edu:8080/logs");
         stage.close();
+    }
+
+    private void putRequest(String put_url) throws IOException, JSONException {
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yy");
+        String date =  sdf.format(cal.getTime());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("date",date);
+        sdf = new SimpleDateFormat("HH:mm");
+        date =  sdf.format(cal.getTime());
+        jsonObject.put("time",date);
+        jsonObject.put("callLength",time);
+        jsonObject.put("operatorName","Shubham Sharma");
+        jsonObject.put("phoneNumber","765-765-7654");
+
+
+
+        URL url = new URL(put_url);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+        OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+        osw.write(String.format(jsonObject.toString()));
+        osw.flush();
+        osw.close();
+        System.err.println(connection.getResponseCode());
     }
 
 
@@ -140,7 +172,8 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    timeElapsed.setText("On Call for:\n"+(System.currentTimeMillis() - startTime)/1000 + " seconds");
+                    time = String.valueOf((System.currentTimeMillis() - startTime)/1000);
+                    timeElapsed.setText("On Call for:\n"+time+ " seconds");
                 });
             }
         }, 1000, 1000);

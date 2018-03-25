@@ -21,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import operator.LoggedInView;
 import operator.Main911Call;
 import operator.Models.OperatorModel;
@@ -112,7 +113,7 @@ public class OperatorLogin {
         jsonObject.put("userName",operator.getUserName());
         jsonObject.put("password",operator.getPassword());
         jsonObject.put("location",operator.getLocation());
-        jsonObject.put("status",1);
+        jsonObject.put("status",0);
         jsonObject.put("ipAddress",operator.getIpAddress());
         jsonObject.put("image",operator.getImage());
 

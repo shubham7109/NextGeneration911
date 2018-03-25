@@ -3,6 +3,8 @@ package operator.Controllers;
 import javafx.application.Platform;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -37,6 +39,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Timer;
@@ -201,6 +204,29 @@ public class Controller {
         logView.setItems(observableList);
         logView.getColumns().add(phoneNumber);
 
+        operatorStatus.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(newValue == "Unavailable") {
+                    try {
+                        putRequest(LOGIN_URL+operator.getId(),1);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else
+                {
+                    try {
+                        putRequest(LOGIN_URL+operator.getId(),0);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     public static String getHTML(String urlToRead) throws Exception {
@@ -263,14 +289,14 @@ public class Controller {
         Stage stage = new Stage();
         Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
 
-        putRequest(LOGIN_URL+operator.getId());
+        putRequest(LOGIN_URL+operator.getId(),3);
         primaryStage.close();
         stage.setTitle("Login View");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
-    private void putRequest(String put_url) throws IOException, JSONException {
+    private void putRequest(String put_url, int status) throws IOException, JSONException {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id",operator.getId());
@@ -280,7 +306,7 @@ public class Controller {
         jsonObject.put("userName",operator.getUserName());
         jsonObject.put("password",operator.getPassword());
         jsonObject.put("location",operator.getLocation());
-        jsonObject.put("status",3);
+        jsonObject.put("status",status);
         jsonObject.put("ipAddress",operator.getIpAddress());
         jsonObject.put("image",operator.getImage());
 
