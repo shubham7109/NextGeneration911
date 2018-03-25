@@ -13,15 +13,15 @@ public class LogsService {
 	@Autowired
 	private LogsRepository logsRepository;
 	
-	public List<Logs> getAllOperators() {
+	public List<Logs> getAllLogs() {
 
-		List<Login> logs = new ArrayList<>();
+		List<Logs> logs = new ArrayList<>();
 		logsRepository.findAll().forEach(logs::add);
 		return logs;
 	}
 
-	public void addOperators(Logs log) {
-		loginRepository.save(log);
+	public void addLogs(Logs log) {
+		logsRepository.save(log);
 	}
 }
 

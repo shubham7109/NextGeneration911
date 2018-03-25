@@ -20,16 +20,6 @@ public class Logs {
 
 	public Logs(){}
 	
-	public Logs()
-	{
-		super();
-		date = "";
-		time = "";
-		callLength = "";
-		operatorName = "";
-		phoneNumber = "";
-	}
-	
 	public void setDate(String date)
 	{
 		this.date = date;

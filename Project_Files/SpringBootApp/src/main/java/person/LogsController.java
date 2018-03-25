@@ -16,15 +16,15 @@ public class LogsController {
 	private LogsService LogsService; 
 	
 	@RequestMapping("/logs")
-	public List<Logs> getAllOperators()
+	public List<Logs> getAllLogs()
 	{
-		return LogsService.getAllOperators();
+		return LogsService.getAllLogs();
 	}
 	
 
 	@RequestMapping(method=RequestMethod.POST, value="/logs")
-	public void addOperators(@RequestBody Logs Logs)
+	public void addLogs(@RequestBody Logs logs)
 	{
-		LogsService.addOperator(Logs);
+		LogsService.addLogs(logs);
 	}
 }
