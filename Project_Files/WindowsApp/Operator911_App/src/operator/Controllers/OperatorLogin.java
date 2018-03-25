@@ -4,8 +4,10 @@ package operator.Controllers; /**
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,6 +23,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import operator.LoggedInView;
 import operator.Main911Call;
+import operator.Models.OperatorModel;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class OperatorLogin {
 
@@ -52,11 +58,15 @@ public class OperatorLogin {
     private Button btn; // Value injected by FXMLLoader
 
     private boolean loginAuth = false;
+    private OperatorModel operator;
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
         loginAuth = checkLogin();
-        if(loginAuth)
+        if(loginAuth){
+            updateStatus();
             loginEnter();
+        }
+
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -69,15 +79,54 @@ public class OperatorLogin {
                 if (keyEvent.getCode() == KeyCode.ENTER)  {
                     try {
                         loginAuth = checkLogin();
+                        if(loginAuth){
+                            updateStatus();
+                            loginEnter();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    if(loginAuth)
-                        loginEnter();
-
                 }
             }
         });
+    }
+
+    private void updateStatus() throws Exception {
+
+        String response = getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/login/");
+        ArrayList<OperatorModel> operatorModels = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray(response);
+        for(int i=0; i<jsonArray.length(); i++){
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            operatorModels.add(new OperatorModel(jsonObject));
+
+            if(operatorModels.get(i).getUserName().equals(userTextField.getText()))
+                operator = operatorModels.get(i);
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",operator.getId());
+        jsonObject.put("firstName",operator.getFirstName());
+        jsonObject.put("lastName",operator.getLastName());
+        jsonObject.put("accesibility",operator.getAccesibility());
+        jsonObject.put("userName",operator.getUserName());
+        jsonObject.put("password",operator.getPassword());
+        jsonObject.put("location",operator.getLocation());
+        jsonObject.put("status",1);
+        jsonObject.put("ipAddress",operator.getIpAddress());
+        jsonObject.put("image",operator.getImage());
+
+        URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/login/" + operator.getId());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("PUT");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+        OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+        osw.write(String.format(jsonObject.toString()));
+        osw.flush();
+        osw.close();
+        System.err.println(connection.getResponseCode());
     }
 
     private boolean checkLogin() throws Exception {
@@ -88,15 +137,15 @@ public class OperatorLogin {
             return false;
         }
 
-        /*String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/login/" + userTextField.getText() + "/" + pwBox.getText();
+        String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/login/" + userTextField.getText() + "/" + pwBox.getText();
          if(getHTML(URL).equals("true")){
              return true;
          }
          else
          {
-             loginError.setText("Incorrect username or password!");*/
-             return true;
-
+             loginError.setText("Incorrect username or password!");
+             return false;
+         }
     }
 
     private static String getHTML(String urlToRead) throws Exception {

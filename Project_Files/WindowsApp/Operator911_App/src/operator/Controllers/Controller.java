@@ -24,24 +24,27 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import operator.Main911Call;
 import operator.Models.LogModel;
+import operator.Models.OperatorModel;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class Controller {
 
     @FXML public ComboBox operatorStatus;
-
+    @FXML private Label operatorsName;
     @FXML private TableView<LogModel> logView;
     @FXML private Label timeLabel;
     @FXML private TableColumn<LogModel, String> date;
@@ -49,11 +52,14 @@ public class Controller {
     @FXML private TableColumn<LogModel, String> callLength;
     @FXML private TableColumn<LogModel, String> operatorName;
     @FXML private TableColumn<LogModel, String> phoneNumber;
+    @FXML private Button logoutButton;
 
     private String username;
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/logs";
+    private String LOGIN_URL = "http://proj-309-sb-5.cs.iastate.edu:8080/login/";
     private ArrayList<LogModel> logModels;
     private Timer timer;
+    private OperatorModel operator;
 
     public Controller(String username){
         this.username = username;
@@ -148,6 +154,26 @@ public class Controller {
                 });
             }
         }, 1000, 1000);
+
+        ArrayList<OperatorModel> operatorModels;
+        operatorModels = new ArrayList<>();
+
+        try{
+            String response = getHTML(LOGIN_URL);
+            JSONArray jsonArray = new JSONArray(response);
+            for(int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                operatorModels.add(new OperatorModel(jsonObject));
+                System.out.println(jsonObject);
+            }
+        }catch (Exception e){
+
+        }
+        for(int i=0; i< operatorModels.size(); i++){
+            if(operatorModels.get(i).getUserName().equals(username))
+                operator = operatorModels.get(i);
+        }
+        operatorsName.setText(operator.getFirstName() + " " + operator.getLastName());
         ObservableList<LogModel> observableList = FXCollections.observableArrayList(logModels);
 
         date = new TableColumn("Date");
@@ -178,6 +204,9 @@ public class Controller {
     }
 
     public static String getHTML(String urlToRead) throws Exception {
+
+
+
         StringBuilder result = new StringBuilder();
         URL url = new URL(urlToRead);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -222,11 +251,50 @@ public class Controller {
             stage.setScene(new Scene(root));
             stage.show();
 
-
-
         }catch (Exception e){
             System.out.println(e);
         }
+    }
+
+    @FXML
+    void logoutPress(ActionEvent event) throws IOException, JSONException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/operator/Xmls/Login.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
+
+        putRequest(LOGIN_URL+operator.getId());
+        primaryStage.close();
+        stage.setTitle("Login View");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    private void putRequest(String put_url) throws IOException, JSONException {
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",operator.getId());
+        jsonObject.put("firstName",operator.getFirstName());
+        jsonObject.put("lastName",operator.getLastName());
+        jsonObject.put("accesibility",operator.getAccesibility());
+        jsonObject.put("userName",operator.getUserName());
+        jsonObject.put("password",operator.getPassword());
+        jsonObject.put("location",operator.getLocation());
+        jsonObject.put("status",3);
+        jsonObject.put("ipAddress",operator.getIpAddress());
+        jsonObject.put("image",operator.getImage());
+
+        URL url = new URL(put_url);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("PUT");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+        OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+        osw.write(String.format(jsonObject.toString()));
+        osw.flush();
+        osw.close();
+        System.err.println(connection.getResponseCode());
     }
 
     @FXML
@@ -279,8 +347,6 @@ public class Controller {
                 }
 
                 newWindow.close();
-
-                Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
             }
         });
 
