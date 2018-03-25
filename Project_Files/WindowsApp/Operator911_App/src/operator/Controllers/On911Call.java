@@ -144,6 +144,8 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         });
     }
 
+
+
     @FXML void ambulanceOnClick(ActionEvent ae){
 
         Stage newWindow = new Stage();
@@ -155,53 +157,152 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setPadding(new Insets(25, 25, 25, 25));
 
         Scene scene = new Scene(grid, 500, 200);
-        newWindow.setTitle("Incoming Call");
+        newWindow.setTitle("Deploy Ambulance");
         newWindow.setScene(scene);
 
-        Text scenetitle = new Text("Incoming call from: (847)-943-7754");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
-        grid.add(scenetitle, 0, 0, 2, 1);
-
-        Button button_accept = new Button("Accept Call");
-        button_accept.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
-        HBox hbBtn_accept = new HBox(10);
-        hbBtn_accept.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn_accept.getChildren().add(button_accept);
-        grid.add(hbBtn_accept, 1, 4);
-
-        Button button_decline = new Button("Decline Call");
-        button_decline.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
-        HBox hbBtn_decline = new HBox(10);
-        hbBtn_decline.setAlignment(Pos.BOTTOM_LEFT);
-        hbBtn_decline.getChildren().add(button_decline);
-        grid.add(hbBtn_decline, 2, 4);
-
+        for (int i=0; i<ambulanceArray.size(); i++){
+            Label label = new Label("Ambulance available 1.2 miles from caller");
+            label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(label,0,i,1,1);
+            Button deploy = new Button("DEPLOY");
+            deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(deploy,1,i,1,1);
+        }
         newWindow.show();
     }
 
     @FXML void fireBrigadeOnClick(ActionEvent ae){
 
+        Stage newWindow = new Stage();
+        newWindow.setResizable(false);
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+
+        Scene scene = new Scene(grid, 500, 200);
+        newWindow.setTitle("Deploy Fire Brigade");
+        newWindow.setScene(scene);
+
+        for (int i=0; i<fireBrigadeArray.size(); i++){
+            Label label = new Label("Fire Brigade available 1.2 miles from caller");
+            label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(label,0,i,1,1);
+            Button deploy = new Button("DEPLOY");
+            deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(deploy,1,i,1,1);
+        }
+        newWindow.show();
+
     }
 
     @FXML void stateTroopersOnClick(ActionEvent ae){
 
+        Stage newWindow = new Stage();
+        newWindow.setResizable(false);
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+
+        Scene scene = new Scene(grid, 500, 200);
+        newWindow.setTitle("Deploy Fire Brigade");
+        newWindow.setScene(scene);
+
+        for (int i=0; i<stateTroopersArray.size(); i++){
+            Label label = new Label("State Troopers available 1.2 miles from caller");
+            label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(label,0,i,1,1);
+            Button deploy = new Button("DEPLOY");
+            deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(deploy,1,i,1,1);
+        }
+        newWindow.show();
     }
 
     @FXML void countyOfficersOnClick(ActionEvent ae){
+
+        Stage newWindow = new Stage();
+        newWindow.setResizable(false);
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+
+        Scene scene = new Scene(grid, 500, 200);
+        newWindow.setTitle("Deploy Fire Brigade");
+        newWindow.setScene(scene);
+
+        for (int i=0; i<countyOfficersArray.size(); i++){
+            Label label = new Label("County Officers available 1.2 miles from caller");
+            label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(label,0,i,1,1);
+            Button deploy = new Button("DEPLOY");
+            deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(deploy,1,i,1,1);
+        }
+        newWindow.show();
 
     }
 
     @FXML void swatTeamOnClick(ActionEvent ae){
 
+        Stage newWindow = new Stage();
+        newWindow.setResizable(false);
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+
+        Scene scene = new Scene(grid, 500, 200);
+        newWindow.setTitle("Deploy Fire Brigade");
+        newWindow.setScene(scene);
+
+        for (int i=0; i<swatTeamArray.size(); i++){
+            Label label = new Label("S.W.A.T. Team available 1.2 miles from caller");
+            label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(label,0,i,1,1);
+            Button deploy = new Button("DEPLOY");
+            deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(deploy,1,i,1,1);
+        }
+        newWindow.show();
+
     }
     @FXML void firstRespondersOnClick(ActionEvent ae){
+
+        Stage newWindow = new Stage();
+        newWindow.setResizable(false);
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+
+        Scene scene = new Scene(grid, 500, 200);
+        newWindow.setTitle("Deploy Fire Brigade");
+        newWindow.setScene(scene);
+
+        for (int i=0; i<firstRespondersArray.size(); i++){
+            Label label = new Label("First Responders available 1.2 miles from caller");
+            label.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(label,0,i,1,1);
+            Button deploy = new Button("DEPLOY");
+            deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+            grid.add(deploy,1,i,1,1);
+        }
+        newWindow.show();
 
     }
 
 
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
-        String message = isServer ? "Server: " : "Client: ";
+        String message = isServer ? "911 Operator: " : "Client: ";
         message += input.getText();
         input.setText("");
 
@@ -249,7 +350,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapView.addMapInializedListener(this);
-
+        messages.setWrapText(true);
         Timer timer = new Timer();
         timeElapsed.setAlignment(Pos.CENTER);
         long startTime = System.currentTimeMillis();
