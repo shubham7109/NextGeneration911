@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class operatorsController {
+public class
+operatorsController {
 
 	@Autowired
 	private operatorsService operatorService; 
