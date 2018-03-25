@@ -21,10 +21,10 @@ public class LogsController {
 		return LogsService.getAllOperators();
 	}
 	
-	
-//	@RequestMapping(method=RequestMethod.POST, value="/logs")
-//	public void addOperators(@RequestBody Logs Logs) 
-//	{
-//		LogsService.addOperator(Logs);
-//	}
+
+	//	@RequestMapping(method=RequestMethod.POST, value="/logs")
+	//	public void addOperators(@RequestBody Logs Logs)
+	//	{
+	//		LogsService.addOperator(Logs);
+	//	}
 }

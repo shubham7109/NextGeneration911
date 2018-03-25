@@ -27,7 +27,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/login/{userName}/{password}")
-	public Login checkPassword(@PathVariable("userName") String userName, @PathVariable("password") String password)
+	public boolean checkPassword(@PathVariable("userName") String userName, @PathVariable("password") String password)
 	{
 		return loginService.checkPassword(userName, password);
 	}
