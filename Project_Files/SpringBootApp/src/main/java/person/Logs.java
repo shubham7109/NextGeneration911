@@ -17,6 +17,8 @@ public class Logs {
 		this.operatorName = operatorName; 
 		this.phoneNumber = phoneNumber; 
 	}
+
+	public Logs(){}
 	
 	public Logs()
 	{
