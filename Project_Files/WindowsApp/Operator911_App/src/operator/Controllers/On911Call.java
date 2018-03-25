@@ -23,6 +23,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import operator.Client;
+import operator.LoggedInView;
 import operator.Models.DeployModel;
 import operator.Models.OperatorModel;
 import operator.Models.PersonModel;
@@ -42,6 +43,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class On911Call implements Initializable, MapComponentInitializedListener, DirectionsServiceCallback {
@@ -134,6 +136,14 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     @Override
     public void directionsReceived(DirectionsResult directionsResult, DirectionStatus directionStatus) {
 
+    }
+
+    private Server createMainServer(){
+        return new Server(9999,data ->{
+            Platform.runLater(()->{
+                messages.appendText(data.toString()+"\n");
+            });
+        });
     }
 
     private Server createServer(){
@@ -324,34 +334,71 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
     @FXML
     public void handleCloseButtonAction(ActionEvent event) throws IOException, JSONException {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
         putRequest("http://proj-309-sb-5.cs.iastate.edu:8080/logs");
-        stage.close();
+
+        Stage stage = new Stage();
+        stage.setTitle("Operator");
+        LoggedInView loggedInView = new LoggedInView(operatorModel.getUserName());
+        try {
+            loggedInView.start(stage);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+        Stage primaryStage = (Stage) closeButton.getScene().getWindow();
+        primaryStage.close();
     }
 
     private void putRequest(String put_url) throws IOException, JSONException {
 
+        //PUT LOGIN [STATUS]
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",operatorModel.getId());
+        jsonObject.put("firstName",operatorModel.getFirstName());
+        jsonObject.put("lastName",operatorModel.getLastName());
+        jsonObject.put("accesibility",operatorModel.getAccesibility());
+        jsonObject.put("userName",operatorModel.getUserName());
+        jsonObject.put("password",operatorModel.getPassword());
+        jsonObject.put("location",operatorModel.getLocation());
+        jsonObject.put("status",0);
+        jsonObject.put("ipAddress",operatorModel.getIpAddress());
+        jsonObject.put("image",operatorModel.getImage());
+
+        URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/login/"+operatorModel.getId());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("PUT");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+        OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+        osw.write(String.format(jsonObject.toString()));
+        osw.flush();
+        osw.close();
+        System.err.println(connection.getResponseCode());
+
+        // PUT LOG
+
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yy");
         String date =  sdf.format(cal.getTime());
-        JSONObject jsonObject = new JSONObject();
+        jsonObject = new JSONObject();
+        jsonObject.put("id",String.valueOf(ThreadLocalRandom.current().nextInt(0, 10000 + 1)));
         jsonObject.put("date",date);
         sdf = new SimpleDateFormat("HH:mm");
         date =  sdf.format(cal.getTime());
         jsonObject.put("time",date);
         jsonObject.put("callLength",time);
-        jsonObject.put("operatorName","Shubham Sharma");
-        jsonObject.put("phoneNumber","765-765-7654");
+        jsonObject.put("operatorName",operatorModel.getFirstName()+ " " + operatorModel.getLastName());
+        jsonObject.put("phoneNumber",personModel.getPhoneNumber());
 
 
-
-        URL url = new URL(put_url);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        url = new URL(put_url);
+        connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
-        OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+        osw = new OutputStreamWriter(connection.getOutputStream());
         osw.write(String.format(jsonObject.toString()));
         osw.flush();
         osw.close();

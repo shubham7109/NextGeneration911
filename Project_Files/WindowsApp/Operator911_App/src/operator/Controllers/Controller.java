@@ -24,6 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import operator.LoggedInView;
 import operator.Main911Call;
 import operator.Models.LogModel;
 import operator.Models.OperatorModel;
@@ -190,7 +191,7 @@ public class Controller {
         logView.setItems(observableList);
         logView.getColumns().add(time);
 
-        callLength = new TableColumn("Call Length(min)");
+        callLength = new TableColumn("Call Length(secs)");
         callLength.setCellValueFactory(new PropertyValueFactory<>("callLength"));
         logView.setItems(observableList);
         logView.getColumns().add(callLength);
@@ -372,8 +373,10 @@ public class Controller {
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
-
                 newWindow.close();
+
+                Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
+                primaryStage.close();
             }
         });
 
