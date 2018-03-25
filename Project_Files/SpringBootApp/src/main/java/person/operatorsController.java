@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class
-operatorsController {
+public class operatorsController {
 
 	@Autowired
 	private operatorsService operatorService; 
@@ -39,7 +38,7 @@ operatorsController {
 	{
 		operatorService.updateOperator(id, Operators);
 	}
-	
+
 	@RequestMapping(method=RequestMethod.DELETE, value="/operators/{id}")
 	public void deleteOperators(@PathVariable("id") String id)
 	{

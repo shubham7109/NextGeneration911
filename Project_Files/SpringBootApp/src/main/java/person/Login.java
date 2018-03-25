@@ -18,8 +18,9 @@ public class Login {
 	private String location;
 	private int status;
 	private String ipAddress;
+	private String image;
 	
-	public Login(String id, String firstName, String lastName, int accesibility, String userName, String password, String location, int status, String ipAddress)
+	public Login(String id, String firstName, String lastName, int accesibility, String userName, String password, String location, int status, String ipAddress, String image)
 	{
 		super();
 		this.id = id;
@@ -31,6 +32,7 @@ public class Login {
 		this.location = location;
 		this.status = status;
 		this.ipAddress = ipAddress;
+		this.image = image;
 	}
 	
 	public Login() {
@@ -136,5 +138,13 @@ public class Login {
 
 	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

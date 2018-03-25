@@ -1650,3 +1650,453 @@ Verify the connector's configuration, identify and stop any process that's liste
 2018-03-24 22:43:32.000  INFO 19612 --- [Thread-4] ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 22:41:12 CDT 2018]; root of context hierarchy
 2018-03-24 22:43:32.002  INFO 19612 --- [Thread-4] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
 2018-03-24 22:43:32.004  INFO 19612 --- [Thread-4] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:01:40.372  INFO 20617 --- [main] person.Main                              : Starting Main v0.0.1-SNAPSHOT on lightkun with PID 20617 (/home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp/target/911SpringBoot-0.0.1-SNAPSHOT.jar started by light in /home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp)
+2018-03-24 23:01:40.374  INFO 20617 --- [main] person.Main                              : No active profile set, falling back to default profiles: default
+2018-03-24 23:01:40.588  INFO 20617 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:01:40 CDT 2018]; root of context hierarchy
+2018-03-24 23:01:41.348  INFO 20617 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$87d7bd2b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-03-24 23:01:41.667  INFO 20617 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-03-24 23:01:41.676  INFO 20617 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-03-24 23:01:41.677  INFO 20617 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.27
+2018-03-24 23:01:41.749  INFO 20617 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-03-24 23:01:41.749  INFO 20617 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1163 ms
+2018-03-24 23:01:41.863  INFO 20617 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-03-24 23:01:41.866  INFO 20617 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-03-24 23:01:41.867  INFO 20617 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-03-24 23:01:41.867  INFO 20617 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-03-24 23:01:41.867  INFO 20617 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-03-24 23:01:42.443  INFO 20617 --- [main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:01:42.456  INFO 20617 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-03-24 23:01:42.582  INFO 20617 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.12.Final}
+2018-03-24 23:01:42.583  INFO 20617 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-03-24 23:01:42.584  INFO 20617 --- [main] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2018-03-24 23:01:42.624  INFO 20617 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-03-24 23:01:42.746  INFO 20617 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2018-03-24 23:01:43.132  INFO 20617 --- [main] org.hibernate.tool.hbm2ddl.SchemaUpdate  : HHH000228: Running hbm2ddl schema update
+2018-03-24 23:01:43.335  INFO 20617 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:01:43.820  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:01:40 CDT 2018]; root of context hierarchy
+2018-03-24 23:01:43.902  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}]}" onto public person.Login person.LoginController.getLogin(java.lang.String)
+2018-03-24 23:01:43.904  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{userName}/{password}]}" onto public boolean person.LoginController.checkPassword(java.lang.String,java.lang.String)
+2018-03-24 23:01:43.904  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[POST]}" onto public void person.LoginController.addLogin(person.Login)
+2018-03-24 23:01:43.904  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[PUT]}" onto public void person.LoginController.updateLogin(person.Login,java.lang.String)
+2018-03-24 23:01:43.905  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login]}" onto public java.lang.Iterable<person.Login> person.LoginController.getAllLogins()
+2018-03-24 23:01:43.905  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[DELETE]}" onto public void person.LoginController.deleteLogin(java.lang.String)
+2018-03-24 23:01:43.906  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}]}" onto public person.Deploy person.DeployController.getDeploy(java.lang.String)
+2018-03-24 23:01:43.906  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy],methods=[POST]}" onto public void person.DeployController.addDeploy(person.Deploy)
+2018-03-24 23:01:43.906  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[PUT]}" onto public void person.DeployController.updateDeploy(person.Deploy,java.lang.String)
+2018-03-24 23:01:43.907  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[DELETE]}" onto public void person.DeployController.deleteDeploy(java.lang.String)
+2018-03-24 23:01:43.907  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy]}" onto public java.lang.Iterable<person.Deploy> person.DeployController.getAllDeploys()
+2018-03-24 23:01:43.910  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}]}" onto public person.Person person.PersonController.getPerson(java.lang.String)
+2018-03-24 23:01:43.910  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons]}" onto public java.lang.Iterable<person.Person> person.PersonController.getAllPersons()
+2018-03-24 23:01:43.911  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons],methods=[POST]}" onto public void person.PersonController.addPerson(person.Person)
+2018-03-24 23:01:43.911  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[PUT]}" onto public void person.PersonController.updatePerson(person.Person,int)
+2018-03-24 23:01:43.911  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[DELETE]}" onto public void person.PersonController.deletePerson(java.lang.String)
+2018-03-24 23:01:43.912  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/logs]}" onto public java.util.List<person.Logs> person.LogsController.getAllOperators()
+2018-03-24 23:01:43.913  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators]}" onto public java.lang.Iterable<person.Operators> person.operatorsController.getAllOperators()
+2018-03-24 23:01:43.914  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}]}" onto public person.Operators person.operatorsController.getOperators(java.lang.String)
+2018-03-24 23:01:43.914  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators],methods=[POST]}" onto public void person.operatorsController.addOperators(person.Operators)
+2018-03-24 23:01:43.914  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[PUT]}" onto public void person.operatorsController.updateOperators(person.Operators,int)
+2018-03-24 23:01:43.915  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[DELETE]}" onto public void person.operatorsController.deleteOperators(java.lang.String)
+2018-03-24 23:01:43.918  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-03-24 23:01:43.918  INFO 20617 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-03-24 23:01:43.944  INFO 20617 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:01:43.944  INFO 20617 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:01:43.977  INFO 20617 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:01:44.004  WARN 20617 --- [main] .t.AbstractTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2018-03-24 23:01:44.504  INFO 20617 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-03-24 23:01:44.549  INFO 20617 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
+2018-03-24 23:01:44.554  INFO 20617 --- [main] person.Main                              : Started Main in 4.436 seconds (JVM running for 4.752)
+2018-03-24 23:01:47.102  INFO 20617 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-03-24 23:01:47.102  INFO 20617 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-03-24 23:01:47.116  INFO 20617 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 14 ms
+2018-03-24 23:01:47.174  INFO 20617 --- [http-nio-8080-exec-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2018-03-24 23:10:27.441  INFO 20617 --- [Thread-4] ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:01:40 CDT 2018]; root of context hierarchy
+2018-03-24 23:10:27.443  INFO 20617 --- [Thread-4] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-03-24 23:10:27.446  INFO 20617 --- [Thread-4] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:10:36.479  INFO 21169 --- [main] person.Main                              : Starting Main v0.0.1-SNAPSHOT on lightkun with PID 21169 (/home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp/target/911SpringBoot-0.0.1-SNAPSHOT.jar started by light in /home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp)
+2018-03-24 23:10:36.481  INFO 21169 --- [main] person.Main                              : No active profile set, falling back to default profiles: default
+2018-03-24 23:10:36.700  INFO 21169 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:10:36 CDT 2018]; root of context hierarchy
+2018-03-24 23:10:37.480  INFO 21169 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$c9ba3698] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-03-24 23:10:37.798  INFO 21169 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-03-24 23:10:37.808  INFO 21169 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-03-24 23:10:37.809  INFO 21169 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.27
+2018-03-24 23:10:37.882  INFO 21169 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-03-24 23:10:37.882  INFO 21169 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1184 ms
+2018-03-24 23:10:37.979  INFO 21169 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-03-24 23:10:37.983  INFO 21169 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-03-24 23:10:37.983  INFO 21169 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-03-24 23:10:37.983  INFO 21169 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-03-24 23:10:37.983  INFO 21169 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-03-24 23:10:38.543  INFO 21169 --- [main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:10:38.555  INFO 21169 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-03-24 23:10:38.680  INFO 21169 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.12.Final}
+2018-03-24 23:10:38.681  INFO 21169 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-03-24 23:10:38.682  INFO 21169 --- [main] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2018-03-24 23:10:38.712  INFO 21169 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-03-24 23:10:38.859  INFO 21169 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2018-03-24 23:10:39.236  INFO 21169 --- [main] org.hibernate.tool.hbm2ddl.SchemaUpdate  : HHH000228: Running hbm2ddl schema update
+2018-03-24 23:10:39.694  INFO 21169 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:10:40.156  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:10:36 CDT 2018]; root of context hierarchy
+2018-03-24 23:10:40.217  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}]}" onto public person.Login person.LoginController.getLogin(java.lang.String)
+2018-03-24 23:10:40.218  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{userName}/{password}]}" onto public boolean person.LoginController.checkPassword(java.lang.String,java.lang.String)
+2018-03-24 23:10:40.218  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[POST]}" onto public void person.LoginController.addLogin(person.Login)
+2018-03-24 23:10:40.218  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[PUT]}" onto public void person.LoginController.updateLogin(person.Login,java.lang.String)
+2018-03-24 23:10:40.219  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[DELETE]}" onto public void person.LoginController.deleteLogin(java.lang.String)
+2018-03-24 23:10:40.219  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login]}" onto public java.lang.Iterable<person.Login> person.LoginController.getAllLogins()
+2018-03-24 23:10:40.220  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[DELETE]}" onto public void person.DeployController.deleteDeploy(java.lang.String)
+2018-03-24 23:10:40.220  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy]}" onto public java.lang.Iterable<person.Deploy> person.DeployController.getAllDeploys()
+2018-03-24 23:10:40.220  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}]}" onto public person.Deploy person.DeployController.getDeploy(java.lang.String)
+2018-03-24 23:10:40.220  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy],methods=[POST]}" onto public void person.DeployController.addDeploy(person.Deploy)
+2018-03-24 23:10:40.221  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[PUT]}" onto public void person.DeployController.updateDeploy(person.Deploy,java.lang.String)
+2018-03-24 23:10:40.223  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons]}" onto public java.lang.Iterable<person.Person> person.PersonController.getAllPersons()
+2018-03-24 23:10:40.224  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons],methods=[POST]}" onto public void person.PersonController.addPerson(person.Person)
+2018-03-24 23:10:40.224  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[PUT]}" onto public void person.PersonController.updatePerson(person.Person,int)
+2018-03-24 23:10:40.224  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[DELETE]}" onto public void person.PersonController.deletePerson(java.lang.String)
+2018-03-24 23:10:40.224  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}]}" onto public person.Person person.PersonController.getPerson(java.lang.String)
+2018-03-24 23:10:40.225  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/logs]}" onto public java.util.List<person.Logs> person.LogsController.getAllOperators()
+2018-03-24 23:10:40.226  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[PUT]}" onto public void person.operatorsController.updateOperators(person.Operators,int)
+2018-03-24 23:10:40.226  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[DELETE]}" onto public void person.operatorsController.deleteOperators(java.lang.String)
+2018-03-24 23:10:40.227  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}]}" onto public person.Operators person.operatorsController.getOperators(java.lang.String)
+2018-03-24 23:10:40.227  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators],methods=[POST]}" onto public void person.operatorsController.addOperators(person.Operators)
+2018-03-24 23:10:40.227  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators]}" onto public java.lang.Iterable<person.Operators> person.operatorsController.getAllOperators()
+2018-03-24 23:10:40.230  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-03-24 23:10:40.231  INFO 21169 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-03-24 23:10:40.256  INFO 21169 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:10:40.256  INFO 21169 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:10:40.289  INFO 21169 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:10:40.316  WARN 21169 --- [main] .t.AbstractTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2018-03-24 23:10:40.718  INFO 21169 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-03-24 23:10:40.769  INFO 21169 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
+2018-03-24 23:10:40.774  INFO 21169 --- [main] person.Main                              : Started Main in 4.579 seconds (JVM running for 4.897)
+2018-03-24 23:10:42.481  INFO 21169 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-03-24 23:10:42.481  INFO 21169 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-03-24 23:10:42.493  INFO 21169 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 12 ms
+2018-03-24 23:10:42.545  INFO 21169 --- [http-nio-8080-exec-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2018-03-24 23:11:21.279  INFO 21169 --- [Thread-4] ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:10:36 CDT 2018]; root of context hierarchy
+2018-03-24 23:11:21.281  INFO 21169 --- [Thread-4] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-03-24 23:11:21.284  INFO 21169 --- [Thread-4] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:11:28.864  INFO 21337 --- [main] person.Main                              : Starting Main v0.0.1-SNAPSHOT on lightkun with PID 21337 (/home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp/target/911SpringBoot-0.0.1-SNAPSHOT.jar started by light in /home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp)
+2018-03-24 23:11:28.866  INFO 21337 --- [main] person.Main                              : No active profile set, falling back to default profiles: default
+2018-03-24 23:11:29.079  INFO 21337 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@2328c243: startup date [Sat Mar 24 23:11:29 CDT 2018]; root of context hierarchy
+2018-03-24 23:11:29.840  INFO 21337 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$cc8e37d4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-03-24 23:11:30.179  INFO 21337 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-03-24 23:11:30.189  INFO 21337 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-03-24 23:11:30.190  INFO 21337 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.27
+2018-03-24 23:11:30.278  INFO 21337 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-03-24 23:11:30.278  INFO 21337 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1202 ms
+2018-03-24 23:11:30.408  INFO 21337 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-03-24 23:11:30.413  INFO 21337 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-03-24 23:11:30.413  INFO 21337 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-03-24 23:11:30.413  INFO 21337 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-03-24 23:11:30.413  INFO 21337 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-03-24 23:11:30.928  INFO 21337 --- [main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:11:30.940  INFO 21337 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-03-24 23:11:31.052  INFO 21337 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.12.Final}
+2018-03-24 23:11:31.053  INFO 21337 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-03-24 23:11:31.055  INFO 21337 --- [main] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2018-03-24 23:11:31.085  INFO 21337 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-03-24 23:11:31.213  INFO 21337 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2018-03-24 23:11:31.583  INFO 21337 --- [main] org.hibernate.tool.hbm2ddl.SchemaUpdate  : HHH000228: Running hbm2ddl schema update
+2018-03-24 23:11:31.797  INFO 21337 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:11:32.211  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@2328c243: startup date [Sat Mar 24 23:11:29 CDT 2018]; root of context hierarchy
+2018-03-24 23:11:32.271  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}]}" onto public person.Login person.LoginController.getLogin(java.lang.String)
+2018-03-24 23:11:32.272  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{userName}/{password}]}" onto public boolean person.LoginController.checkPassword(java.lang.String,java.lang.String)
+2018-03-24 23:11:32.272  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[POST]}" onto public void person.LoginController.addLogin(person.Login)
+2018-03-24 23:11:32.272  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[PUT]}" onto public void person.LoginController.updateLogin(person.Login,java.lang.String)
+2018-03-24 23:11:32.273  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[DELETE]}" onto public void person.LoginController.deleteLogin(java.lang.String)
+2018-03-24 23:11:32.273  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login]}" onto public java.lang.Iterable<person.Login> person.LoginController.getAllLogins()
+2018-03-24 23:11:32.273  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}]}" onto public person.Deploy person.DeployController.getDeploy(java.lang.String)
+2018-03-24 23:11:32.274  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy]}" onto public java.lang.Iterable<person.Deploy> person.DeployController.getAllDeploys()
+2018-03-24 23:11:32.274  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy],methods=[POST]}" onto public void person.DeployController.addDeploy(person.Deploy)
+2018-03-24 23:11:32.274  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[PUT]}" onto public void person.DeployController.updateDeploy(person.Deploy,java.lang.String)
+2018-03-24 23:11:32.274  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[DELETE]}" onto public void person.DeployController.deleteDeploy(java.lang.String)
+2018-03-24 23:11:32.276  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}]}" onto public person.Person person.PersonController.getPerson(java.lang.String)
+2018-03-24 23:11:32.276  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons]}" onto public java.lang.Iterable<person.Person> person.PersonController.getAllPersons()
+2018-03-24 23:11:32.277  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons],methods=[POST]}" onto public void person.PersonController.addPerson(person.Person)
+2018-03-24 23:11:32.277  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[PUT]}" onto public void person.PersonController.updatePerson(person.Person,int)
+2018-03-24 23:11:32.277  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[DELETE]}" onto public void person.PersonController.deletePerson(java.lang.String)
+2018-03-24 23:11:32.277  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/logs]}" onto public java.util.List<person.Logs> person.LogsController.getAllOperators()
+2018-03-24 23:11:32.278  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators]}" onto public java.lang.Iterable<person.Operators> person.operatorsController.getAllOperators()
+2018-03-24 23:11:32.279  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators],methods=[POST]}" onto public void person.operatorsController.addOperators(person.Operators)
+2018-03-24 23:11:32.279  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[PUT]}" onto public void person.operatorsController.updateOperators(person.Operators,int)
+2018-03-24 23:11:32.279  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[DELETE]}" onto public void person.operatorsController.deleteOperators(java.lang.String)
+2018-03-24 23:11:32.281  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}]}" onto public person.Operators person.operatorsController.getOperators(java.lang.String)
+2018-03-24 23:11:32.283  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-03-24 23:11:32.284  INFO 21337 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-03-24 23:11:32.315  INFO 21337 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:11:32.315  INFO 21337 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:11:32.363  INFO 21337 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:11:32.405  WARN 21337 --- [main] .t.AbstractTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2018-03-24 23:11:32.846  INFO 21337 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-03-24 23:11:32.898  INFO 21337 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
+2018-03-24 23:11:32.903  INFO 21337 --- [main] person.Main                              : Started Main in 4.3 seconds (JVM running for 4.651)
+2018-03-24 23:11:34.823  INFO 21337 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-03-24 23:11:34.823  INFO 21337 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-03-24 23:11:34.837  INFO 21337 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 14 ms
+2018-03-24 23:11:34.893  INFO 21337 --- [http-nio-8080-exec-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2018-03-24 23:12:33.057  INFO 21337 --- [Thread-4] ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@2328c243: startup date [Sat Mar 24 23:11:29 CDT 2018]; root of context hierarchy
+2018-03-24 23:12:33.058  INFO 21337 --- [Thread-4] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-03-24 23:12:33.060  INFO 21337 --- [Thread-4] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:12:41.179  INFO 21531 --- [main] person.Main                              : Starting Main v0.0.1-SNAPSHOT on lightkun with PID 21531 (/home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp/target/911SpringBoot-0.0.1-SNAPSHOT.jar started by light in /home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp)
+2018-03-24 23:12:41.181  INFO 21531 --- [main] person.Main                              : No active profile set, falling back to default profiles: default
+2018-03-24 23:12:41.399  INFO 21531 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:12:41 CDT 2018]; root of context hierarchy
+2018-03-24 23:12:42.169  INFO 21531 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$cc8e37d4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-03-24 23:12:42.492  INFO 21531 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-03-24 23:12:42.502  INFO 21531 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-03-24 23:12:42.503  INFO 21531 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.27
+2018-03-24 23:12:42.585  INFO 21531 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-03-24 23:12:42.585  INFO 21531 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1188 ms
+2018-03-24 23:12:42.692  INFO 21531 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-03-24 23:12:42.696  INFO 21531 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-03-24 23:12:42.696  INFO 21531 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-03-24 23:12:42.696  INFO 21531 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-03-24 23:12:42.696  INFO 21531 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-03-24 23:12:43.232  INFO 21531 --- [main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:12:43.244  INFO 21531 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-03-24 23:12:43.358  INFO 21531 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.12.Final}
+2018-03-24 23:12:43.359  INFO 21531 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-03-24 23:12:43.360  INFO 21531 --- [main] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2018-03-24 23:12:43.396  INFO 21531 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-03-24 23:12:43.524  INFO 21531 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2018-03-24 23:12:43.885  INFO 21531 --- [main] org.hibernate.tool.hbm2ddl.SchemaUpdate  : HHH000228: Running hbm2ddl schema update
+2018-03-24 23:12:44.097  INFO 21531 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:12:44.551  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:12:41 CDT 2018]; root of context hierarchy
+2018-03-24 23:12:44.621  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}]}" onto public person.Login person.LoginController.getLogin(java.lang.String)
+2018-03-24 23:12:44.622  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{userName}/{password}]}" onto public boolean person.LoginController.checkPassword(java.lang.String,java.lang.String)
+2018-03-24 23:12:44.622  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[POST]}" onto public void person.LoginController.addLogin(person.Login)
+2018-03-24 23:12:44.623  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[PUT]}" onto public void person.LoginController.updateLogin(person.Login,java.lang.String)
+2018-03-24 23:12:44.623  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[DELETE]}" onto public void person.LoginController.deleteLogin(java.lang.String)
+2018-03-24 23:12:44.623  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login]}" onto public java.lang.Iterable<person.Login> person.LoginController.getAllLogins()
+2018-03-24 23:12:44.624  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy]}" onto public java.lang.Iterable<person.Deploy> person.DeployController.getAllDeploys()
+2018-03-24 23:12:44.624  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy],methods=[POST]}" onto public void person.DeployController.addDeploy(person.Deploy)
+2018-03-24 23:12:44.624  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[PUT]}" onto public void person.DeployController.updateDeploy(person.Deploy,java.lang.String)
+2018-03-24 23:12:44.625  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[DELETE]}" onto public void person.DeployController.deleteDeploy(java.lang.String)
+2018-03-24 23:12:44.625  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}]}" onto public person.Deploy person.DeployController.getDeploy(java.lang.String)
+2018-03-24 23:12:44.627  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons]}" onto public java.lang.Iterable<person.Person> person.PersonController.getAllPersons()
+2018-03-24 23:12:44.627  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons],methods=[POST]}" onto public void person.PersonController.addPerson(person.Person)
+2018-03-24 23:12:44.628  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[PUT]}" onto public void person.PersonController.updatePerson(person.Person,int)
+2018-03-24 23:12:44.628  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[DELETE]}" onto public void person.PersonController.deletePerson(java.lang.String)
+2018-03-24 23:12:44.628  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}]}" onto public person.Person person.PersonController.getPerson(java.lang.String)
+2018-03-24 23:12:44.629  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/logs]}" onto public java.util.List<person.Logs> person.LogsController.getAllOperators()
+2018-03-24 23:12:44.629  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators]}" onto public java.lang.Iterable<person.Operators> person.operatorsController.getAllOperators()
+2018-03-24 23:12:44.630  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators],methods=[POST]}" onto public void person.operatorsController.addOperators(person.Operators)
+2018-03-24 23:12:44.630  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[PUT]}" onto public void person.operatorsController.updateOperators(person.Operators,int)
+2018-03-24 23:12:44.630  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[DELETE]}" onto public void person.operatorsController.deleteOperators(java.lang.String)
+2018-03-24 23:12:44.630  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}]}" onto public person.Operators person.operatorsController.getOperators(java.lang.String)
+2018-03-24 23:12:44.633  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-03-24 23:12:44.633  INFO 21531 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-03-24 23:12:44.657  INFO 21531 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:12:44.657  INFO 21531 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:12:44.689  INFO 21531 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:12:44.721  WARN 21531 --- [main] .t.AbstractTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2018-03-24 23:12:45.199  INFO 21531 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-03-24 23:12:45.249  INFO 21531 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
+2018-03-24 23:12:45.254  INFO 21531 --- [main] person.Main                              : Started Main in 4.352 seconds (JVM running for 4.681)
+2018-03-24 23:12:48.487  INFO 21531 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-03-24 23:12:48.487  INFO 21531 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-03-24 23:12:48.498  INFO 21531 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 11 ms
+2018-03-24 23:12:48.550  INFO 21531 --- [http-nio-8080-exec-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2018-03-24 23:37:10.522  INFO 21531 --- [Thread-4] ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:12:41 CDT 2018]; root of context hierarchy
+2018-03-24 23:37:10.524  INFO 21531 --- [Thread-4] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-03-24 23:37:10.527  INFO 21531 --- [Thread-4] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:37:20.342  INFO 22495 --- [main] person.Main                              : Starting Main v0.0.1-SNAPSHOT on lightkun with PID 22495 (/home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp/target/911SpringBoot-0.0.1-SNAPSHOT.jar started by light in /home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp)
+2018-03-24 23:37:20.345  INFO 22495 --- [main] person.Main                              : No active profile set, falling back to default profiles: default
+2018-03-24 23:37:20.558  INFO 22495 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:37:20 CDT 2018]; root of context hierarchy
+2018-03-24 23:37:21.378  INFO 22495 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$b48c9c9b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-03-24 23:37:21.725  INFO 22495 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-03-24 23:37:21.735  INFO 22495 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-03-24 23:37:21.736  INFO 22495 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.27
+2018-03-24 23:37:21.795  INFO 22495 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-03-24 23:37:21.796  INFO 22495 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1240 ms
+2018-03-24 23:37:21.895  INFO 22495 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-03-24 23:37:21.899  INFO 22495 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-03-24 23:37:21.899  INFO 22495 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-03-24 23:37:21.899  INFO 22495 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-03-24 23:37:21.900  INFO 22495 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-03-24 23:37:22.456  INFO 22495 --- [main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:37:22.468  INFO 22495 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-03-24 23:37:22.585  INFO 22495 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.12.Final}
+2018-03-24 23:37:22.586  INFO 22495 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-03-24 23:37:22.587  INFO 22495 --- [main] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2018-03-24 23:37:22.617  INFO 22495 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-03-24 23:37:22.764  INFO 22495 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2018-03-24 23:37:23.152  INFO 22495 --- [main] org.hibernate.tool.hbm2ddl.SchemaUpdate  : HHH000228: Running hbm2ddl schema update
+2018-03-24 23:37:23.373  INFO 22495 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:37:23.936  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:37:20 CDT 2018]; root of context hierarchy
+2018-03-24 23:37:24.000  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}]}" onto public person.Login person.LoginController.getLogin(java.lang.String)
+2018-03-24 23:37:24.001  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{userName}/{password}]}" onto public boolean person.LoginController.checkPassword(java.lang.String,java.lang.String)
+2018-03-24 23:37:24.001  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[POST]}" onto public void person.LoginController.addLogin(person.Login)
+2018-03-24 23:37:24.002  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[PUT]}" onto public void person.LoginController.updateLogin(person.Login,java.lang.String)
+2018-03-24 23:37:24.002  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[DELETE]}" onto public void person.LoginController.deleteLogin(java.lang.String)
+2018-03-24 23:37:24.002  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login]}" onto public java.lang.Iterable<person.Login> person.LoginController.getAllLogins()
+2018-03-24 23:37:24.003  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy]}" onto public java.lang.Iterable<person.Deploy> person.DeployController.getAllDeploys()
+2018-03-24 23:37:24.003  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy],methods=[POST]}" onto public void person.DeployController.addDeploy(person.Deploy)
+2018-03-24 23:37:24.003  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[PUT]}" onto public void person.DeployController.updateDeploy(person.Deploy,java.lang.String)
+2018-03-24 23:37:24.003  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[DELETE]}" onto public void person.DeployController.deleteDeploy(java.lang.String)
+2018-03-24 23:37:24.004  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}]}" onto public person.Deploy person.DeployController.getDeploy(java.lang.String)
+2018-03-24 23:37:24.006  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[DELETE]}" onto public void person.PersonController.deletePerson(java.lang.String)
+2018-03-24 23:37:24.006  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}]}" onto public person.Person person.PersonController.getPerson(java.lang.String)
+2018-03-24 23:37:24.006  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons]}" onto public java.lang.Iterable<person.Person> person.PersonController.getAllPersons()
+2018-03-24 23:37:24.006  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons],methods=[POST]}" onto public void person.PersonController.addPerson(person.Person)
+2018-03-24 23:37:24.007  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[PUT]}" onto public void person.PersonController.updatePerson(person.Person,int)
+2018-03-24 23:37:24.007  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/logs]}" onto public java.util.List<person.Logs> person.LogsController.getAllOperators()
+2018-03-24 23:37:24.008  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}]}" onto public person.Operators person.operatorsController.getOperators(java.lang.String)
+2018-03-24 23:37:24.008  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators],methods=[POST]}" onto public void person.operatorsController.addOperators(person.Operators)
+2018-03-24 23:37:24.009  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[PUT]}" onto public void person.operatorsController.updateOperators(person.Operators,int)
+2018-03-24 23:37:24.009  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[DELETE]}" onto public void person.operatorsController.deleteOperators(java.lang.String)
+2018-03-24 23:37:24.009  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/image],methods=[GET],produces=[image/jpeg]}" onto public org.springframework.http.ResponseEntity<org.springframework.core.io.InputStreamResource> person.operatorsController.getImage() throws java.io.IOException
+2018-03-24 23:37:24.009  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators]}" onto public java.lang.Iterable<person.Operators> person.operatorsController.getAllOperators()
+2018-03-24 23:37:24.011  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-03-24 23:37:24.011  INFO 22495 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-03-24 23:37:24.035  INFO 22495 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:37:24.035  INFO 22495 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:37:24.069  INFO 22495 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:37:24.109  WARN 22495 --- [main] .t.AbstractTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2018-03-24 23:37:24.554  INFO 22495 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-03-24 23:37:24.604  INFO 22495 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
+2018-03-24 23:37:24.609  INFO 22495 --- [main] person.Main                              : Started Main in 4.527 seconds (JVM running for 4.875)
+2018-03-24 23:37:34.563  INFO 22495 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-03-24 23:37:34.563  INFO 22495 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-03-24 23:37:34.573  INFO 22495 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 10 ms
+2018-03-24 23:37:34.634  INFO 22495 --- [http-nio-8080-exec-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2018-03-24 23:49:29.639  INFO 22495 --- [Thread-4] ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:37:20 CDT 2018]; root of context hierarchy
+2018-03-24 23:49:29.641  INFO 22495 --- [Thread-4] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-03-24 23:49:29.644  INFO 22495 --- [Thread-4] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:49:37.750  INFO 22927 --- [main] person.Main                              : Starting Main v0.0.1-SNAPSHOT on lightkun with PID 22927 (/home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp/target/911SpringBoot-0.0.1-SNAPSHOT.jar started by light in /home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp)
+2018-03-24 23:49:37.753  INFO 22927 --- [main] person.Main                              : No active profile set, falling back to default profiles: default
+2018-03-24 23:49:37.971  INFO 22927 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:49:37 CDT 2018]; root of context hierarchy
+2018-03-24 23:49:38.734  INFO 22927 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$903121f9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-03-24 23:49:39.085  INFO 22927 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-03-24 23:49:39.097  INFO 22927 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-03-24 23:49:39.098  INFO 22927 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.27
+2018-03-24 23:49:39.184  INFO 22927 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-03-24 23:49:39.185  INFO 22927 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1217 ms
+2018-03-24 23:49:39.292  INFO 22927 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-03-24 23:49:39.296  INFO 22927 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-03-24 23:49:39.296  INFO 22927 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-03-24 23:49:39.296  INFO 22927 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-03-24 23:49:39.296  INFO 22927 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-03-24 23:49:39.867  INFO 22927 --- [main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:49:39.879  INFO 22927 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-03-24 23:49:39.992  INFO 22927 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.12.Final}
+2018-03-24 23:49:39.993  INFO 22927 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-03-24 23:49:39.995  INFO 22927 --- [main] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2018-03-24 23:49:40.026  INFO 22927 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-03-24 23:49:40.161  INFO 22927 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2018-03-24 23:49:40.542  INFO 22927 --- [main] org.hibernate.tool.hbm2ddl.SchemaUpdate  : HHH000228: Running hbm2ddl schema update
+2018-03-24 23:49:40.755  INFO 22927 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:49:41.160  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:49:37 CDT 2018]; root of context hierarchy
+2018-03-24 23:49:41.225  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login]}" onto public java.lang.Iterable<person.Login> person.LoginController.getAllLogins()
+2018-03-24 23:49:41.226  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}]}" onto public person.Login person.LoginController.getLogin(java.lang.String)
+2018-03-24 23:49:41.226  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{userName}/{password}]}" onto public boolean person.LoginController.checkPassword(java.lang.String,java.lang.String)
+2018-03-24 23:49:41.227  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[POST]}" onto public void person.LoginController.addLogin(person.Login)
+2018-03-24 23:49:41.227  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[PUT]}" onto public void person.LoginController.updateLogin(person.Login,java.lang.String)
+2018-03-24 23:49:41.227  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[DELETE]}" onto public void person.LoginController.deleteLogin(java.lang.String)
+2018-03-24 23:49:41.227  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}]}" onto public person.Deploy person.DeployController.getDeploy(java.lang.String)
+2018-03-24 23:49:41.228  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy],methods=[POST]}" onto public void person.DeployController.addDeploy(person.Deploy)
+2018-03-24 23:49:41.228  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[PUT]}" onto public void person.DeployController.updateDeploy(person.Deploy,java.lang.String)
+2018-03-24 23:49:41.228  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[DELETE]}" onto public void person.DeployController.deleteDeploy(java.lang.String)
+2018-03-24 23:49:41.228  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy]}" onto public java.lang.Iterable<person.Deploy> person.DeployController.getAllDeploys()
+2018-03-24 23:49:41.230  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons]}" onto public java.lang.Iterable<person.Person> person.PersonController.getAllPersons()
+2018-03-24 23:49:41.230  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}]}" onto public person.Person person.PersonController.getPerson(java.lang.String)
+2018-03-24 23:49:41.230  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons],methods=[POST]}" onto public void person.PersonController.addPerson(person.Person)
+2018-03-24 23:49:41.231  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[PUT]}" onto public void person.PersonController.updatePerson(person.Person,int)
+2018-03-24 23:49:41.231  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[DELETE]}" onto public void person.PersonController.deletePerson(java.lang.String)
+2018-03-24 23:49:41.231  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/logs]}" onto public java.util.List<person.Logs> person.LogsController.getAllOperators()
+2018-03-24 23:49:41.232  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators]}" onto public java.lang.Iterable<person.Operators> person.operatorsController.getAllOperators()
+2018-03-24 23:49:41.233  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators],methods=[POST]}" onto public void person.operatorsController.addOperators(person.Operators)
+2018-03-24 23:49:41.233  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[PUT]}" onto public void person.operatorsController.updateOperators(person.Operators,int)
+2018-03-24 23:49:41.233  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[DELETE]}" onto public void person.operatorsController.deleteOperators(java.lang.String)
+2018-03-24 23:49:41.233  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/image],methods=[GET],produces=[image/jpeg]}" onto public org.springframework.http.ResponseEntity<org.springframework.core.io.InputStreamResource> person.operatorsController.getImage() throws java.io.IOException
+2018-03-24 23:49:41.233  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}]}" onto public person.Operators person.operatorsController.getOperators(java.lang.String)
+2018-03-24 23:49:41.235  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-03-24 23:49:41.236  INFO 22927 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-03-24 23:49:41.263  INFO 22927 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:49:41.263  INFO 22927 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:49:41.304  INFO 22927 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:49:41.350  WARN 22927 --- [main] .t.AbstractTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2018-03-24 23:49:41.833  INFO 22927 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-03-24 23:49:41.886  INFO 22927 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
+2018-03-24 23:49:41.890  INFO 22927 --- [main] person.Main                              : Started Main in 4.4 seconds (JVM running for 4.735)
+2018-03-24 23:49:44.963  INFO 22927 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-03-24 23:49:44.964  INFO 22927 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-03-24 23:49:44.977  INFO 22927 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 13 ms
+2018-03-24 23:49:45.034  INFO 22927 --- [http-nio-8080-exec-2] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2018-03-24 23:49:59.339  INFO 22927 --- [Thread-4] ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:49:37 CDT 2018]; root of context hierarchy
+2018-03-24 23:49:59.341  INFO 22927 --- [Thread-4] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-03-24 23:49:59.344  INFO 22927 --- [Thread-4] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:52:40.919  INFO 23262 --- [main] person.Main                              : Starting Main v0.0.1-SNAPSHOT on lightkun with PID 23262 (/home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp/target/911SpringBoot-0.0.1-SNAPSHOT.jar started by light in /home/light/Desktop/COMS309/SB_5_NextGeneration911/Project_Files/SpringBootApp)
+2018-03-24 23:52:40.922  INFO 23262 --- [main] person.Main                              : No active profile set, falling back to default profiles: default
+2018-03-24 23:52:41.159  INFO 23262 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:52:41 CDT 2018]; root of context hierarchy
+2018-03-24 23:52:41.966  INFO 23262 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1d0bb303] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-03-24 23:52:42.289  INFO 23262 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)
+2018-03-24 23:52:42.299  INFO 23262 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-03-24 23:52:42.300  INFO 23262 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.27
+2018-03-24 23:52:42.366  INFO 23262 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-03-24 23:52:42.366  INFO 23262 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1210 ms
+2018-03-24 23:52:42.482  INFO 23262 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2018-03-24 23:52:42.486  INFO 23262 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-03-24 23:52:42.487  INFO 23262 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-03-24 23:52:42.487  INFO 23262 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-03-24 23:52:42.487  INFO 23262 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-03-24 23:52:43.015  INFO 23262 --- [main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:52:43.027  INFO 23262 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-03-24 23:52:43.138  INFO 23262 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.0.12.Final}
+2018-03-24 23:52:43.139  INFO 23262 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-03-24 23:52:43.140  INFO 23262 --- [main] org.hibernate.cfg.Environment            : HHH000021: Bytecode provider name : javassist
+2018-03-24 23:52:43.170  INFO 23262 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+2018-03-24 23:52:43.299  INFO 23262 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2018-03-24 23:52:43.674  INFO 23262 --- [main] org.hibernate.tool.hbm2ddl.SchemaUpdate  : HHH000228: Running hbm2ddl schema update
+2018-03-24 23:52:44.165  INFO 23262 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-03-24 23:52:44.757  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:52:41 CDT 2018]; root of context hierarchy
+2018-03-24 23:52:44.837  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}]}" onto public person.Login person.LoginController.getLogin(java.lang.String)
+2018-03-24 23:52:44.838  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{userName}/{password}]}" onto public boolean person.LoginController.checkPassword(java.lang.String,java.lang.String)
+2018-03-24 23:52:44.838  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[POST]}" onto public void person.LoginController.addLogin(person.Login)
+2018-03-24 23:52:44.839  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[PUT]}" onto public void person.LoginController.updateLogin(person.Login,java.lang.String)
+2018-03-24 23:52:44.839  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login/{id}],methods=[DELETE]}" onto public void person.LoginController.deleteLogin(java.lang.String)
+2018-03-24 23:52:44.839  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login]}" onto public java.lang.Iterable<person.Login> person.LoginController.getAllLogins()
+2018-03-24 23:52:44.840  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy]}" onto public java.lang.Iterable<person.Deploy> person.DeployController.getAllDeploys()
+2018-03-24 23:52:44.840  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}]}" onto public person.Deploy person.DeployController.getDeploy(java.lang.String)
+2018-03-24 23:52:44.840  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy],methods=[POST]}" onto public void person.DeployController.addDeploy(person.Deploy)
+2018-03-24 23:52:44.840  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[PUT]}" onto public void person.DeployController.updateDeploy(person.Deploy,java.lang.String)
+2018-03-24 23:52:44.841  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/deploy/{id}],methods=[DELETE]}" onto public void person.DeployController.deleteDeploy(java.lang.String)
+2018-03-24 23:52:44.843  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons]}" onto public java.lang.Iterable<person.Person> person.PersonController.getAllPersons()
+2018-03-24 23:52:44.843  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}]}" onto public person.Person person.PersonController.getPerson(java.lang.String)
+2018-03-24 23:52:44.843  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons],methods=[POST]}" onto public void person.PersonController.addPerson(person.Person)
+2018-03-24 23:52:44.844  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[PUT]}" onto public void person.PersonController.updatePerson(person.Person,int)
+2018-03-24 23:52:44.844  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/persons/{id}],methods=[DELETE]}" onto public void person.PersonController.deletePerson(java.lang.String)
+2018-03-24 23:52:44.845  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/logs]}" onto public java.util.List<person.Logs> person.LogsController.getAllOperators()
+2018-03-24 23:52:44.846  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}]}" onto public person.Operators person.operatorsController.getOperators(java.lang.String)
+2018-03-24 23:52:44.847  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators],methods=[POST]}" onto public void person.operatorsController.addOperators(person.Operators)
+2018-03-24 23:52:44.847  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[PUT]}" onto public void person.operatorsController.updateOperators(person.Operators,int)
+2018-03-24 23:52:44.847  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators/{id}],methods=[DELETE]}" onto public void person.operatorsController.deleteOperators(java.lang.String)
+2018-03-24 23:52:44.847  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/operators]}" onto public java.lang.Iterable<person.Operators> person.operatorsController.getAllOperators()
+2018-03-24 23:52:44.851  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-03-24 23:52:44.852  INFO 23262 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-03-24 23:52:44.880  INFO 23262 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:52:44.881  INFO 23262 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:52:44.919  INFO 23262 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-03-24 23:52:44.958  WARN 23262 --- [main] .t.AbstractTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2018-03-24 23:52:45.486  INFO 23262 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-03-24 23:52:45.541  INFO 23262 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)
+2018-03-24 23:52:45.547  INFO 23262 --- [main] person.Main                              : Started Main in 4.902 seconds (JVM running for 5.235)
+2018-03-24 23:52:47.588  INFO 23262 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-03-24 23:52:47.588  INFO 23262 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-03-24 23:52:47.599  INFO 23262 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 11 ms
+2018-03-24 23:52:47.656  INFO 23262 --- [http-nio-8080-exec-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2018-03-24 23:57:18.454  INFO 23262 --- [Thread-4] ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@45ff54e6: startup date [Sat Mar 24 23:52:41 CDT 2018]; root of context hierarchy
+2018-03-24 23:57:18.455  INFO 23262 --- [Thread-4] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-03-24 23:57:18.458  INFO 23262 --- [Thread-4] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
