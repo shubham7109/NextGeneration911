@@ -362,13 +362,20 @@ public class Controller {
         button_accept.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
 
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Sample.fxml"));
 
-                Stage stage = new Stage();
-                stage.setTitle("On Call");
-                Main911Call main911Call = new Main911Call();
+                // Create a controller instance
+                On911Call controller = new On911Call(username, "4145155");
+                // Set it in the FXMLLoader
+                loader.setController(controller);
+                FlowPane flowPane = null;
                 try {
-                    main911Call.start(stage);
-                } catch (Exception e1) {
+                    flowPane = loader.load();
+                    Scene scene = new Scene(flowPane, 200, 200);
+                    
+                    primaryStage.setScene(scene);
+                    primaryStage.show();
+                } catch (IOException e1) {
                     e1.printStackTrace();
                 }
 
