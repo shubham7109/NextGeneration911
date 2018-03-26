@@ -244,7 +244,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public String getZip() {
         EditText zip = findViewById(R.id.zipCode_editText);
-        if (zip.getText().equals(""))
+        if (zip.getText().toString().equals(""))
             return "0";
 
         return zip.getText().toString();
@@ -262,7 +262,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public String getHeight() {
         EditText height = findViewById(R.id.heightCentimeters_editText);
-        if (height.getText().equals(""))
+        if (height.getText().toString().equals(""))
             return "0";
 
         return height.getText().toString();
@@ -270,7 +270,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public String getWeight() {
         EditText weight = findViewById(R.id.weightKilograms_editText);
-        if (weight.getText().equals(""))
+        if (weight.getText().toString().equals(""))
             return "0";
 
         return weight.getText().toString();
