@@ -25,6 +25,8 @@ public class Person {
 	private String bloodType;
 	private String heightCentimeters;
 	private String weightKilograms;
+	private String latitude;
+	private String longitude;
 	
 	public Person() {
 		super();
@@ -48,14 +50,15 @@ public class Person {
 		this.bloodType = "";
 		this.heightCentimeters = "";
 		this.weightKilograms = "";
+		this.latitude = "";
+		this.longitude = "";
 	}
 	
 	
-
 	public Person(String id, String phoneNumber, String gender, String firstName, String middleName, String lastName,
 			String homeAddress, String city, String state, String zipcode, String dateOfBirth,
 			String licencePlateNumber, String vehicle, String bloodType, String heightCentimeters,
-			String weightKilograms) {
+			String weightKilograms, String latitude, String longitude) {
 		super();
 		this.id = id;
 		this.phoneNumber = phoneNumber;
@@ -73,6 +76,24 @@ public class Person {
 		this.bloodType = bloodType;
 		this.heightCentimeters = heightCentimeters;
 		this.weightKilograms = weightKilograms;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
 	public String getId() {
