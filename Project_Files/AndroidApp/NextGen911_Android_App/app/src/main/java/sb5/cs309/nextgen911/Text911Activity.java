@@ -69,6 +69,12 @@ public class Text911Activity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
                 updateLocation();
+                try {
+                    clientConnection.send(message);
+                } catch (Exception e) {
+                    messageList.add("Oops that didn't work right");
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -82,7 +88,16 @@ public class Text911Activity extends AppCompatActivity {
 
     private Client createClient() {
         Consumer<Serializable> onRecieveCallback = new myConsumer();
-        Client c = new Client("10.24.87.237", 5555, onRecieveCallback);
+        Client c = new Client("10.64.25.147", 5555, data ->{
+            messageList.add(data.toString() + "\n"); adapter.notifyDataSetChanged();
+        });
+
+        try {
+            c.startConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return c;
     }
 
@@ -174,6 +189,17 @@ public class Text911Activity extends AppCompatActivity {
     private static class LocationTuple {
         public String lat;
         public String lng;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        try {
+            clientConnection.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onBackPressed();  // optional depending on your needs
     }
 }
 

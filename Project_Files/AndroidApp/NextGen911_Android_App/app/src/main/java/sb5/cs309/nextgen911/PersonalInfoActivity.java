@@ -329,7 +329,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public void populateJSONValues(JSONObject personalInfo) {
         String gender, firstName, middleName, lastName, homeAddress, city, state,
-                dateOfBirth, licencePlateNumber, vehicle, bloodType, zipcode, heightCentimeters, weightKilograms;
+                dateOfBirth, licencePlateNumber, vehicle, bloodType, zipcode, heightCentimeters, weightKilograms, phoneNumber;
 
         // Load all JSON values
         try {
@@ -347,6 +347,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             bloodType = personalInfo.getString("bloodType");
             heightCentimeters = personalInfo.getString("heightCentimeters");
             weightKilograms = personalInfo.getString("weightKilograms");
+            phoneNumber = personalInfo.getString("phoneNumber");
         } catch (JSONException e) {
             throw new RuntimeException(e); // Non-recoverable
         }
@@ -357,6 +358,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         setFirstName(firstName);
         setMiddleName(middleName);
         setLastName(lastName);
+        setPhoneNumber(phoneNumber);
         setHomeAddress(homeAddress);
         setCity(city);
         setState(state);
@@ -467,6 +469,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public void setWeight(String weight) {
         EditText text = findViewById(R.id.weightKilograms_editText);
         text.setText(weight);
+    }
+
+    public void setPhoneNumber(String phoneNumber){
+        EditText text = findViewById(R.id.phoneNumber_editText);
+        text.setText(phoneNumber);
     }
 
     protected void onResume(){
