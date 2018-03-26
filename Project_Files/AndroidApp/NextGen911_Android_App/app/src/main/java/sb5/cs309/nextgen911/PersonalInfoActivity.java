@@ -120,7 +120,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             Toast.makeText(context, "Submitted", Toast.LENGTH_LONG).show();
             sharedPreferences.edit().putString(idKey, getID()).apply();
 
-            Networking.post(personalInfo);
+            Networking.postPersonalInfo(personalInfo);
         }
     }
 
@@ -326,7 +326,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 populateJSONValues(response);
             }
         };
-        Networking.get(id, listener);
+        Networking.getPersonalInfo(id, listener);
     }
 
     public void populateJSONValues(JSONObject personalInfo) {

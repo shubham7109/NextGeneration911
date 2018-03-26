@@ -18,8 +18,7 @@ import java.util.Map;
  */
 
 public class Networking {
-    public static void post(JSONObject personalInfo) {
-
+    public static void postPersonalInfo(JSONObject personalInfo) {
         JsonObjectRequest req = new JsonObjectRequest(PersonalInfoActivity.context.getResources().getString(R.string.personsURL), personalInfo,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -48,7 +47,7 @@ public class Networking {
         PersonalInfoActivity.mQueue.add(req);
     }
 
-    public static void get(final String ID, final AppController.VolleyResponseListener listener) {
+    public static void getPersonalInfo(final String ID, final AppController.VolleyResponseListener listener) {
         JsonObjectRequest req = new JsonObjectRequest
                 (Request.Method.GET, PersonalInfoActivity.context.getResources().getString(R.string.personsURL) + ID, null, new Response.Listener<JSONObject>() {
 
