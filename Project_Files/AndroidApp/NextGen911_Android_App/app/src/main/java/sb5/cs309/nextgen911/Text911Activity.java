@@ -16,6 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +40,6 @@ public class Text911Activity extends AppCompatActivity {
     ArrayList<String> messageList;
     ArrayAdapter<String> adapter;
     Client clientConnection;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class Text911Activity extends AppCompatActivity {
                 messageList.add(message);
                 adapter.notifyDataSetChanged();
 
-
+                updateLocation();
             }
         });
 
@@ -107,15 +109,15 @@ public class Text911Activity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     LocationTuple loc = getLocation();
-                    response.put("latitude", loc.lat); // Null Value
-                    response.put("longitude", loc.lng); // Null Value
+                    response.put("latitude", loc.lat);
+                    response.put("longitude", loc.lng);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Networking.postPersonalInfo(response);
+                Networking.postPersonalInfo(response, AppController.getInstance().getRequestQueue());
             }
         };
-        Networking.getPersonalInfo(id, listener);
+        Networking.getPersonalInfo(id, listener, AppController.getInstance().getRequestQueue());
     }
 
     public LocationTuple getLocation() {

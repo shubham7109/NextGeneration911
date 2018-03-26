@@ -42,7 +42,6 @@ import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 public class PersonalInfoActivity extends AppCompatActivity {
 
     static Context context;
-    static RequestQueue mQueue;
     BottomNavigationView navigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -77,7 +76,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_info);
 
-        mQueue = Volley.newRequestQueue(getApplicationContext());
         PersonalInfoActivity.context = getApplicationContext();
         loadJson();
 
@@ -120,7 +118,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             Toast.makeText(context, "Submitted", Toast.LENGTH_LONG).show();
             sharedPreferences.edit().putString(idKey, getID()).apply();
 
-            Networking.postPersonalInfo(personalInfo);
+            Networking.postPersonalInfo(personalInfo, AppController.getInstance().getRequestQueue());
         }
     }
 
@@ -326,7 +324,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 populateJSONValues(response);
             }
         };
-        Networking.getPersonalInfo(id, listener);
+        Networking.getPersonalInfo(id, listener, AppController.getInstance().getRequestQueue());
     }
 
     public void populateJSONValues(JSONObject personalInfo) {

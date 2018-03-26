@@ -2,6 +2,7 @@ package sb5.cs309.nextgen911;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -18,7 +19,9 @@ import java.util.Map;
  */
 
 public class Networking {
-    public static void postPersonalInfo(JSONObject personalInfo) {
+
+
+    public static void postPersonalInfo(JSONObject personalInfo, RequestQueue mQueue) {
         JsonObjectRequest req = new JsonObjectRequest(PersonalInfoActivity.context.getResources().getString(R.string.personsURL), personalInfo,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -44,12 +47,12 @@ public class Networking {
             }
         };
 
-        PersonalInfoActivity.mQueue.add(req);
+        mQueue.add(req);
     }
 
-    public static void getPersonalInfo(final String ID, final AppController.VolleyResponseListener listener) {
+    public static void getPersonalInfo(final String ID, final AppController.VolleyResponseListener listener, RequestQueue mQueue) {
         JsonObjectRequest req = new JsonObjectRequest
-                (Request.Method.GET, PersonalInfoActivity.context.getResources().getString(R.string.personsURL) + ID, null, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, "http://proj-309-sb-5.cs.iastate.edu:8080/persons/" + ID, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -62,7 +65,7 @@ public class Networking {
 
                     }
                 });
-        PersonalInfoActivity.mQueue.add(req);
+        mQueue.add(req);
     }
 
 }
