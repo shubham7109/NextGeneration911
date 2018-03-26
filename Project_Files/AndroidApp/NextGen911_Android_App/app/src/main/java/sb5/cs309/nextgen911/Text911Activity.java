@@ -73,7 +73,7 @@ public class Text911Activity extends AppCompatActivity {
 
     private Client createClient(){
         Consumer<Serializable> onRecieveCallback = new myConsumer();
-        Client c = new Client("10.26.17.136", 5555, onRecieveCallback);
+        Client c = new Client("10.64.25.147", 5555, onRecieveCallback);
         return c;
     }
 

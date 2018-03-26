@@ -43,6 +43,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     static Context context;
     static RequestQueue mQueue;
+    BottomNavigationView navigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -80,7 +81,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         PersonalInfoActivity.context = getApplicationContext();
         loadJson();
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
@@ -184,7 +185,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     // Returns phone number as ID
     public String getID() {
-        return getPhoneNumber();
+        return getPhoneNumber().substring(6);
     }
 
     public String getFirstName() {
@@ -245,6 +246,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public String getZip() {
         EditText zip = findViewById(R.id.zipCode_editText);
+        if (zip.getText().equals(""))
+            return "0";
 
         return zip.getText().toString();
     }
@@ -261,13 +264,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     public String getHeight() {
         EditText height = findViewById(R.id.heightCentimeters_editText);
+        if (height.getText().equals(""))
+            return "0";
 
         return height.getText().toString();
     }
 
     public String getWeight() {
         EditText weight = findViewById(R.id.weightKilograms_editText);
-
+        if (weight.getText().equals(""))
+            return "0";
 
         return weight.getText().toString();
     }
@@ -463,5 +469,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public void setWeight(String weight) {
         EditText text = findViewById(R.id.weightKilograms_editText);
         text.setText(weight);
+    }
+
+    protected void onResume(){
+        super.onResume();
+        navigation = findViewById(R.id.navigation);
+        navigation.setSelectedItemId(R.id.navigation_personal_info);
     }
 }

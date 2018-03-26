@@ -46,7 +46,7 @@ public class MainMenu extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         int registered = sharedPreferences.getInt(regKey, 0);
-        if (registered != 0) {
+        if (registered != 0 || true) {
             findViewById(R.id.reg_button).setVisibility(View.INVISIBLE);
         }
 
