@@ -3,6 +3,7 @@ package person;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,12 @@ public class InstantMessageRouter {
 		 * 	then send it to the windows operator*/
 		
 		// this will return null if there is no available operator
+		return oper.getIpAddress();
+	}
+	
+	@RequestMapping("/makecall/{id}")
+	public String makeIdCall(@PathVariable("id") String id) {
+		Login oper = getAvailableOperator();
 		return oper.getIpAddress();
 	}
 	
