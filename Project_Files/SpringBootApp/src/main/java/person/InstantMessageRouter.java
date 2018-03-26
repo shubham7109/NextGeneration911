@@ -16,6 +16,9 @@ public class InstantMessageRouter {
 		 * return the ip address of that operator */
 		Login oper = getAvailableOperator();
 		
+		/* if the id of the operator is not null,
+		 * 	then send it to the windows operator*/
+		
 		// this will return null if there is no available operator
 		return oper.getIpAddress();
 	}
