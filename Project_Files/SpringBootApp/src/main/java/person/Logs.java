@@ -1,33 +1,45 @@
 package person;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "logs")
 public class Logs {
 
+	@Id
+	private String id;
 	private String date;
 	private String time;
 	private String callLength;
 	private String operatorName;
 	private String phoneNumber; 
 	
-	public Logs(String date, String time, String callLength, String operatorName, String phoneNumber)
+	public Logs(String id, String date, String time, String callLength, String operatorName, String phoneNumber)
 	{
 		super();
+		this.id = id;
 		this.date = date; 
 		this.time = time; 
 		this.callLength = callLength; 
 		this.operatorName = operatorName; 
 		this.phoneNumber = phoneNumber; 
 	}
-	
-	public Logs()
-	{
-		super();
-		date = "";
-		time = "";
-		callLength = "";
-		operatorName = "";
-		phoneNumber = "";
+
+	public Logs(){
 	}
-	
+
+	public void setID(String id)
+	{
+		this.id = id;
+	}
+
+	public String getID()
+	{
+		return id;
+	}
+
 	public void setDate(String date)
 	{
 		this.date = date;

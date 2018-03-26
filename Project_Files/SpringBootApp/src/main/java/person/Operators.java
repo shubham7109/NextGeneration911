@@ -17,7 +17,7 @@ public class Operators
 	private String status;
 	private String location;
 	private String ipAddress;
-	
+
 	public Operators(String id, String userName, String password, String firstName, String lastName, String status,
 			String location, String ipAddress) {
 		super();
@@ -98,8 +98,8 @@ public class Operators
 	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
 	}
-	
-	
 
-	
+
+
+
 }

@@ -38,7 +38,7 @@ public class operatorsController {
 	{
 		operatorService.updateOperator(id, Operators);
 	}
-	
+
 	@RequestMapping(method=RequestMethod.DELETE, value="/operators/{id}")
 	public void deleteOperators(@PathVariable("id") String id)
 	{

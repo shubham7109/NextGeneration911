@@ -12,13 +12,15 @@ public class Login {
 	private String id; 
 	private String firstName;
 	private String lastName;
-	private String accesibility; 
+	private int accesibility;
 	private String userName;
 	private String password;
 	private String location;
 	private int status;
+	private String ipAddress;
+	private String image;
 	
-	public Login(String id, String firstName, String lastName, String accesibility, String userName, String password, String location, int status)
+	public Login(String id, String firstName, String lastName, int accesibility, String userName, String password, String location, int status, String ipAddress, String image)
 	{
 		super();
 		this.id = id;
@@ -29,6 +31,8 @@ public class Login {
 		this.password = password;
 		this.location = location;
 		this.status = status;
+		this.ipAddress = ipAddress;
+		this.image = image;
 	}
 	
 	public Login() {
@@ -39,12 +43,13 @@ public class Login {
 		super();
 		firstName = "";
 		lastName = "";
-		accesibility = "";
+		accesibility = 0;
 		userName = "";
 		password = "";
 		this.id = id;
 		location = "";
 		status = 0;
+		ipAddress = "";
 	}
 
 
@@ -78,12 +83,12 @@ public class Login {
 		return lastName;
 	}
 	
-	public void setAccesibility(String accesibility)
+	public void setAccesibility(int accesibility)
 	{
 		this.accesibility = accesibility;
 	}
 
-	public String getAccesibility()
+	public int getAccesibility()
 	{
 		return accesibility;
 	}
@@ -125,5 +130,21 @@ public class Login {
 	public int getStatus()
 	{
 		return status;
+	}
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }
