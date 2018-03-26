@@ -1,6 +1,8 @@
 package person;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class InstantMessageRouter {
+	
+	private Client client;
 	
 	@Autowired
 	private LoginService loginService;
@@ -29,6 +33,9 @@ public class InstantMessageRouter {
 	@RequestMapping("/makecall/{id}")
 	public String makeIdCall(@PathVariable("id") String id) {
 		Login oper = getAvailableOperator();
+		/*
+		Client client = new Client(oper.getIpAddress(), 9999, Consumer<Serializable> onRecieveCallback);
+		*/
 		return oper.getIpAddress();
 	}
 	
