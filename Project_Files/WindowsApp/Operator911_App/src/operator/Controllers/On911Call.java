@@ -7,6 +7,7 @@ import com.lynden.gmapsfx.service.directions.DirectionStatus;
 import com.lynden.gmapsfx.service.directions.DirectionsResult;
 import com.lynden.gmapsfx.service.directions.DirectionsService;
 import com.lynden.gmapsfx.service.directions.DirectionsServiceCallback;
+import com.lynden.gmapsfx.util.MarkerImageFactory;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -124,12 +125,33 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
         GoogleMap map = mapView.createMap(options);
 
-        LatLong freddy = new LatLong(LAT, LONG);
+        LatLong callerLocation = new LatLong(LAT, LONG);
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(freddy);
-        Marker freddymarker = new Marker(markerOptions);
+        markerOptions.position(callerLocation);
+        Marker callerMarker = new Marker(markerOptions);
+        map.addMarker(callerMarker);
+        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>();
+        ArrayList<Marker> markerArrayList = new ArrayList<>();
 
-        map.addMarker(freddymarker);
+
+
+        for(int i=0; i<deployModels.size(); i++){
+            markerOptionsArrayList.add(new MarkerOptions());
+            LatLong latLong = new LatLong(Double.parseDouble(deployModels.get(i).getLatitude()),Double.parseDouble(deployModels.get(i).getLongitude()));
+            markerOptionsArrayList.get(i).position(latLong);
+
+            markerArrayList.add(new Marker(markerOptionsArrayList.get(i)));
+
+            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+            infoWindowOptions.content(deployModels.get(i).getType());
+
+            InfoWindow fredWilkeInfoWindow = new InfoWindow(infoWindowOptions);
+            fredWilkeInfoWindow.open(map, markerArrayList.get(i));
+
+            map.addMarker(markerArrayList.get(i));
+        }
+        callerLocation = new LatLong(LAT, LONG);
+        map.setCenter(callerLocation);
 
     }
 

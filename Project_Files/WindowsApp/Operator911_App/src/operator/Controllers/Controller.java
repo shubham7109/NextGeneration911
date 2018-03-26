@@ -17,6 +17,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -33,10 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.ProtocolException;
@@ -57,6 +57,7 @@ public class Controller {
     @FXML private TableColumn<LogModel, String> callLength;
     @FXML private TableColumn<LogModel, String> operatorName;
     @FXML private TableColumn<LogModel, String> phoneNumber;
+    @FXML private ImageView profileImage;
     @FXML private Button logoutButton;
 
     private String username;
@@ -144,22 +145,6 @@ public class Controller {
         }catch (Exception e){
 
         }
-
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    Calendar cal = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yy");
-                    String time =sdf.format(cal.getTime()) + "\n";
-                    sdf = new SimpleDateFormat("HH:mm:ss");
-                    time =  time + sdf.format(cal.getTime());
-                    timeLabel.setText(time);
-                });
-            }
-        }, 1000, 1000);
-
         ArrayList<OperatorModel> operatorModels;
         operatorModels = new ArrayList<>();
 
@@ -178,6 +163,25 @@ public class Controller {
             if(operatorModels.get(i).getUserName().equals(username))
                 operator = operatorModels.get(i);
         }
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yy");
+                    String time =sdf.format(cal.getTime()) + "\n";
+                    sdf = new SimpleDateFormat("HH:mm:ss");
+                    time =  time + sdf.format(cal.getTime());
+                    timeLabel.setText(time);
+
+                    profileImage.setImage(new Image(operator.getImage()));
+
+                });
+            }
+        }, 1000, 1000);
+
         operatorsName.setText(operator.getFirstName() + " " + operator.getLastName());
         ObservableList<LogModel> observableList = FXCollections.observableArrayList(logModels);
 

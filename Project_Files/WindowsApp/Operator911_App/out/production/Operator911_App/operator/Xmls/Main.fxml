@@ -40,13 +40,13 @@
           <children>
             <Button fx:id="lookUpPerson" mnemonicParsing="false" onAction="#openLookUpPerson" prefHeight="40.0" prefWidth="169.0" text="Look up person" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="23.0" />
             <Button fx:id="operatorList" mnemonicParsing="false" onAction="#openOperatorList" prefHeight="40.0" prefWidth="169.0" text="911 Operators List" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="87.0" />
-            <ComboBox fx:id="operatorStatus" layoutX="37.0" layoutY="142.0" prefWidth="150.0" promptText="Choose Status" AnchorPane.leftAnchor="37.0" AnchorPane.topAnchor="142.0" />
-            <ImageView fitHeight="63.0" fitWidth="88.0" layoutX="80.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="12.0">
+            <ComboBox fx:id="operatorStatus" layoutX="38.0" layoutY="167.0" prefWidth="150.0" promptText="Choose Status" AnchorPane.leftAnchor="38.0" AnchorPane.topAnchor="167.0" />
+            <ImageView fx:id="profileImage" fitHeight="105.0" fitWidth="129.0" layoutX="60.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="11.0">
               <image>
                 <Image url="@../../res/drawable/avatar.png" />
               </image>
             </ImageView>
-            <Label fx:id="operatorsName" layoutX="21.0" layoutY="87.0" prefHeight="40.0" prefWidth="286.0" text="Operator Name" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="87.0">
+            <Label fx:id="operatorsName" layoutX="22.0" layoutY="116.0" prefHeight="40.0" prefWidth="286.0" text="Operator Name" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="116.0">
                      <font>
                         <Font name="System Bold" size="22.0" />
                      </font></Label>
