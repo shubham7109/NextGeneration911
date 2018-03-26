@@ -1,5 +1,8 @@
 ===== Deploy SpringBootApp on Server =====
 
+In Project_Files/SpringBootApp/pom.xml, Increment the version number
+	of the build (on line 7)
+
 In Project Root Directory:
 $ mvn clean install
 
