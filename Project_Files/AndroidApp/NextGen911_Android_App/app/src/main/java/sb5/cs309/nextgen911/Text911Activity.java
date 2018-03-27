@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import sb5.cs309.nextgen911.ChatServer.Client;
+import sb5.cs309.nextgen911.ChatServer.AsyncConnection;
 
 import static sb5.cs309.nextgen911.MainMenu.idKey;
 import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
@@ -34,11 +34,12 @@ public class Text911Activity extends AppCompatActivity {
     public String serverIP;
     ArrayList<String> messageList;
     ArrayAdapter<String> adapter;
-    Client firstConnection;
-    Client secondConnection;
+    AsyncConnection firstConnection;
+    AsyncConnection secondConnection;
     boolean firstMessage;
     private EditText inputBox;
     private ListView list_of_messages;
+    private boolean connected;
 
     public static Context getAppContext() {
         return Text911Activity.context;
@@ -47,10 +48,12 @@ public class Text911Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_text911);
         Text911Activity.context = getApplicationContext();
 
         firstMessage = true;
+        connected = false;
         getServerIP();
         messageList = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(Text911Activity.this,
@@ -74,13 +77,18 @@ public class Text911Activity extends AppCompatActivity {
 
                 updateLocation();
                 try {
-                    if (firstMessage) {
-                        firstConnection.send(sharedPreferences.getString(idKey, ""));
-                        firstMessage = false;
+                    if (connected) {
+                        if (firstMessage) {
+                            firstConnection.write(sharedPreferences.getString(idKey, ""));
+                            //firstConnection.write("111");
+                            firstMessage = false;
+                        }
+                        secondConnection.write(message);
                     }
-                    secondConnection.send(message);
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             }
         });
 
@@ -88,19 +96,42 @@ public class Text911Activity extends AppCompatActivity {
     }
 
     private void createClient() {
-        firstConnection = new Client(serverIP, 5555, data -> {
-        });
-        secondConnection = new Client(serverIP, 7777, data -> {
-            messageList.add(data.toString() + "\n");
-            adapter.notifyDataSetChanged();
+
+        firstConnection = new AsyncConnection(serverIP, 5555, 50000, new AsyncConnection.ConnectionHandler() {
+            @Override
+            public void didReceiveData(String data) {
+
+            }
+
+            @Override
+            public void didDisconnect(Exception error) {
+
+            }
+
+            @Override
+            public void didConnect() {
+                connected = true;
+            }
         });
 
-        try {
-            firstConnection.startConnection();
-            secondConnection.startConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        secondConnection = new AsyncConnection(serverIP, 7777, 50000, new AsyncConnection.ConnectionHandler() {
+            @Override
+            public void didReceiveData(String data) {
+
+            }
+
+            @Override
+            public void didDisconnect(Exception error) {
+
+            }
+
+            @Override
+            public void didConnect() {
+
+            }
+        });
+        firstConnection.execute();
+        secondConnection.execute();
     }
 
     public void updateLocation() {
@@ -180,8 +211,8 @@ public class Text911Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         try {
-            firstConnection.closeConnection();
-            secondConnection.closeConnection();
+            firstConnection.disconnect();
+            secondConnection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -194,6 +225,7 @@ public class Text911Activity extends AppCompatActivity {
             public void onResponse(String response) {
                 Toast.makeText(getAppContext(), response + "", Toast.LENGTH_LONG).show(); //Todo
                 serverIP = response;
+                serverIP = "10.26.47.247";
                 createClient();
             }
         };
