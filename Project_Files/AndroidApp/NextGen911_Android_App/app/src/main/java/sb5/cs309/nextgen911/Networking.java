@@ -30,7 +30,7 @@ public class Networking {
 
 
     public static void postPersonalInfo(JSONObject personalInfo) {
-        JsonObjectRequest req = new JsonObjectRequest(PersonalInfoActivity.context.getResources().getString(R.string.personsURL), personalInfo,
+        JsonObjectRequest req = new JsonObjectRequest("http://proj-309-sb-5.cs.iastate.edu:8080/persons/", personalInfo,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

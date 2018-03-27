@@ -80,8 +80,6 @@ public class Text911Activity extends AppCompatActivity {
                     }
                     secondConnection.send(message);
                 } catch (Exception e) {
-                    Toast.makeText(getAppContext(), "Oops that didn't work right", Toast.LENGTH_LONG);
-                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -91,8 +89,6 @@ public class Text911Activity extends AppCompatActivity {
 
     private void createClient() {
         firstConnection = new Client(serverIP, 5555, data -> {
-            messageList.add(data.toString() + "\n");
-            adapter.notifyDataSetChanged();
         });
         secondConnection = new Client(serverIP, 7777, data -> {
             messageList.add(data.toString() + "\n");
@@ -184,7 +180,8 @@ public class Text911Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         try {
-            clientConnection.closeConnection();
+            firstConnection.closeConnection();
+            secondConnection.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
