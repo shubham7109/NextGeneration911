@@ -43,6 +43,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Timer;
 
+import static java.lang.Character.isDigit;
+
 public class Controller {
 
     @FXML public ComboBox operatorStatus;
@@ -88,16 +90,26 @@ public class Controller {
                     Stage stage = new Stage();
                     stage.setTitle("Welcome");
                     try {
-                        connection.closeConnection();
-                        Main911Call main911Call = new Main911Call(username,data.toString() , connection);
-                        updateStatus();
-                        main911Call.start(stage);
+                        String recieve = data.toString();
+                        boolean isDigit = true;
+                        for(int i=0; i<recieve.length(); i++){
+                            if(!isDigit(recieve.charAt(i))){
+                                isDigit = false;
+                            }
+                        }
+                        if(isDigit){
+                            Main911Call main911Call = new Main911Call(username,recieve , connection);
+                            updateStatus();
+                            main911Call.start(stage);
+                            Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
+                            primaryStage.close();
+                            callOnce = false;
+                        }
+
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
-                    Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
-                    primaryStage.close();
-                    callOnce = false;
+
                 }
             });
         });
@@ -114,12 +126,15 @@ public class Controller {
 
     public Controller(String username){
         this.username = username;
-        System.out.println(this.username);
+        try {
+            connection.startConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void initialize() throws Exception {
-        connection.startConnection();
 
         operatorStatus.getItems().removeAll(operatorStatus.getItems());
         operatorStatus.getItems().addAll("Available", "Unavailable");
@@ -223,12 +238,13 @@ public class Controller {
                     time =  time + sdf.format(cal.getTime());
                     timeLabel.setText(time);
 
-                    profileImage.setImage(new Image(operator.getImage()));
+
 
                 });
             }
         }, 1000, 1000);
 
+        profileImage.setImage(new Image(operator.getImage()));
         operatorsName.setText(operator.getFirstName() + " " + operator.getLastName());
         ObservableList<LogModel> observableList = FXCollections.observableArrayList(logModels);
 
@@ -341,8 +357,6 @@ public class Controller {
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
-        connection.send("closing");
-        connection.closeConnection();
         putRequest(LOGIN_URL+operator.getId(),3);
         primaryStage.close();
         stage.setTitle("Login View");

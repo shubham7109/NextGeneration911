@@ -114,7 +114,6 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             this.personModel = personModel;
             this.operatorModel = operatorModel;
         }
-        connection.closeConnection();
     }
 
     private Client createClient() throws UnknownHostException {
@@ -168,6 +167,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
             InfoWindow fredWilkeInfoWindow = new InfoWindow(infoWindowOptions);
             fredWilkeInfoWindow.open(map, markerArrayList.get(i));
+
 
             map.addMarker(markerArrayList.get(i));
         }
@@ -364,7 +364,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        connection.closeConnection();
+
         Stage primaryStage = (Stage) closeButton.getScene().getWindow();
         primaryStage.close();
     }

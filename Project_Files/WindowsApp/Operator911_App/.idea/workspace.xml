@@ -25,22 +25,12 @@
       <file leaf-file-name="On911Call.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operator/Controllers/On911Call.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="366" column="8" lean-forward="true" selection-start-line="366" selection-start-column="8" selection-end-line="366" selection-end-column="37" />
+            <state relative-caret-position="513">
+              <caret line="366" column="0" lean-forward="false" selection-start-line="366" selection-start-column="0" selection-end-line="366" selection-end-column="0" />
               <folding>
-                <element signature="e#20338#20339#0" expanded="true" />
-                <element signature="e#20368#20369#0" expanded="true" />
+                <element signature="e#20264#20265#0" expanded="true" />
+                <element signature="e#20294#20295#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/operator/Controllers/Controller.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
-              <caret line="99" column="37" lean-forward="false" selection-start-line="99" selection-start-column="37" selection-end-line="99" selection-end-column="37" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -48,8 +38,41 @@
       <file leaf-file-name="Main911Call.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operator/Main911Call.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
+            <state relative-caret-position="166">
               <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/operator/Controllers/Controller.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="237">
+              <caret line="245" column="0" lean-forward="true" selection-start-line="245" selection-start-column="0" selection-end-line="245" selection-end-column="0" />
+              <folding>
+                <element signature="e#8321#8852#0" expanded="true" />
+                <element signature="e#8851#8852#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoggedInView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/operator/LoggedInView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="280">
+              <caret line="35" column="46" lean-forward="true" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OperatorLogin.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/operator/Controllers/OperatorLogin.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="448">
+              <caret line="180" column="0" lean-forward="true" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -66,8 +89,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>end</find>
-      <find>elap</find>
       <find>timee</find>
       <find>calen</find>
       <find>accept</find>
@@ -96,6 +117,8 @@
       <find>logout</find>
       <find>initi</find>
       <find>setDaemon</find>
+      <find>conn</find>
+      <find>runlater</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Student\Desktop\SB_5_NextGeneration911\Project_Files\WindowsApp\Operator911_App\src\operator</dir>
@@ -114,7 +137,6 @@
         <option value="$PROJECT_DIR$/src/operator/Models/OperatorModel.java" />
         <option value="$PROJECT_DIR$/src/operator/Models/Networking.java" />
         <option value="$PROJECT_DIR$/src/operator/Client.java" />
-        <option value="$PROJECT_DIR$/src/operator/Controllers/OperatorLogin.java" />
         <option value="$PROJECT_DIR$/src/operator/Models/DeployModel.java" />
         <option value="$PROJECT_DIR$/src/operator/Models/PersonModel.java" />
         <option value="$PROJECT_DIR$/src/operator/LoggedInView.java" />
@@ -122,8 +144,9 @@
         <option value="$PROJECT_DIR$/src/operator/Xmls/On911Call.fxml" />
         <option value="$PROJECT_DIR$/src/operator/Main911Call.java" />
         <option value="$PROJECT_DIR$/src/operator/NetworkConnection.java" />
-        <option value="$PROJECT_DIR$/src/operator/Controllers/Controller.java" />
+        <option value="$PROJECT_DIR$/src/operator/Controllers/OperatorLogin.java" />
         <option value="$PROJECT_DIR$/src/operator/Controllers/On911Call.java" />
+        <option value="$PROJECT_DIR$/src/operator/Controllers/Controller.java" />
       </list>
     </option>
   </component>
@@ -369,13 +392,13 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.51428574" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.51428574" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1890625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1890625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -445,18 +468,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/operator/Controllers/Controller.java</url>
-          <line>342</line>
+          <line>92</line>
           <properties />
-          <option name="timeStamp" value="31" />
+          <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/operator/Controllers/On911Call.java</url>
-          <line>351</line>
+          <url>file://$PROJECT_DIR$/src/operator/Controllers/Controller.java</url>
+          <line>129</line>
           <properties />
-          <option name="timeStamp" value="33" />
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="34" />
+      <option name="time" value="36" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -466,8 +489,8 @@
         <state relative-caret-position="2100">
           <caret line="84" column="24" lean-forward="true" selection-start-line="84" selection-start-column="24" selection-end-line="84" selection-end-column="24" />
           <folding>
-            <element signature="e#20338#20339#0" expanded="true" />
-            <element signature="e#20368#20369#0" expanded="true" />
+            <element signature="e#20264#20265#0" expanded="true" />
+            <element signature="e#20294#20295#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -484,7 +507,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9150">
           <caret line="366" column="42" lean-forward="true" selection-start-line="366" selection-start-column="42" selection-end-line="366" selection-end-column="42" />
-          <folding />
+          <folding>
+            <element signature="e#8321#8852#0" expanded="true" />
+            <element signature="e#8851#8852#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -493,8 +519,8 @@
         <state relative-caret-position="3225">
           <caret line="129" column="68" lean-forward="false" selection-start-line="129" selection-start-column="68" selection-end-line="129" selection-end-column="68" />
           <folding>
-            <element signature="e#20338#20339#0" expanded="true" />
-            <element signature="e#20368#20369#0" expanded="true" />
+            <element signature="e#20264#20265#0" expanded="true" />
+            <element signature="e#20294#20295#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -519,7 +545,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9200">
           <caret line="368" column="21" lean-forward="true" selection-start-line="368" selection-start-column="21" selection-end-line="368" selection-end-column="21" />
-          <folding />
+          <folding>
+            <element signature="e#8321#8852#0" expanded="true" />
+            <element signature="e#8851#8852#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -640,22 +669,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/operator/Controllers/OperatorLogin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="165" column="0" lean-forward="true" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/operator/LoggedInView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/operator/Xmls/Main.fxml">
       <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
         <state />
@@ -715,14 +728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/operator/Main911Call.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/java/lang/Thread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -733,28 +738,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/operator/NetworkConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="12" column="53" lean-forward="true" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
+        <state relative-caret-position="130">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operator/Controllers/OperatorLogin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="180" column="0" lean-forward="true" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operator/LoggedInView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="35" column="46" lean-forward="true" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operator/Main911Call.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/operator/Controllers/On911Call.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="366" column="8" lean-forward="true" selection-start-line="366" selection-start-column="8" selection-end-line="366" selection-end-column="37" />
+        <state relative-caret-position="513">
+          <caret line="366" column="0" lean-forward="false" selection-start-line="366" selection-start-column="0" selection-end-line="366" selection-end-column="0" />
           <folding>
-            <element signature="e#20338#20339#0" expanded="true" />
-            <element signature="e#20368#20369#0" expanded="true" />
+            <element signature="e#20264#20265#0" expanded="true" />
+            <element signature="e#20294#20295#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/operator/Controllers/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="99" column="37" lean-forward="false" selection-start-line="99" selection-start-column="37" selection-end-line="99" selection-end-column="37" />
-          <folding />
+        <state relative-caret-position="237">
+          <caret line="245" column="0" lean-forward="true" selection-start-line="245" selection-start-column="0" selection-end-line="245" selection-end-column="0" />
+          <folding>
+            <element signature="e#8321#8852#0" expanded="true" />
+            <element signature="e#8851#8852#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
