@@ -94,16 +94,40 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private ArrayList<DeployModel> firstRespondersArray;
     private OperatorModel operatorModel;
     private PersonModel personModel;
+    private boolean isServer = true;
     private NetworkConnection connection;
 
+    {
+        try {
+            connection = isServer ? createServer() : createClient();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
 
 
-    public On911Call(OperatorModel operatorModel, PersonModel personModel, NetworkConnection connection) {
+
+    public On911Call(OperatorModel operatorModel, PersonModel personModel, NetworkConnection connection) throws Exception {
         LAT = Double.parseDouble(personModel.getLatitude());
         LONG = Double.parseDouble(personModel.getLongitude());
         this.personModel = personModel;
-        this.operatorModel = operatorModel;
-        this.connection =connection;
+        connection.closeConnection();
+    }
+
+    private Client createClient() throws UnknownHostException {
+        return new Client(InetAddress.getLocalHost().getHostAddress(), 7777, data ->{
+            Platform.runLater(()->{
+                messages.appendText(data.toString() + "\n");
+            });
+        });
+    }
+
+    private Server createServer(){
+        return new Server(7777,data ->{
+            Platform.runLater(()->{
+                messages.appendText(data.toString() + "\n");
+            });
+        });
     }
 
     @Override
@@ -317,11 +341,12 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
-        String message ="911 Operator: ";
+        String message = "911 Operator: ";
         message += input.getText();
         input.setText("");
+
         messages.appendText(message + "\n");
-        connection.send(message);
+        this.connection.send(message);
     }
 
 
@@ -402,6 +427,13 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        try {
+            connection.startConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         mapView.addMapInializedListener(this);
         messages.setWrapText(true);
         Timer timer = new Timer();

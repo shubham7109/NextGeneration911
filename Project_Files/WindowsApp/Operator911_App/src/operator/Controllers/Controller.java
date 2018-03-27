@@ -83,6 +83,7 @@ public class Controller {
                     Stage stage = new Stage();
                     stage.setTitle("Welcome");
                     try {
+                        //connection.closeConnection();
                         Main911Call main911Call = new Main911Call(username,data.toString() , connection);
                         updateStatus();
                         main911Call.start(stage);
