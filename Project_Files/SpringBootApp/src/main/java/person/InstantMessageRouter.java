@@ -19,23 +19,13 @@ public class InstantMessageRouter {
 	
 	@RequestMapping("/makecall")
 	public String makeCall() {
-		/* find the first operator whose status = x
-		 * return the ip address of that operator */
 		Login oper = getAvailableOperator();
-		
-		/* if the id of the caller is not null,
-		 * 	then send it to the windows operator*/
-		
-		// this will return null if there is no available operator
 		return oper.getIpAddress();
 	}
 	
 	@RequestMapping("/makecall/{id}")
 	public String makeIdCall(@PathVariable("id") String id) {
 		Login oper = getAvailableOperator();
-		/*
-		Client client = new Client(oper.getIpAddress(), 9999, Consumer<Serializable> onRecieveCallback);
-		*/
 		return oper.getIpAddress();
 	}
 	

@@ -1,5 +1,6 @@
 package person;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,11 @@ public class LogsController {
 	@RequestMapping("/logs")
 	public List<Logs> getAllLogs()
 	{
-		return logsService.getAllLogs();
+		List<Logs> s = logsService.getAllLogs();
+		
+		s.sort(new LogsComparator());
+		
+		return s;
 	}
 	
 
@@ -27,4 +32,5 @@ public class LogsController {
 	{
 		logsService.addLogs(logs);
 	}
+	
 }
