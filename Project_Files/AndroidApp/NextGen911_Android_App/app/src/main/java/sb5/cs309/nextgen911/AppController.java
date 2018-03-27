@@ -8,8 +8,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONObject;
-
 public class AppController extends Application {
     public static final String TAG = AppController.class
             .getSimpleName();
@@ -49,12 +47,5 @@ public class AppController extends Application {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
-    }
-
-    public interface JSONResponseListener {
-        void onResponse(JSONObject response);
-    }
-    public interface StringresponseListener {
-        void onResponse(String response);
     }
 }

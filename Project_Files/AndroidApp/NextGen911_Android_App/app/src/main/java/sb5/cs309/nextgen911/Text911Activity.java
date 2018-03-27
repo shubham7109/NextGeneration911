@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +34,9 @@ public class Text911Activity extends AppCompatActivity {
     public String serverIP;
     ArrayList<String> messageList;
     ArrayAdapter<String> adapter;
-    Client clientConnection;
+    Client firstConnection;
+    Client secondConnection;
+    boolean firstMessage;
     private EditText inputBox;
     private ListView list_of_messages;
 
@@ -46,6 +50,7 @@ public class Text911Activity extends AppCompatActivity {
         setContentView(R.layout.activity_text911);
         Text911Activity.context = getApplicationContext();
 
+        firstMessage = true;
         getServerIP();
         messageList = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(Text911Activity.this,
@@ -55,7 +60,6 @@ public class Text911Activity extends AppCompatActivity {
         list_of_messages = findViewById(R.id.list_of_messages);
         list_of_messages.setAdapter(adapter);
         FloatingActionButton fab = findViewById(R.id.fab);
-        clientConnection = createClient();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +74,13 @@ public class Text911Activity extends AppCompatActivity {
 
                 updateLocation();
                 try {
-                    clientConnection.send(message);
+                    if (firstMessage) {
+                        firstConnection.send(sharedPreferences.getString(idKey, ""));
+                        firstMessage = false;
+                    }
+                    secondConnection.send(message);
                 } catch (Exception e) {
-                    messageList.add("Oops that didn't work right");
+                    Toast.makeText(getAppContext(), "Oops that didn't work right", Toast.LENGTH_LONG);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -81,19 +89,22 @@ public class Text911Activity extends AppCompatActivity {
 
     }
 
-    private Client createClient() {
-        Client c = new Client("10.24.87.234", 5555, data -> {
+    private void createClient() {
+        firstConnection = new Client(serverIP, 5555, data -> {
+            messageList.add(data.toString() + "\n");
+            adapter.notifyDataSetChanged();
+        });
+        secondConnection = new Client(serverIP, 7777, data -> {
             messageList.add(data.toString() + "\n");
             adapter.notifyDataSetChanged();
         });
 
         try {
-            c.startConnection();
+            firstConnection.startConnection();
+            secondConnection.startConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return c;
     }
 
     public void updateLocation() {
@@ -181,15 +192,16 @@ public class Text911Activity extends AppCompatActivity {
     }
 
     public void getServerIP() {
-        serverIP = "-1";
-        com.android.volley.Response.Listener<String> listener = new com.android.volley.Response.Listener<String>() {
+        Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Toast.makeText(getAppContext(), response + "", Toast.LENGTH_LONG).show(); //Todo
                 serverIP = response;
-                Toast.makeText(getAppContext(), serverIP, Toast.LENGTH_LONG);
+                createClient();
             }
         };
         Networking.getOperatorIP(listener);
+
     }
 
     private static class LocationTuple {

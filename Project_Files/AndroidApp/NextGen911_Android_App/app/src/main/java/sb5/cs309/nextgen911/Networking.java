@@ -1,5 +1,7 @@
 package sb5.cs309.nextgen911;
 
+import android.os.Looper;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -8,9 +10,15 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,16 +70,15 @@ public class Networking {
         AppController.getInstance().getRequestQueue().add(req);
     }
 
-    public static void getOperatorIP(final Response.Listener<String> listener) {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://proj-309-sb-5.cs.iastate.edu:8080/makecall/",
-                listener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                listener.onResponse("Error");
-            }
+    public static void getOperatorIP(Response.Listener<String> listener) {
+        StringRequest req = new StringRequest
+                (Request.Method.GET, "http://proj-309-sb-5.cs.iastate.edu:8080/makecall/", listener, new Response.ErrorListener() {
 
-        });
-        AppController.getInstance().getRequestQueue().add(stringRequest);
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        AppController.getInstance().getRequestQueue().add(req);
     }
-
 }
