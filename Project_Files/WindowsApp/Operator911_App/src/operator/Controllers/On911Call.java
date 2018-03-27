@@ -132,7 +132,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private Server createServer(){
         return new Server(7777,data ->{
             Platform.runLater(()->{
-                messages.appendText("Caller ("+ personModel.getFirstName() +"):\n"+data.toString() + "\n");
+                messages.appendText("Caller ("+ personModel.getFirstName() +"):\n"+data.toString() + "\n\n");
             });
         });
     }
@@ -144,7 +144,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         options.center(new LatLong(LAT, LONG))
                 .mapMaker(true)
                 .zoomControl(true)
-                .zoom(12)
+                .zoom(15)
                 .overviewMapControl(false)
                 .mapType(MapTypeIdEnum.ROADMAP);
 
@@ -179,11 +179,14 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         callerLocation = new LatLong(LAT, LONG);
         map.setCenter(callerLocation);
         map.addMarker(callerMarker);
-
         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
         infoWindowOptions.content("CALLER LOCATION");
         InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
         infoWindow.open(map, callerMarker);
+
+        map.addUIEventHandler(callerMarker, UIEventType.click, (JSObject obj) -> {
+            infoWindow.open(map,callerMarker);
+        });
 
     }
 
@@ -203,7 +206,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 400, 100);
+        Scene scene = new Scene(grid, 500, 100);
         newWindow.setTitle("Deploy Ambulance");
         newWindow.setScene(scene);
 
@@ -246,7 +249,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 400, 100);
+        Scene scene = new Scene(grid, 500, 100);
         newWindow.setTitle("Deploy Fire Brigade");
         newWindow.setScene(scene);
 
@@ -290,7 +293,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 400, 100);
+        Scene scene = new Scene(grid, 500, 100);
         newWindow.setTitle("Deploy Fire Brigade");
         newWindow.setScene(scene);
 
@@ -333,7 +336,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 400, 100);
+        Scene scene = new Scene(grid, 500, 100);
         newWindow.setTitle("Deploy Fire Brigade");
         newWindow.setScene(scene);
 
@@ -377,7 +380,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 400, 100);
+        Scene scene = new Scene(grid, 500, 100);
         newWindow.setTitle("Deploy Fire Brigade");
         newWindow.setScene(scene);
 
@@ -420,7 +423,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 400, 100);
+        Scene scene = new Scene(grid, 500, 100);
         newWindow.setTitle("Deploy Fire Brigade");
         newWindow.setScene(scene);
 
@@ -457,11 +460,11 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
-        String message = "911 Operator: ";
+        String message = "911 Operator:\n";
         message += input.getText();
         input.setText("");
 
-        messages.appendText(message + "\n");
+        messages.appendText(message + "\n\n");
         this.connection.send(message);
     }
 
@@ -595,14 +598,14 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
         stateTroopersArray = new ArrayList<>();
         for(int i=0; i< deployModels.size(); i++){
-            if(deployModels.get(i).getType().equals("State Troopers")){
+            if(deployModels.get(i).getType().equals("State Trooper")){
                 stateTroopersArray.add(deployModels.get(i));
             }
         }
 
         countyOfficersArray = new ArrayList<>();
         for(int i=0; i< deployModels.size(); i++){
-            if(deployModels.get(i).getType().equals("County Officers")){
+            if(deployModels.get(i).getType().equals("County Officer")){
                 countyOfficersArray.add(deployModels.get(i));
             }
         }
@@ -623,7 +626,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
         firstRespondersArray = new ArrayList<>();
         for(int i=0; i< deployModels.size(); i++){
-            if(deployModels.get(i).getType().equals("First Responders")){
+            if(deployModels.get(i).getType().equals("First Responder")){
                 firstRespondersArray.add(deployModels.get(i));
             }
         }
