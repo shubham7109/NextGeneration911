@@ -9,7 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 
 public class Main extends Application {
@@ -19,12 +23,15 @@ public class Main extends Application {
     private NetworkConnection mainConnection  = isServer ? createMainServer() : createMainClient();
     private TextArea messages = new TextArea();
     private boolean firstMessage = true;
+    private String IP = "";
+    boolean firstTime = true;
 
-    public Main() throws UnknownHostException {
+    public Main() throws Exception {
     }
 
         @Override
         public void init() throws Exception{
+            IP = getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/makecall");
             firstConnection.startConnection();
         }
 
@@ -38,7 +45,7 @@ public class Main extends Application {
 
 
     private Client createMainClient() throws UnknownHostException {
-        return new Client(InetAddress.getLocalHost().getHostAddress(), 7777, data ->{
+        return new Client(IP, 7777, data ->{
             Platform.runLater(()->{
                 messages.appendText(data.toString() + "\n");
             });
@@ -46,8 +53,12 @@ public class Main extends Application {
         });
     }
 
-    private Client createClient() throws UnknownHostException {
-        return new Client(InetAddress.getLocalHost().getHostAddress(), 5555, data ->{
+    private Client createClient() throws Exception {
+        if(firstTime){
+            IP = getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/makecall");
+            firstTime = false;
+        }
+        return new Client(IP, 5555, data ->{
             Platform.runLater(()->{
                 messages.appendText(data.toString() + "\n");
             });
@@ -91,6 +102,20 @@ public class Main extends Application {
 
         VBox root = new VBox(20,messages,input);
         return root;
+    }
+
+    private static String getHTML(String urlToRead) throws Exception {
+        StringBuilder result = new StringBuilder();
+        java.net.URL url = new URL(urlToRead);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line;
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+        rd.close();
+        return result.toString();
     }
 
     @Override
