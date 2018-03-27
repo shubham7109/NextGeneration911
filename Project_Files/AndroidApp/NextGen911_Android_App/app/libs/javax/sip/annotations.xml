@@ -1,0 +1,5 @@
+<root>
+    <item name='javax.sip.SipStack'>
+        <annotation name='java.lang.Deprecated' />
+    </item>
+</root>
