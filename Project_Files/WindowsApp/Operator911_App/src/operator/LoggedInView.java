@@ -25,6 +25,7 @@ public class LoggedInView extends Application{
         // Constants
         private final String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons";
 
+
     public LoggedInView(String username) {
         this.username = username;
     }

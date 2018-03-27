@@ -84,9 +84,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
     private double LAT;
     private double LONG;
-    private String IP;
-    private boolean isServer = true    ;
-    private NetworkConnection connection;
+
     private ArrayList<DeployModel> deployModels;
     private ArrayList<DeployModel> ambulanceArray;
     private ArrayList<DeployModel> stateTroopersArray;
@@ -96,20 +94,16 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private ArrayList<DeployModel> firstRespondersArray;
     private OperatorModel operatorModel;
     private PersonModel personModel;
+    private NetworkConnection connection;
 
-    {
-        try {
-            connection = isServer ? createServer() : createClient();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public On911Call(OperatorModel operatorModel, PersonModel personModel) {
+
+    public On911Call(OperatorModel operatorModel, PersonModel personModel, NetworkConnection connection) {
         LAT = Double.parseDouble(personModel.getLatitude());
         LONG = Double.parseDouble(personModel.getLongitude());
         this.personModel = personModel;
         this.operatorModel = operatorModel;
+        this.connection =connection;
     }
 
     @Override
@@ -159,29 +153,6 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     public void directionsReceived(DirectionsResult directionsResult, DirectionStatus directionStatus) {
 
     }
-
-    private Server createMainServer(){
-        return new Server(9999,data ->{
-            Platform.runLater(()->{
-                messages.appendText(data.toString()+"\n");
-            });
-        });
-    }
-
-    private Server createServer(){
-        return new Server(5555,data ->{
-            Platform.runLater(()->{
-                messages.appendText(data.toString()+"\n");
-            });
-        });
-    }
-
-    private Client createClient() throws UnknownHostException {
-        return new Client(InetAddress.getLocalHost().getHostAddress(), 5555, data ->{
-            messages.appendText(data.toString() + "\n");
-        });
-    }
-
 
 
     @FXML void ambulanceOnClick(ActionEvent ae){
@@ -346,13 +317,14 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
-        String message = isServer ? "911 Operator: " : "Client: ";
+        String message ="911 Operator: ";
         message += input.getText();
         input.setText("");
-
         messages.appendText(message + "\n");
         connection.send(message);
     }
+
+
 
     @FXML
     public void handleCloseButtonAction(ActionEvent event) throws IOException, JSONException {
@@ -444,13 +416,6 @@ public class On911Call implements Initializable, MapComponentInitializedListener
                 });
             }
         }, 1000, 1000);
-
-        try {
-            IP = InetAddress.getLocalHost().getHostAddress();
-            connection.startConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         // TODO CHANGE THIS
         Platform.runLater(()->{

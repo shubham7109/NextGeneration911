@@ -24,10 +24,12 @@ public class Main911Call extends Application {
 
     private OperatorModel operatorModel;
     private PersonModel personModel;
+    private NetworkConnection connection;
 
-    public Main911Call(String username, String callerNumber) throws Exception {
+    public Main911Call(String username, String callerID, NetworkConnection connection) throws Exception {
         JSONArray operators  = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/login"));
         JSONArray persons = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/persons"));
+        this.connection = connection;
 
         for(int i=0; i<operators.length(); i++){
             if((new OperatorModel(operators.getJSONObject(i)).getUserName()).equals(username)){
@@ -35,7 +37,7 @@ public class Main911Call extends Application {
             }
         }
         for(int i=0; i<persons.length(); i++){
-            if((new PersonModel(persons.getJSONObject(i)).getPhoneNumber()).equals(callerNumber)){
+            if((new PersonModel(persons.getJSONObject(i)).getId()).equals(callerID)){
                 personModel = new PersonModel(persons.getJSONObject(i));
             }
         }
@@ -44,7 +46,7 @@ public class Main911Call extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Xmls/On911Call.fxml"));
-        On911Call controller = new On911Call(operatorModel,personModel);
+        On911Call controller = new On911Call(operatorModel,personModel,connection);
         loader.setController(controller);
         AnchorPane anchorPane = loader.load();
 

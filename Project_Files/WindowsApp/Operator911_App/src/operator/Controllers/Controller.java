@@ -27,20 +27,17 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import operator.LoggedInView;
-import operator.Main911Call;
+import operator.*;
 import operator.Models.LogModel;
 import operator.Models.OperatorModel;
+import operator.Models.PersonModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.swing.*;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.ProtocolException;
-import java.net.URL;
+import java.net.*;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -67,13 +64,53 @@ public class Controller {
     private Timer timer;
     private OperatorModel operator;
 
+    private boolean isServer = true;
+    private NetworkConnection connection;
+
+    {
+        try {
+            connection = isServer ? createServer() : createClient();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Server createServer(){
+        return new Server(5555,data ->{
+            Platform.runLater(()->{
+                if(!data.toString().equals("")){
+                    // Create a controller instance
+                    Stage stage = new Stage();
+                    stage.setTitle("Welcome");
+                    try {
+                        Main911Call main911Call = new Main911Call(username,data.toString() , connection);
+                        updateStatus();
+                        main911Call.start(stage);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
+                    primaryStage.close();
+                }
+            });
+        });
+    }
+
+    private Client createClient() throws UnknownHostException {
+        return new Client(InetAddress.getLocalHost().getHostAddress(), 5555, data ->{
+            // Does nothing as I am not client
+        });
+    }
+
     public Controller(String username){
         this.username = username;
         System.out.println(this.username);
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws Exception {
+        connection.startConnection();
+
         operatorStatus.getItems().removeAll(operatorStatus.getItems());
         operatorStatus.getItems().addAll("Available", "Unavailable");
 
@@ -328,69 +365,6 @@ public class Controller {
         osw.close();
         System.err.println(connection.getResponseCode());
     }
-
-    @FXML
-    void simulateCallPress(ActionEvent event) {
-
-        // TODO Update this method !
-        Stage newWindow = new Stage();
-        newWindow.setResizable(false);
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
-
-        Scene scene = new Scene(grid, 500, 200);
-        newWindow.setTitle("Incoming Call");
-        newWindow.setScene(scene);
-
-        Text scenetitle = new Text("Incoming call from: (847)-943-7754");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
-        grid.add(scenetitle, 0, 0, 2, 1);
-
-        Button button_accept = new Button("Accept Call");
-        button_accept.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
-        HBox hbBtn_accept = new HBox(10);
-        hbBtn_accept.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn_accept.getChildren().add(button_accept);
-        grid.add(hbBtn_accept, 1, 4);
-
-        Button button_decline = new Button("Decline Call");
-        button_decline.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
-        HBox hbBtn_decline = new HBox(10);
-        hbBtn_decline.setAlignment(Pos.BOTTOM_LEFT);
-        hbBtn_decline.getChildren().add(button_decline);
-        grid.add(hbBtn_decline, 2, 4);
-
-        newWindow.show();
-
-        button_accept.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                // Create a controller instance
-                Stage stage = new Stage();
-                stage.setTitle("Welcome");
-                try {
-                    Main911Call main911Call = new Main911Call(username,"4145155");
-                    updateStatus();
-                    main911Call.start(stage);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-                newWindow.close();
-
-                Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
-                primaryStage.close();
-            }
-        });
-
-        button_decline.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                newWindow.close();
-            }
-        });
-    }
-
 
     private void updateStatus() throws Exception {
         JSONObject jsonObject = new JSONObject();
