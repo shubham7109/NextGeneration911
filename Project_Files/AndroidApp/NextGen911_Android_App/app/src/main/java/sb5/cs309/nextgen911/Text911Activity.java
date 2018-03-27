@@ -5,9 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,17 +13,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 import sb5.cs309.nextgen911.ChatServer.Client;
 
@@ -34,12 +28,17 @@ import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 
 public class Text911Activity extends AppCompatActivity {
 
-    private EditText inputBox;
     static Context context;
-    private ListView list_of_messages;
+    public String serverIP;
     ArrayList<String> messageList;
     ArrayAdapter<String> adapter;
     Client clientConnection;
+    private EditText inputBox;
+    private ListView list_of_messages;
+
+    public static Context getAppContext() {
+        return Text911Activity.context;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +46,7 @@ public class Text911Activity extends AppCompatActivity {
         setContentView(R.layout.activity_text911);
         Text911Activity.context = getApplicationContext();
 
+        getServerIP();
         messageList = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(Text911Activity.this,
                 android.R.layout.simple_list_item_1, messageList);
@@ -81,15 +81,10 @@ public class Text911Activity extends AppCompatActivity {
 
     }
 
-    public static Context getAppContext() {
-        return Text911Activity.context;
-    }
-
-
     private Client createClient() {
-        Consumer<Serializable> onRecieveCallback = new myConsumer();
-        Client c = new Client("10.64.25.147", 5555, data ->{
-            messageList.add(data.toString() + "\n"); adapter.notifyDataSetChanged();
+        Client c = new Client("10.24.87.234", 5555, data -> {
+            messageList.add(data.toString() + "\n");
+            adapter.notifyDataSetChanged();
         });
 
         try {
@@ -101,17 +96,6 @@ public class Text911Activity extends AppCompatActivity {
         return c;
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public class myConsumer implements Consumer<Serializable> {
-
-        @Override
-        public void accept(Serializable serializable) {
-            messageList.add(serializable.toString());
-            adapter.notifyDataSetChanged();
-        }
-    }
-
     public void updateLocation() {
         String id = sharedPreferences.getString(idKey, "");
 
@@ -119,7 +103,7 @@ public class Text911Activity extends AppCompatActivity {
             return;
 
         //Make get request
-        AppController.VolleyResponseListener listener = new AppController.VolleyResponseListener() {
+        com.android.volley.Response.Listener<JSONObject> listener = new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -129,10 +113,10 @@ public class Text911Activity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Networking.postPersonalInfo(response, AppController.getInstance().getRequestQueue());
+                Networking.postPersonalInfo(response);
             }
         };
-        Networking.getPersonalInfo(id, listener, AppController.getInstance().getRequestQueue());
+        Networking.getPersonalInfo(id, listener);
     }
 
     public LocationTuple getLocation() {
@@ -186,20 +170,31 @@ public class Text911Activity extends AppCompatActivity {
         }
     }
 
-    private static class LocationTuple {
-        public String lat;
-        public String lng;
-    }
-
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         try {
             clientConnection.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
         super.onBackPressed();  // optional depending on your needs
+    }
+
+    public void getServerIP() {
+        serverIP = "-1";
+        com.android.volley.Response.Listener<String> listener = new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                serverIP = response;
+                Toast.makeText(getAppContext(), serverIP, Toast.LENGTH_LONG);
+            }
+        };
+        Networking.getOperatorIP(listener);
+    }
+
+    private static class LocationTuple {
+        public String lat;
+        public String lng;
     }
 }
 

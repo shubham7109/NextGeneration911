@@ -2,11 +2,11 @@ package sb5.cs309.nextgen911;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class Networking {
 
 
-    public static void postPersonalInfo(JSONObject personalInfo, RequestQueue mQueue) {
+    public static void postPersonalInfo(JSONObject personalInfo) {
         JsonObjectRequest req = new JsonObjectRequest(PersonalInfoActivity.context.getResources().getString(R.string.personsURL), personalInfo,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -47,25 +47,31 @@ public class Networking {
             }
         };
 
-        mQueue.add(req);
+        AppController.getInstance().getRequestQueue().add(req);
     }
 
-    public static void getPersonalInfo(final String ID, final AppController.VolleyResponseListener listener, RequestQueue mQueue) {
+    public static void getPersonalInfo(final String ID, final Response.Listener<JSONObject> listener) {
         JsonObjectRequest req = new JsonObjectRequest
-                (Request.Method.GET, "http://proj-309-sb-5.cs.iastate.edu:8080/persons/" + ID, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        listener.onResponse(response);
-                    }
-                }, new Response.ErrorListener() {
+                (Request.Method.GET, "http://proj-309-sb-5.cs.iastate.edu:8080/persons/" + ID, null, listener, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
                     }
                 });
-        mQueue.add(req);
+        AppController.getInstance().getRequestQueue().add(req);
+    }
+
+    public static void getOperatorIP(final Response.Listener<String> listener) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://proj-309-sb-5.cs.iastate.edu:8080/makecall/",
+                listener, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onResponse("Error");
+            }
+
+        });
+        AppController.getInstance().getRequestQueue().add(stringRequest);
     }
 
 }

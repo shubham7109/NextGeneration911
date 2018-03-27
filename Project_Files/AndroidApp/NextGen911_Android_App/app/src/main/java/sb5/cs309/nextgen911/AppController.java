@@ -51,7 +51,10 @@ public class AppController extends Application {
         }
     }
 
-    public interface VolleyResponseListener {
+    public interface JSONResponseListener {
         void onResponse(JSONObject response);
+    }
+    public interface StringresponseListener {
+        void onResponse(String response);
     }
 }

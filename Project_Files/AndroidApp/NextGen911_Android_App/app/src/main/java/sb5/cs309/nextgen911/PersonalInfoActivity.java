@@ -1,13 +1,11 @@
 package sb5.cs309.nextgen911;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -15,28 +13,15 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import static sb5.cs309.nextgen911.MainMenu.idKey;
-import static sb5.cs309.nextgen911.MainMenu.phonekey;
-import static sb5.cs309.nextgen911.MainMenu.regKey;
 import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 
 public class PersonalInfoActivity extends AppCompatActivity {
@@ -71,6 +56,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
         }
     };
 
+    public static Context getAppContext() {
+        return PersonalInfoActivity.context;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,10 +71,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
         navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
-
-    public static Context getAppContext() {
-        return PersonalInfoActivity.context;
     }
 
     public void submit_info(View view) {
@@ -118,7 +103,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             Toast.makeText(context, "Submitted", Toast.LENGTH_LONG).show();
             sharedPreferences.edit().putString(idKey, getID()).apply();
 
-            Networking.postPersonalInfo(personalInfo, AppController.getInstance().getRequestQueue());
+            Networking.postPersonalInfo(personalInfo);
         }
     }
 
@@ -191,9 +176,19 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return name.getText().toString();
     }
 
+    public void setFirstName(String firstName) {
+        EditText text = findViewById(R.id.firstName_editText);
+        text.setText(firstName);
+    }
+
     public String getMiddleName() {
         EditText name = findViewById(R.id.middleName_editText);
         return name.getText().toString();
+    }
+
+    public void setMiddleName(String middleName) {
+        EditText text = findViewById(R.id.middleName_editText);
+        text.setText(middleName);
     }
 
     public String getLastName() {
@@ -201,9 +196,19 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return name.getText().toString();
     }
 
+    public void setLastName(String lastName) {
+        EditText text = findViewById(R.id.lastName_editText);
+        text.setText(lastName);
+    }
+
     public String getDOB() {
         EditText dob = findViewById(R.id.dob_editText);
         return dob.getText().toString();
+    }
+
+    public void setDOB(String DOB) {
+        EditText text = findViewById(R.id.dob_editText);
+        text.setText(DOB);
     }
 
     public String getPhoneNumber() {
@@ -212,6 +217,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
         phoneNumber = phoneNumber.replaceAll("[^\\d.]", ""); // Remove all non-numeric characters
 
         return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        EditText text = findViewById(R.id.phoneNumber_editText);
+        text.setText(phoneNumber);
     }
 
     // Return //0 for female, 1 for male, -1 on no selection
@@ -227,6 +237,22 @@ public class PersonalInfoActivity extends AppCompatActivity {
             return "";
     }
 
+    public void setGender(String gender) {
+        if (gender.equals("MALE")) {
+            RadioButton button = findViewById(R.id.male);
+            button.toggle();
+        }
+        if (gender.equals("FEMALE")) {
+            RadioButton button = findViewById(R.id.female);
+            button.toggle();
+        }
+        if (gender.equals("")) {
+            RadioButton button = findViewById(R.id.none);
+            button.toggle();
+        }
+
+    }
+
     public String getAddress() {
         EditText address = findViewById(R.id.home_editText);
         return address.getText().toString();
@@ -237,9 +263,19 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return city.getText().toString();
     }
 
+    public void setCity(String city) {
+        EditText text = findViewById(R.id.city_editText);
+        text.setText(city);
+    }
+
     public String getState() {
         EditText state = findViewById(R.id.state_editText);
         return state.getText().toString();
+    }
+
+    public void setState(String state) {
+        EditText text = findViewById(R.id.state_editText);
+        text.setText(state);
     }
 
     public String getZip() {
@@ -260,6 +296,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return vehicle.getText().toString();
     }
 
+    public void setVehicle(String vehicle) {
+        EditText text = findViewById(R.id.vehicle_editText);
+        text.setText(vehicle);
+    }
+
     public String getHeight() {
         EditText height = findViewById(R.id.heightCentimeters_editText);
         if (height.getText().toString().equals(""))
@@ -268,12 +309,24 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return height.getText().toString();
     }
 
+    public void setHeight(String height) {
+        EditText text = findViewById(R.id.heightCentimeters_editText);
+        if (!height.equals("0"))
+            text.setText(height);
+    }
+
     public String getWeight() {
         EditText weight = findViewById(R.id.weightKilograms_editText);
         if (weight.getText().toString().equals(""))
             return "0";
 
         return weight.getText().toString();
+    }
+
+    public void setWeight(String weight) {
+        EditText text = findViewById(R.id.weightKilograms_editText);
+        if (!weight.equals("0"))
+            text.setText(weight);
     }
 
     public String getBloodType() {
@@ -310,6 +363,29 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return "";
     }
 
+    public void setBloodType(String bloodType) {
+        CheckBox rh = findViewById(R.id.rh_checkBox);
+        if (bloodType.contains("+"))
+            rh.toggle();
+        bloodType = bloodType.replace("+", "");
+        if (bloodType.equals("A")) {
+            RadioButton a = findViewById(R.id.bloodA);
+            a.toggle();
+        }
+        if (bloodType.equals("B")) {
+            RadioButton b = findViewById(R.id.bloodB);
+            b.toggle();
+        }
+        if (bloodType.equals("AB")) {
+            RadioButton ab = findViewById(R.id.bloodAB);
+            ab.toggle();
+        }
+        if (bloodType.equals("O")) {
+            RadioButton o = findViewById(R.id.bloodO);
+            o.toggle();
+        }
+
+    }
 
     public void loadJson() {
         String id = sharedPreferences.getString(idKey, "");
@@ -318,13 +394,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
             return;
 
         //Make get request
-        AppController.VolleyResponseListener listener = new AppController.VolleyResponseListener() {
+        com.android.volley.Response.Listener<JSONObject> listener = new com.android.volley.Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 populateJSONValues(response);
             }
         };
-        Networking.getPersonalInfo(id, listener, AppController.getInstance().getRequestQueue());
+        Networking.getPersonalInfo(id, listener);
     }
 
     public void populateJSONValues(JSONObject personalInfo) {
@@ -371,44 +447,15 @@ public class PersonalInfoActivity extends AppCompatActivity {
         setWeight(weightKilograms);
     }
 
-    public void setFirstName(String firstName) {
-        EditText text = findViewById(R.id.firstName_editText);
-        text.setText(firstName);
-    }
-
-    public void setMiddleName(String middleName) {
-        EditText text = findViewById(R.id.middleName_editText);
-        text.setText(middleName);
-    }
-
-    public void setLastName(String lastName) {
-        EditText text = findViewById(R.id.lastName_editText);
-        text.setText(lastName);
-    }
-
     public void setHomeAddress(String homeAddress) {
         EditText text = findViewById(R.id.home_editText);
         text.setText(homeAddress);
     }
 
-    public void setCity(String city) {
-        EditText text = findViewById(R.id.city_editText);
-        text.setText(city);
-    }
-
-    public void setState(String state) {
-        EditText text = findViewById(R.id.state_editText);
-        text.setText(state);
-    }
-
     public void setZIP(String ZIP) {
         EditText text = findViewById(R.id.zipCode_editText);
-        text.setText(ZIP);
-    }
-
-    public void setDOB(String DOB) {
-        EditText text = findViewById(R.id.dob_editText);
-        text.setText(DOB);
+        if (!ZIP.equals("0"))
+            text.setText(ZIP);
     }
 
     public void setLicence(String licence) {
@@ -416,67 +463,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         text.setText(licence);
     }
 
-    public void setVehicle(String vehicle) {
-        EditText text = findViewById(R.id.vehicle_editText);
-        text.setText(vehicle);
-    }
-
-    public void setBloodType(String bloodType) {
-        CheckBox rh = findViewById(R.id.rh_checkBox);
-        if (bloodType.contains("+"))
-            rh.toggle();
-        bloodType = bloodType.replace("+", "");
-        if (bloodType.equals("A")) {
-            RadioButton a = findViewById(R.id.bloodA);
-            a.toggle();
-        }
-        if (bloodType.equals("B")) {
-            RadioButton b = findViewById(R.id.bloodB);
-            b.toggle();
-        }
-        if (bloodType.equals("AB")) {
-            RadioButton ab = findViewById(R.id.bloodAB);
-            ab.toggle();
-        }
-        if (bloodType.equals("O")) {
-            RadioButton o = findViewById(R.id.bloodO);
-            o.toggle();
-        }
-
-    }
-
-    public void setGender(String gender) {
-        if (gender.equals("MALE")) {
-            RadioButton button = findViewById(R.id.male);
-            button.toggle();
-        }
-        if (gender.equals("FEMALE")) {
-            RadioButton button = findViewById(R.id.female);
-            button.toggle();
-        }
-        if (gender.equals("")) {
-            RadioButton button = findViewById(R.id.none);
-            button.toggle();
-        }
-
-    }
-
-    public void setHeight(String height) {
-        EditText text = findViewById(R.id.heightCentimeters_editText);
-        text.setText(height);
-    }
-
-    public void setWeight(String weight) {
-        EditText text = findViewById(R.id.weightKilograms_editText);
-        text.setText(weight);
-    }
-
-    public void setPhoneNumber(String phoneNumber){
-        EditText text = findViewById(R.id.phoneNumber_editText);
-        text.setText(phoneNumber);
-    }
-
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
