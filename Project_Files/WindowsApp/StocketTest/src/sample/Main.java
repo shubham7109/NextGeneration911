@@ -41,7 +41,7 @@ public class Main extends Application {
     }
 
     private Client createClient() throws UnknownHostException {
-        return new Client("10.24.87.234", 5555, data ->{
+        return new Client(InetAddress.getLocalHost().getHostAddress(), 5555, data ->{
             Platform.runLater(()->{
                 messages.appendText(data.toString() + "\n");
             });
@@ -53,6 +53,7 @@ public class Main extends Application {
         messages.setPrefHeight(550);
         TextField input = new TextField();
         input.setOnAction(event -> {
+
             String message = input.getText();
             input.clear();
 
