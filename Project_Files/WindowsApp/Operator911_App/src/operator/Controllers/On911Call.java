@@ -108,9 +108,12 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
 
     public On911Call(OperatorModel operatorModel, PersonModel personModel, NetworkConnection connection) throws Exception {
-        LAT = Double.parseDouble(personModel.getLatitude());
-        LONG = Double.parseDouble(personModel.getLongitude());
-        this.personModel = personModel;
+        if(personModel != null){
+            LAT = Double.parseDouble(personModel.getLatitude());
+            LONG = Double.parseDouble(personModel.getLongitude());
+            this.personModel = personModel;
+            this.operatorModel = operatorModel;
+        }
         connection.closeConnection();
     }
 
@@ -349,21 +352,19 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         this.connection.send(message);
     }
 
-
-
     @FXML
-    public void handleCloseButtonAction(ActionEvent event) throws IOException, JSONException {
-        putRequest("http://proj-309-sb-5.cs.iastate.edu:8080/logs");
+    public void closeWindowAction(ActionEvent event) throws Exception {
 
         Stage stage = new Stage();
         stage.setTitle("Operator");
         LoggedInView loggedInView = new LoggedInView(operatorModel.getUserName());
         try {
+            putRequest("http://proj-309-sb-5.cs.iastate.edu:8080/logs");
             loggedInView.start(stage);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-
+        connection.closeConnection();
         Stage primaryStage = (Stage) closeButton.getScene().getWindow();
         primaryStage.close();
     }

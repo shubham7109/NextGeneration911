@@ -23,10 +23,10 @@ public class Main extends Application {
     public Main() throws UnknownHostException {
     }
 
-    @Override
-    public void init() throws Exception{
-        firstConnection.startConnection();
-    }
+        @Override
+        public void init() throws Exception{
+            firstConnection.startConnection();
+        }
 
     private Server createMainServer(){
         return new Server(7777,data ->{

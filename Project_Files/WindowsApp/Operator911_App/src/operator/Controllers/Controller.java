@@ -57,6 +57,7 @@ public class Controller {
     @FXML private ImageView profileImage;
     @FXML private Button logoutButton;
 
+    private boolean callOnce = true;
     private String username;
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/logs";
     private String LOGIN_URL = "http://proj-309-sb-5.cs.iastate.edu:8080/login/";
@@ -75,10 +76,14 @@ public class Controller {
         }
     }
 
+    public Controller(){
+        // Required Constructor
+    }
+
     private Server createServer(){
         return new Server(5555,data ->{
             Platform.runLater(()->{
-                if(!data.toString().equals("")){
+                if(!data.toString().equals("") && callOnce){
                     // Create a controller instance
                     Stage stage = new Stage();
                     stage.setTitle("Welcome");
@@ -92,6 +97,7 @@ public class Controller {
                     }
                     Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
                     primaryStage.close();
+                    callOnce = false;
                 }
             });
         });
@@ -100,6 +106,9 @@ public class Controller {
     private Client createClient() throws UnknownHostException {
         return new Client(InetAddress.getLocalHost().getHostAddress(), 5555, data ->{
             // Does nothing as I am not client
+            Platform.runLater(()->{
+
+            });
         });
     }
 
@@ -327,12 +336,13 @@ public class Controller {
     }
 
     @FXML
-    void logoutPress(ActionEvent event) throws IOException, JSONException {
+    void logoutPress(ActionEvent event) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/operator/Xmls/Login.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
-
+        connection.send("closing");
+        connection.closeConnection();
         putRequest(LOGIN_URL+operator.getId(),3);
         primaryStage.close();
         stage.setTitle("Login View");

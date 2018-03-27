@@ -26,6 +26,9 @@ public class Main911Call extends Application {
     private PersonModel personModel;
     private NetworkConnection connection;
 
+    public Main911Call(){
+        // Required Constructor
+    }
     public Main911Call(String username, String callerID, NetworkConnection connection) throws Exception {
         JSONArray operators  = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/login"));
         JSONArray persons = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/persons"));

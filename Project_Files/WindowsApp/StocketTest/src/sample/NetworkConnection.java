@@ -56,7 +56,7 @@ public abstract class NetworkConnection {
                 }
             }
             catch (Exception e){
-                onRecieveCallback.accept("Connection is closed!");
+                onRecieveCallback.accept("");
             }
         }
     }
