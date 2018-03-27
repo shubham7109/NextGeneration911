@@ -237,9 +237,6 @@ public class Controller {
                     sdf = new SimpleDateFormat("HH:mm:ss");
                     time =  time + sdf.format(cal.getTime());
                     timeLabel.setText(time);
-
-
-
                 });
             }
         }, 1000, 1000);

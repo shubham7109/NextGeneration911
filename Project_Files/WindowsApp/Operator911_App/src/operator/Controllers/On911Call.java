@@ -2,6 +2,7 @@ package operator.Controllers;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import com.lynden.gmapsfx.service.directions.DirectionStatus;
 import com.lynden.gmapsfx.service.directions.DirectionsResult;
@@ -11,6 +12,7 @@ import com.lynden.gmapsfx.util.MarkerImageFactory;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -23,6 +25,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import netscape.javascript.JSObject;
 import operator.Client;
 import operator.LoggedInView;
 import operator.Models.DeployModel;
@@ -84,7 +87,6 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
     private double LAT;
     private double LONG;
-
     private ArrayList<DeployModel> deployModels;
     private ArrayList<DeployModel> ambulanceArray;
     private ArrayList<DeployModel> stateTroopersArray;
@@ -93,6 +95,9 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private ArrayList<DeployModel> swatTeamArray;
     private ArrayList<DeployModel> firstRespondersArray;
     private OperatorModel operatorModel;
+    private GoogleMap map;
+    private ArrayList<Marker> markerArrayList = new ArrayList<>();
+    private ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>();
     private PersonModel personModel;
     private boolean isServer = true;
     private NetworkConnection connection;
@@ -119,7 +124,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private Client createClient() throws UnknownHostException {
         return new Client(InetAddress.getLocalHost().getHostAddress(), 7777, data ->{
             Platform.runLater(()->{
-                messages.appendText(data.toString() + "\n");
+                messages.appendText("Caller ("+ personModel.getFirstName() +"): "+data.toString() + "\n");
             });
         });
     }
@@ -127,7 +132,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     private Server createServer(){
         return new Server(7777,data ->{
             Platform.runLater(()->{
-                messages.appendText(data.toString() + "\n");
+                messages.appendText("Caller ("+ personModel.getFirstName() +"):\n"+data.toString() + "\n");
             });
         });
     }
@@ -139,21 +144,17 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         options.center(new LatLong(LAT, LONG))
                 .mapMaker(true)
                 .zoomControl(true)
-                .zoom(16)
+                .zoom(12)
                 .overviewMapControl(false)
                 .mapType(MapTypeIdEnum.ROADMAP);
 
-        GoogleMap map = mapView.createMap(options);
+        map = mapView.createMap(options);
 
         LatLong callerLocation = new LatLong(LAT, LONG);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(callerLocation);
+
         Marker callerMarker = new Marker(markerOptions);
-        map.addMarker(callerMarker);
-        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>();
-        ArrayList<Marker> markerArrayList = new ArrayList<>();
-
-
 
         for(int i=0; i<deployModels.size(); i++){
             markerOptionsArrayList.add(new MarkerOptions());
@@ -165,14 +166,24 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
             infoWindowOptions.content(deployModels.get(i).getType());
 
-            InfoWindow fredWilkeInfoWindow = new InfoWindow(infoWindowOptions);
-            fredWilkeInfoWindow.open(map, markerArrayList.get(i));
-
+            InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+            //infoWindow.open(map, markerArrayList.get(i));
 
             map.addMarker(markerArrayList.get(i));
+
+            int finalI = i;
+            map.addUIEventHandler(markerArrayList.get(i), UIEventType.click, (JSObject obj) -> {
+                infoWindow.open(map,markerArrayList.get(finalI));
+            });
         }
         callerLocation = new LatLong(LAT, LONG);
         map.setCenter(callerLocation);
+        map.addMarker(callerMarker);
+
+        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+        infoWindowOptions.content("CALLER LOCATION");
+        InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+        infoWindow.open(map, callerMarker);
 
     }
 
@@ -192,7 +203,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 500, 200);
+        Scene scene = new Scene(grid, 400, 100);
         newWindow.setTitle("Deploy Ambulance");
         newWindow.setScene(scene);
 
@@ -204,6 +215,23 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             Button deploy = new Button("DEPLOY");
             deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(deploy,1,i,1,1);
+
+            int finalI = i;
+            deploy.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    for(int k=0; k< deployModels.size(); k++){
+                        for(int j=0; j<ambulanceArray.size(); j++){
+                            if(deployModels.get(k).getId().equals(ambulanceArray.get(finalI).getId())){
+                                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                                infoWindowOptions.content(deployModels.get(k).getType());
+                                InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+                                infoWindow.open(map, markerArrayList.get(k));
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
         }
         newWindow.show();
     }
@@ -218,7 +246,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 500, 200);
+        Scene scene = new Scene(grid, 400, 100);
         newWindow.setTitle("Deploy Fire Brigade");
         newWindow.setScene(scene);
 
@@ -230,6 +258,23 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             Button deploy = new Button("DEPLOY");
             deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(deploy,1,i,1,1);
+
+            int finalI = i;
+            deploy.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    for(int k=0; k< deployModels.size(); k++){
+                        for(int j=0; j<fireBrigadeArray.size(); j++){
+                            if(deployModels.get(k).getId().equals(fireBrigadeArray.get(finalI).getId())){
+                                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                                infoWindowOptions.content(deployModels.get(k).getType());
+                                InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+                                infoWindow.open(map, markerArrayList.get(k));
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
         }
         newWindow.show();
 
@@ -245,7 +290,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 500, 200);
+        Scene scene = new Scene(grid, 400, 100);
         newWindow.setTitle("Deploy Fire Brigade");
         newWindow.setScene(scene);
 
@@ -257,6 +302,23 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             Button deploy = new Button("DEPLOY");
             deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(deploy,1,i,1,1);
+
+            int finalI = i;
+            deploy.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    for(int k=0; k< deployModels.size(); k++){
+                        for(int j=0; j<stateTroopersArray.size(); j++){
+                            if(deployModels.get(k).getId().equals(stateTroopersArray.get(finalI).getId())){
+                                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                                infoWindowOptions.content(deployModels.get(k).getType());
+                                InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+                                infoWindow.open(map, markerArrayList.get(k));
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
         }
         newWindow.show();
     }
@@ -271,7 +333,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 500, 200);
+        Scene scene = new Scene(grid, 400, 100);
         newWindow.setTitle("Deploy Fire Brigade");
         newWindow.setScene(scene);
 
@@ -283,6 +345,23 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             Button deploy = new Button("DEPLOY");
             deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(deploy,1,i,1,1);
+
+            int finalI = i;
+            deploy.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    for(int k=0; k< deployModels.size(); k++){
+                        for(int j=0; j<countyOfficersArray.size(); j++){
+                            if(deployModels.get(k).getId().equals(countyOfficersArray.get(finalI).getId())){
+                                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                                infoWindowOptions.content(deployModels.get(k).getType());
+                                InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+                                infoWindow.open(map, markerArrayList.get(k));
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
         }
         newWindow.show();
 
@@ -298,7 +377,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 500, 200);
+        Scene scene = new Scene(grid, 400, 100);
         newWindow.setTitle("Deploy Fire Brigade");
         newWindow.setScene(scene);
 
@@ -310,6 +389,23 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             Button deploy = new Button("DEPLOY");
             deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(deploy,1,i,1,1);
+
+            int finalI = i;
+            deploy.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    for(int k=0; k< deployModels.size(); k++){
+                        for(int j=0; j<swatTeamArray.size(); j++){
+                            if(deployModels.get(k).getId().equals(swatTeamArray.get(finalI).getId())){
+                                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                                infoWindowOptions.content(deployModels.get(k).getType());
+                                InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+                                infoWindow.open(map, markerArrayList.get(k));
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
         }
         newWindow.show();
 
@@ -324,7 +420,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 500, 200);
+        Scene scene = new Scene(grid, 400, 100);
         newWindow.setTitle("Deploy Fire Brigade");
         newWindow.setScene(scene);
 
@@ -336,6 +432,23 @@ public class On911Call implements Initializable, MapComponentInitializedListener
             Button deploy = new Button("DEPLOY");
             deploy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
             grid.add(deploy,1,i,1,1);
+
+            int finalI = i;
+            deploy.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    for(int k=0; k< deployModels.size(); k++){
+                        for(int j=0; j<firstRespondersArray.size(); j++){
+                            if(deployModels.get(k).getId().equals(firstRespondersArray.get(finalI).getId())){
+                                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                                infoWindowOptions.content(deployModels.get(k).getType());
+                                InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+                                infoWindow.open(map, markerArrayList.get(k));
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
         }
         newWindow.show();
 

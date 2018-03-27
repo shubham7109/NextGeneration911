@@ -64,7 +64,8 @@ public class Main extends Application {
     }
 
     private Parent createContent(){
-        messages.setPrefHeight(550);
+        messages.setPrefHeight(100);
+        messages.setPrefWidth(300);
         TextField input = new TextField();
         input.setOnAction(event -> {
 
