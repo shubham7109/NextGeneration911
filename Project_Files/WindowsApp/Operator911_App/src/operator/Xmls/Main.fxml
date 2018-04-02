@@ -11,8 +11,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="873.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Controllers.Controller">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="873.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar prefHeight="26.0" prefWidth="1011.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <menus>
@@ -33,20 +34,27 @@
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.34003350083752093" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
+    <SplitPane dividerPositions="0.37185929648241206" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
             <Button fx:id="lookUpPerson" mnemonicParsing="false" onAction="#openLookUpPerson" prefHeight="40.0" prefWidth="169.0" text="Look up person" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="23.0" />
-            <Button fx:id="operatorList" mnemonicParsing="false" onAction="#openOperatorList" prefHeight="40.0" prefWidth="169.0" text="911 Operators List" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="56.0" />
-            <ComboBox fx:id="operatorStatus" prefWidth="150.0" promptText="Choose Status" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="36.0" />
-            <ImageView fitHeight="63.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="67.0" AnchorPane.topAnchor="12.0">
+            <Button fx:id="operatorList" mnemonicParsing="false" onAction="#openOperatorList" prefHeight="40.0" prefWidth="169.0" text="911 Operators List" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="87.0" />
+            <ComboBox fx:id="operatorStatus" layoutX="38.0" layoutY="167.0" prefWidth="150.0" promptText="Choose Status" AnchorPane.leftAnchor="38.0" AnchorPane.topAnchor="167.0" />
+            <ImageView fx:id="profileImage" fitHeight="105.0" fitWidth="129.0" layoutX="60.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="11.0">
               <image>
                 <Image url="@../../res/drawable/avatar.png" />
               </image>
             </ImageView>
-            <Label text="Operator Name" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="80.0" />
-            <Button layoutX="371.0" layoutY="80.0" mnemonicParsing="false" onAction="#simulateCallPress" prefHeight="40.0" prefWidth="129.0" text="Simulate Call" />
+            <Label fx:id="operatorsName" layoutX="22.0" layoutY="116.0" prefHeight="40.0" prefWidth="286.0" text="Operator Name" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="116.0">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font></Label>
+                  <Label fx:id="timeLabel" layoutX="602.0" layoutY="32.0" prefHeight="63.0" prefWidth="129.0" textAlignment="CENTER" AnchorPane.leftAnchor="602.0" AnchorPane.topAnchor="32.0">
+                     <font>
+                        <Font name="System Italic" size="23.0" />
+                     </font></Label>
+                  <Button fx:id="logoutButton" layoutX="661.0" layoutY="197.0" mnemonicParsing="false" onAction="#logoutPress" prefHeight="40.0" prefWidth="140.0" text="Logout" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="197.0" />
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class OperatorList implements Initializable{
 
-    private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/operators";
+    private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/login";
     private ArrayList<OperatorModel> operatorModels;
     @FXML private TableView<OperatorModel> tableView;
     @FXML private TableColumn<OperatorModel, String> operatorName;
