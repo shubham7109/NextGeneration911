@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import operator.Controllers.Controller;
 import operator.Controllers.OperatorLogin;
 import operator.Models.PersonModel;
 import org.json.JSONArray;
@@ -19,12 +21,21 @@ import java.util.ArrayList;
 public class LoggedInView extends Application{
 
         private ArrayList<PersonModel> personModels;
+        private String username;
         // Constants
         private final String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons";
 
-        @Override
+
+    public LoggedInView(String username) {
+        this.username = username;
+    }
+
+    @Override
         public void start(Stage primaryStage) throws Exception{
-            Parent root = FXMLLoader.load(getClass().getResource("Xmls/Main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Xmls/Main.fxml"));
+            Controller controller = new Controller(username);
+            loader.setController(controller);
+            AnchorPane anchorPane = loader.load();
             personModels = new ArrayList<>();
 
             String response = getHTML(URL);
@@ -36,8 +47,10 @@ public class LoggedInView extends Application{
             }
 
             primaryStage.setTitle("911 Operator");
-            //primaryStage.setMaximized(false););
-            primaryStage.setScene(new Scene(root));
+
+            Scene scene = new Scene(anchorPane, 200, 200);
+            primaryStage.setScene(scene);
+            primaryStage.setMaximized(true);
             primaryStage.show();
         }
 
