@@ -11,7 +11,10 @@ public class OperatorModel {
     private String firstName;
     private String lastName;
     private String location;
-    private String status;
+    private int accesibility;
+    private int status;
+    private String ipAddress;
+    private String image;
 
     public OperatorModel(JSONObject jsonObject) throws JSONException {
         id = jsonObject.getString("id");
@@ -20,9 +23,22 @@ public class OperatorModel {
         firstName = jsonObject.getString("firstName");
         lastName = jsonObject.getString("lastName");
         location = jsonObject.getString("location");
-        status = jsonObject.getString("status");
+        status = jsonObject.getInt("status");
+        accesibility = jsonObject.getInt("accesibility");
+        ipAddress = jsonObject.getString("ipAddress");
+        image = jsonObject.getString("image");
+    }
 
+    public String getIpAddress() {
+        return ipAddress;
+    }
 
+    public String getImage() {
+        return image;
+    }
+
+    public int getAccesibility(){
+        return accesibility;
     }
 
     public String getId() {
@@ -50,7 +66,16 @@ public class OperatorModel {
     }
 
     public String getStatus() {
-        return status;
+
+        if(status == 0)
+            return "Available";
+        else if (status == 1)
+            return "Unavailable";
+        else if (status == 2)
+            return "On-Call";
+        else
+            return "Offline";
+
     }
 
 

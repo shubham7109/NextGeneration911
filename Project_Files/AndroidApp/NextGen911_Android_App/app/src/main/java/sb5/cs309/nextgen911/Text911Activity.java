@@ -1,60 +1,242 @@
 package sb5.cs309.nextgen911;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import sb5.cs309.nextgen911.ChatServer.AsyncConnection;
+
+import static sb5.cs309.nextgen911.MainMenu.idKey;
+import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 
 public class Text911Activity extends AppCompatActivity {
 
-    private TextView mTextMessage;
     static Context context;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent intent;
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    intent = new Intent(getAppContext(), MainMenu.class);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-                    break;
-
-                case R.id.navigation_personal_info:
-                    intent = new Intent(getAppContext(), PersonalInfoActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
-                    break;
-                case R.id.navigation_text:
-                    // Do nothing this is the current view
-                    break;
-            }
-
-            return true;
-        }
-    };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_text911);
-        Text911Activity.context = getApplicationContext();
-
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navigation_text);
-    }
-
+    public String serverIP;
+    ArrayList<String> messageList;
+    ArrayAdapter<String> adapter;
+    AsyncConnection firstConnection;
+    AsyncConnection secondConnection;
+    boolean firstMessage;
+    private EditText inputBox;
+    private ListView list_of_messages;
+    private boolean connected;
 
     public static Context getAppContext() {
         return Text911Activity.context;
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_text911);
+        Text911Activity.context = getApplicationContext();
+
+        firstMessage = true;
+        connected = false;
+        getServerIP();
+        messageList = new ArrayList<String>();
+        adapter = new ArrayAdapter<String>(Text911Activity.this,
+                android.R.layout.simple_list_item_1, messageList);
+
+        inputBox = findViewById(R.id.input);
+        list_of_messages = findViewById(R.id.list_of_messages);
+        list_of_messages.setAdapter(adapter);
+        FloatingActionButton fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = sharedPreferences.getString(idKey, "");
+                message += ": ";
+                message += inputBox.getText().toString();
+                inputBox.setText("");
+
+                messageList.add(message);
+                adapter.notifyDataSetChanged();
+
+                updateLocation();
+                try {
+                    if (connected) {
+                        if (firstMessage) {
+                            firstConnection.write(sharedPreferences.getString(idKey, ""));
+                            //firstConnection.write("111");
+                            firstMessage = false;
+                        }
+                        secondConnection.write(message);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+    }
+
+    private void createClient() {
+
+        firstConnection = new AsyncConnection(serverIP, 5555, 50000, new AsyncConnection.ConnectionHandler() {
+            @Override
+            public void didReceiveData(String data) {
+
+            }
+
+            @Override
+            public void didDisconnect(Exception error) {
+
+            }
+
+            @Override
+            public void didConnect() {
+                connected = true;
+            }
+        });
+
+        secondConnection = new AsyncConnection(serverIP, 7777, 50000, new AsyncConnection.ConnectionHandler() {
+            @Override
+            public void didReceiveData(String data) {
+
+            }
+
+            @Override
+            public void didDisconnect(Exception error) {
+
+            }
+
+            @Override
+            public void didConnect() {
+
+            }
+        });
+        firstConnection.execute();
+        secondConnection.execute();
+    }
+
+    public void updateLocation() {
+        String id = sharedPreferences.getString(idKey, "");
+
+        if (id.equals(""))
+            return;
+
+        //Make get request
+        com.android.volley.Response.Listener<JSONObject> listener = new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    LocationTuple loc = getLocation();
+                    response.put("latitude", loc.lat);
+                    response.put("longitude", loc.lng);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Networking.postPersonalInfo(response);
+            }
+        };
+        Networking.getPersonalInfo(id, listener);
+    }
+
+    public LocationTuple getLocation() {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean locationPerm = ContextCompat.checkSelfPermission(Text911Activity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        if (locationPerm) {
+            DecimalFormat decimalFormat = new DecimalFormat(".###"); // 5 digits gives +- 100 m
+
+            /* An empty listener is needed to update the location */
+            LocationListener locationListener = new LocationListener() {
+                public void onLocationChanged(Location location) {
+                }
+
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+
+                public void onProviderEnabled(String provider) {
+                }
+
+                public void onProviderDisabled(String provider) {
+                }
+            };
+
+
+            requestLocationUpdates(lm, locationListener);
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            double longitude = location.getLongitude();
+            double latitude = location.getLatitude();
+
+            LocationTuple result = new LocationTuple();
+            result.lat = latitude + "";
+            result.lng = longitude + "";
+
+            return result;
+        }
+
+        LocationTuple result = new LocationTuple();
+        result.lat = "0";
+        result.lng = "0";
+
+        return result;
+    }
+
+    public final void requestLocationUpdates(LocationManager locationManager, LocationListener locationListener) {
+        boolean locationPerm = ContextCompat.checkSelfPermission(Text911Activity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        if (locationPerm) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        try {
+            firstConnection.disconnect();
+            secondConnection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onBackPressed();  // optional depending on your needs
+    }
+
+    public void getServerIP() {
+        Response.Listener<String> listener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getAppContext(), response + "", Toast.LENGTH_LONG).show(); //Todo
+                serverIP = response;
+                serverIP = "10.26.47.247";
+                createClient();
+            }
+        };
+        Networking.getOperatorIP(listener);
+
+    }
+
+    private static class LocationTuple {
+        public String lat;
+        public String lng;
+    }
 }
+
+

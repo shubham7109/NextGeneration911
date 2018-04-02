@@ -14,10 +14,13 @@
     <root id="root">
       <element id="archive" name="Operator911_App.jar">
         <element id="module-output" name="Operator911_App" />
-        <element id="directory" name="META-INF">
-          <element id="file-copy" path="$PROJECT_DIR$/src/resources/MANIFEST.MF" />
-        </element>
       </element>
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Jars/GMapsFX-2.12.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Jars/java-json.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Jars/jfxrt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Jars/logback-classic-1.2.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Jars/logback-core-1.2.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Jars/slf4j-api-1.7.23.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

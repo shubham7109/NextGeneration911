@@ -8,20 +8,33 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.telecom.Call;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainMenu extends AppCompatActivity {
 
 
-    private static SharedPreferences sharedPreferences;
     public static final String mypreference = "911UserPrefs";
     public static final String regKey = "Registered";
     public static final String phonekey = "phNum";
+    public static final String idKey = "ID";
     private static final int requestCode = 911;
-    BottomNavigationView bottomNavigationView;
+    public static SharedPreferences sharedPreferences;
+    public static int clickCount;
     static Context context;
+    BottomNavigationView bottomNavigationView;
+
+    public static Context getAppContext() {
+        return MainMenu.context;
+    }
+
+    public static void register_device(String regCode) {
+        sharedPreferences.edit().putInt(regKey, Integer.parseInt(regCode)).apply();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +46,7 @@ public class MainMenu extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         int registered = sharedPreferences.getInt(regKey, 0);
-        if(registered != 0){
+        if (registered != 0 || true) {
             findViewById(R.id.reg_button).setVisibility(View.INVISIBLE);
         }
 
@@ -50,7 +63,7 @@ public class MainMenu extends AppCompatActivity {
                                 break;
 
                             case R.id.navigation_personal_info:
-                                intent = new Intent(getAppContext(), PersonalInfoActivity.class);
+                                intent = new Intent(getAppContext(), FingerPrintActivity.class);
                                 startActivity(intent);
                                 overridePendingTransition(0, 0);
                                 break;
@@ -65,21 +78,50 @@ public class MainMenu extends AppCompatActivity {
                         return true;
                     }
                 });
+
+
+        clickCount = 0;
+        Button call911 =findViewById(R.id.call_911_button);
+        call911.isClickable();
+
+        call911.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickCount < 3){
+                    Toast.makeText(getBaseContext(), (3-clickCount) +" more taps to call 911", Toast.LENGTH_SHORT).show();
+                    clickCount++;
+                }else{
+                    Intent intent = new Intent(getAppContext(), CallActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                }
+
+            }
+        });
+
+        call911.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(getAppContext(), CallActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                return true;
+            }
+        });
+
     }
 
-    public static Context getAppContext() {
-        return MainMenu.context;
+    protected void onResume(){
+        super.onResume();
+        clickCount = 0;
+
+        bottomNavigationView = findViewById(R.id.navigation);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
     }
 
-    public void onRegisterClick(View view){
-        Intent intent;
-
-        intent = new Intent(getAppContext(), RegistrationActivity.class);
+    public void onRegisterClick(View view) {
+        Intent intent = new Intent(getAppContext(), RegistrationActivity.class);
         startActivity(intent);
         overridePendingTransition(0, 0);
-    }
-
-    public static void register_device(String regCode){
-        sharedPreferences.edit().putInt(regKey,Integer.parseInt(regCode)).apply();
     }
 }
