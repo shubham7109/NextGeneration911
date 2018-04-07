@@ -25,7 +25,7 @@ public class operatorsController {
 	}
 
 	/**
-	 * @param id
+	 * @param id of Operators
 	 * @return operator with the given id or null if the id doesn't exist
 	 */
 	@RequestMapping("/operators/{id}")
@@ -36,7 +36,7 @@ public class operatorsController {
 
 	/**
 	 * adds a operator to the database
-	 * @param Operators
+	 * @param Operators Operators object
 	 */
 	@RequestMapping(method=RequestMethod.POST, value="/operators")
 	public void addOperators(@RequestBody Operators Operators) 
@@ -46,8 +46,8 @@ public class operatorsController {
 
 	/**
 	 * Updates a operator in the database
-	 * @param Operators
-	 * @param id
+	 * @param Operators Operators object
+	 * @param id of Operators
 	 */
 	@RequestMapping(method=RequestMethod.PUT, value="/operators/{id}")
 	public void updateOperators(@RequestBody Operators Operators, @PathVariable("id") int id) 
@@ -57,7 +57,7 @@ public class operatorsController {
 
 	/**
 	 * Deletes a operator in the database
-	 * @param id
+	 * @param id of Operators
 	 */
 	@RequestMapping(method=RequestMethod.DELETE, value="/operators/{id}")
 	public void deleteOperators(@PathVariable("id") String id)
