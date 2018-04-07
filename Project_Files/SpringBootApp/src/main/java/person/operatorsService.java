@@ -20,13 +20,20 @@ public class operatorsService {
 			new Operators(789, "mike", "password2", "Michael", "Onyszczak", 2)
 			));
 			*/
-	
+
+	/**
+	 * @return list of operators
+	 */
 	public List<Operators> getAllOperators() {
 		List<Operators> operators = new ArrayList<>();
 		operatorsRepository.findAll().forEach(operators::add);
 		return operators;
 	}
-	
+
+	/**
+	 * @param id of operator
+	 * @return operator
+	 */
 	public Operators getOperator(String id) {
 		/*for(int i = 0; i < operator.size(); i++)
 		{
@@ -36,12 +43,21 @@ public class operatorsService {
 		return new Operators(id);*/
 		return operatorsRepository.findOne(id);
 	}
-	
+
+	/**
+	 * adds a operator to the database
+	 * @param operators Operators
+	 */
 	public void addOperator(Operators operators) {
 		/*operator.add(operators);*/
 		operatorsRepository.save(operators);
 	}
-	
+
+	/**
+	 * updates a operator in the database
+	 * @param id of operator
+	 * @param operators the Operator
+	 */
 	public void updateOperator(int id, Operators operators) {
 		/*for (int i = 0; i < operator.size(); i++) {
 			Operators o = operator.get(i);
@@ -52,7 +68,11 @@ public class operatorsService {
 		}*/
 		operatorsRepository.save(operators);
 	}
-	
+
+	/**
+	 * deletes a operator
+	 * @param id of operator
+	 */
 	public void deleteOperator(String id) {
 		/*for (int i = 0; i < operator.size(); i++) {
 			Operators o = operator.get(i);
