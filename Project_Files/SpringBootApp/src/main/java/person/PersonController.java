@@ -26,7 +26,7 @@ public class PersonController {
 	}
 	
 	/**
-	 * @param id
+	 * @param id of person
 	 * @return a person with the given id
 	 */
 	@RequestMapping("/persons/{id}")
@@ -45,8 +45,8 @@ public class PersonController {
 	
 	/**
 	 * updates a person in the database
-	 * @param person
-	 * @param id
+	 * @param person person obeject
+	 * @param id id of person
 	 */
 	@RequestMapping(method=RequestMethod.PUT, value="/persons/{id}")
 	public void updatePerson(@RequestBody Person person, @PathVariable("id") int id) {
@@ -55,7 +55,7 @@ public class PersonController {
 	
 	/**
 	 * deletes a person in the database
-	 * @param id
+	 * @param id of person
 	 */
 	@RequestMapping(method=RequestMethod.DELETE, value="/persons/{id}")
 	public void deletePerson(@PathVariable("id") String id) {

@@ -27,7 +27,7 @@ public class DeployController {
 	
 	
 	/**
-	 * @param id
+	 * @param id of deploy
 	 * @return deploy with the given id or null if the id doesn't exist
 	 */
 	@RequestMapping("/deploy/{id}")
@@ -48,8 +48,8 @@ public class DeployController {
 	
 	/**
 	 * Updates a deploy in the database
-	 * @param deploy
-	 * @param id
+	 * @param deploy deploy object
+	 * @param id of deploy
 	 */
 	@RequestMapping(method=RequestMethod.PUT, value="/deploy/{id}")
 	public void updateDeploy(@RequestBody Deploy deploy, @PathVariable("id") String id) 
@@ -59,7 +59,7 @@ public class DeployController {
 	
 	/**
 	 * Deletes a deploy in the database
-	 * @param id
+	 * @param id of deploy
 	 */
 	@RequestMapping(method=RequestMethod.DELETE, value="/deploy/{id}")
 	public void deleteDeploy(@PathVariable("id") String id)
