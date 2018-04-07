@@ -13,32 +13,52 @@ import org.springframework.web.bind.annotation.RestController;
 public class operatorsController {
 
 	@Autowired
-	private operatorsService operatorService; 
-	
+	private operatorsService operatorService;
+
+	/**
+	 * @return list of all operators
+	 */
 	@RequestMapping("/operators")
 	public Iterable<Operators> getAllOperators()
 	{
 		return operatorService.getAllOperators();
 	}
-	
+
+	/**
+	 * @param id
+	 * @return operator with the given id or null if the id doesn't exist
+	 */
 	@RequestMapping("/operators/{id}")
 	public Operators getOperators(@PathVariable("id") String id) 
 	{
 		return operatorService.getOperator(id);
 	}
-	
+
+	/**
+	 * adds a operator to the database
+	 * @param Operators
+	 */
 	@RequestMapping(method=RequestMethod.POST, value="/operators")
 	public void addOperators(@RequestBody Operators Operators) 
 	{
 		operatorService.addOperator(Operators);
 	}
-	
+
+	/**
+	 * Updates a operator in the database
+	 * @param Operators
+	 * @param id
+	 */
 	@RequestMapping(method=RequestMethod.PUT, value="/operators/{id}")
 	public void updateOperators(@RequestBody Operators Operators, @PathVariable("id") int id) 
 	{
 		operatorService.updateOperator(id, Operators);
 	}
 
+	/**
+	 * Deletes a operator in the database
+	 * @param id
+	 */
 	@RequestMapping(method=RequestMethod.DELETE, value="/operators/{id}")
 	public void deleteOperators(@PathVariable("id") String id)
 	{
