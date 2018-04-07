@@ -15,7 +15,10 @@ public class LogsController {
 
 	@Autowired
 	private LogsService logsService;
-	
+
+	/**
+	 * @return list of all Logs
+	 */
 	@RequestMapping("/logs")
 	public List<Logs> getAllLogs()
 	{
@@ -25,7 +28,11 @@ public class LogsController {
 		
 		return s;
 	}
-	
+
+	/**
+	 * adds a log to the database
+	 * @param logs
+	 */
 
 	@RequestMapping(method=RequestMethod.POST, value="/logs")
 	public void addLogs(@RequestBody Logs logs)
