@@ -12,7 +12,10 @@ public class LoginService {
 	
 	@Autowired
 	private LoginRepository loginRepository;
-	
+
+	/**
+	 * @return list of logins
+	 */
 	public List<Login> getAllLogins() 
 	{
 		List<Login> logins = new ArrayList<>();
@@ -20,26 +23,49 @@ public class LoginService {
 		return logins;
 
 	}
-	
+
+	/**
+	 * @param id of login
+	 * @return login
+	 */
 	public Login getLogin(String id) 
 	{
 		return loginRepository.findOne(id);
 	}
-	
+
+	/**
+	 * adds a login to the database
+	 * @param log Login
+	 */
 	public void addLogin(Login log) {
 		loginRepository.save(log);
 	}
-	
+
+	/**
+	 * updates a login in the database
+	 * @param id of login
+	 * @param log the Login
+	 */
 	public void updateLogin(String id, Login log) 
 	{
 		loginRepository.save(log);
 	}
-	
+
+	/**
+	 * deletes a login
+	 * @param id of login
+	 */
 	public void deleteLogin(String id) 
 	{
 		loginRepository.delete(id);
 	}
-	
+
+	/**
+	 * checks password of user based upon username
+	 * @param username of login
+	 * @param password of login
+	 * @return true is password is correct, otherwise false
+	 */
 	public boolean checkPassword(String userName, String password)
 	{
 		List<Login> login;
