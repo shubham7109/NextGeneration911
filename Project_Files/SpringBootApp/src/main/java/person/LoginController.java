@@ -34,9 +34,9 @@ public class LoginController {
 	}
 
 	/**
-	 * Checks if the password entered for the givem username is correct
-	 * @param userName
-	 * @param password
+	 * Checks if the password entered for the given username is correct
+	 * @param userName username of operator
+	 * @param password password of operator
 	 */
 	@RequestMapping("/login/{userName}/{password}")
 	public boolean checkPassword(@PathVariable("userName") String userName, @PathVariable("password") String password)
@@ -46,7 +46,7 @@ public class LoginController {
 
 	/**
 	 * adds a login to the database
-	 * @param log
+	 * @param log Login object
 	 */
 	@RequestMapping(method=RequestMethod.POST, value="/login")
 	public void addLogin(@RequestBody Login log) 
@@ -56,8 +56,8 @@ public class LoginController {
 
 	/**
 	 * Updates a login in the database
-	 * @param login
-	 * @param id
+	 * @param login Login object
+	 * @param id of login
 	 */
 	@RequestMapping(method=RequestMethod.PUT, value="/login/{id}")
 	public void updateLogin(@RequestBody Login login, @PathVariable("id") String id) 
@@ -67,7 +67,7 @@ public class LoginController {
 
 	/**
 	 * Deletes a login in the database
-	 * @param id
+	 * @param id of login
 	 */
 	@RequestMapping(method=RequestMethod.DELETE, value="/login/{id}")
 	public void deleteLogin(@PathVariable("id") String id)

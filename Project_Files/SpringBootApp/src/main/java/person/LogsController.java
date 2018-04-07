@@ -31,7 +31,7 @@ public class LogsController {
 
 	/**
 	 * adds a log to the database
-	 * @param logs
+	 * @param logs Logs object
 	 */
 
 	@RequestMapping(method=RequestMethod.POST, value="/logs")
