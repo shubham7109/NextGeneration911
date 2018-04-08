@@ -45,6 +45,10 @@ import java.util.Timer;
 
 import static java.lang.Character.isDigit;
 
+/**
+ * Controller class for Main.fxml
+ * @author Shubham Sharma
+ */
 public class Controller {
 
     @FXML public ComboBox operatorStatus;
@@ -78,6 +82,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Required default constructor
+     */
     public Controller(){
         // Required Constructor
     }
@@ -124,6 +131,10 @@ public class Controller {
         });
     }
 
+    /**
+     * Constructor: Starts the connection to listen's for a 911 Message
+     * @param username gets the username of the operator.
+     */
     public Controller(String username){
         this.username = username;
         try {
@@ -133,6 +144,12 @@ public class Controller {
         }
     }
 
+    /**
+     * This method initializes the view, sets the status of the login user,
+     * updates the IP on the server for the user, pulls in the list of logs,
+     * and displays interactive buttons, images and other information.
+     * @throws Exception
+     */
     @FXML
     public void initialize() throws Exception {
 
@@ -295,10 +312,13 @@ public class Controller {
         });
     }
 
+    /**
+     * Performs GET requests to the given url
+     * @param urlToRead The url to perform the GET request
+     * @return Returns the JSON code as a String
+     * @throws Exception
+     */
     public static String getHTML(String urlToRead) throws Exception {
-
-
-
         StringBuilder result = new StringBuilder();
         URL url = new URL(urlToRead);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -312,9 +332,11 @@ public class Controller {
         return result.toString();
     }
 
-
+    /**
+     * Open's the view to look up person based on their ID
+     * @param event On button click
+     */
     public void openLookUpPerson(ActionEvent event){
-
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/operator/Xmls/LookUpPerson.fxml"));
             Parent root = fxmlLoader.load();
@@ -323,17 +345,17 @@ public class Controller {
             stage.setTitle("Look Up Person");
             stage.setScene(new Scene(root));
             stage.show();
-
-
-
         }catch (Exception e){
             System.out.println(e);
         }
-
     }
 
-    public void openOperatorList(ActionEvent event){
 
+    /**
+     * Open's the view to display the list of operators in the database.
+     * @param event On button click
+     */
+    public void openOperatorList(ActionEvent event){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/operator/Xmls/OperatorList.fxml"));
             Parent root = fxmlLoader.load();
@@ -348,6 +370,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Button to logout the user, open's a view to login as another user and update the status of the user
+     * @param event On button press
+     * @throws Exception
+     */
     @FXML
     void logoutPress(ActionEvent event) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/operator/Xmls/Login.fxml"));

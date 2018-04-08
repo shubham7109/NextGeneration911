@@ -20,6 +20,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for OperatorList.fxml
+ * @author Shubham Sharma
+ */
 public class OperatorList implements Initializable{
 
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/login";
@@ -29,9 +33,7 @@ public class OperatorList implements Initializable{
     @FXML private TableColumn<OperatorModel, String> locations;
     @FXML private TableColumn<OperatorModel, String> status;
 
-
-
-    public static String getHTML(String urlToRead) throws Exception {
+    private static String getHTML(String urlToRead) throws Exception {
         StringBuilder result = new StringBuilder();
         java.net.URL url = new URL(urlToRead);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -45,6 +47,12 @@ public class OperatorList implements Initializable{
         return result.toString();
     }
 
+    /**
+     * Initializes the view for the controller and
+     * performs get requests operator list
+     * @param location url of the location
+     * @param resources resources information
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -79,6 +87,5 @@ public class OperatorList implements Initializable{
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         tableView.setItems(observableList);
         tableView.getColumns().add(status);
-
     }
 }

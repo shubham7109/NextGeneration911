@@ -20,15 +20,31 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Class to initialize the On911Call.fxml view and the calls its controller class
+ * @author Shubham Sharma
+ */
 public class Main911Call extends Application {
 
     private OperatorModel operatorModel;
     private PersonModel personModel;
     private NetworkConnection connection;
 
+    /**
+     * Required constructor
+     */
     public Main911Call(){
         // Required Constructor
     }
+
+    /**
+     * Constructor to set the instance variables and
+     * create the OperatorModel and PersonModel
+     * @param username username of the operator
+     * @param callerID ID of the caller
+     * @param connection Connection status
+     * @throws Exception
+     */
     public Main911Call(String username, String callerID, NetworkConnection connection) throws Exception {
         JSONArray operators  = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/login"));
         JSONArray persons = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/persons"));
@@ -46,6 +62,11 @@ public class Main911Call extends Application {
         }
     }
 
+    /**
+     * Creates the view when on a 911 call
+     * @param stage Sets the stage and the root of the view
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Xmls/On911Call.fxml"));

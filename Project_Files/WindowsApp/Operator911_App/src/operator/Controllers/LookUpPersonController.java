@@ -21,8 +21,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-
-public class LookUpPerson_Controller {
+/**
+ * Controller class for LookUpPerson.fxml
+ * @author Shubham Sharma
+ */
+public class LookUpPersonController {
 
 
     @FXML private TextField ID_text;
@@ -49,7 +52,11 @@ public class LookUpPerson_Controller {
 
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons";
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * This method is called by the FXMLLoader
+     * when initialization is complete
+     */
+    @FXML
     void initialize() {
 
         // set handlers
@@ -65,6 +72,11 @@ public class LookUpPerson_Controller {
         });
     }
 
+    /**
+     * Performs a search of the person when the enter key is pressed
+     * @param ae On enter press
+     * @throws Exception
+     */
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
         searchPerson();
@@ -125,10 +137,4 @@ public class LookUpPerson_Controller {
         rd.close();
         return result.toString();
     }
-
-
-
-
-
-
 }

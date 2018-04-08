@@ -18,6 +18,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * Class to initialize the Main.fxml view and the calls its controller class
+ * @author Shubham Sharma
+ */
 public class LoggedInView extends Application{
 
         private ArrayList<PersonModel> personModels;
@@ -25,11 +29,19 @@ public class LoggedInView extends Application{
         // Constants
         private final String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons";
 
-
+    /**
+     * Constructor to set the username
+     * @param username Sets username
+     */
     public LoggedInView(String username) {
         this.username = username;
     }
 
+    /**
+     * Method to open the logged in view
+     * @param primaryStage Defines the stage and its root
+     * @throws Exception
+     */
     @Override
         public void start(Stage primaryStage) throws Exception{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Xmls/Main.fxml"));
@@ -54,7 +66,7 @@ public class LoggedInView extends Application{
             primaryStage.show();
         }
 
-        public static String getHTML(String urlToRead) throws Exception {
+        private static String getHTML(String urlToRead) throws Exception {
             StringBuilder result = new StringBuilder();
             java.net.URL url = new URL(urlToRead);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

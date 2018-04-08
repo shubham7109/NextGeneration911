@@ -25,16 +25,26 @@ public class Client extends NetworkConnection {
         this.port = port;
     }
 
+    /**
+     * Check if client is server
+     * @return Always returns false
+     */
     @Override
     protected boolean isServer() {
         return false;
     }
 
+    /**
+     * @return Returns the IP for the server to connect to.
+     */
     @Override
     protected String getIP() {
         return ip;
     }
 
+    /**
+     * @return Returns the port to connect to.
+     */
     @Override
     protected int getPort() {
         return port;

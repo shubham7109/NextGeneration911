@@ -1,6 +1,4 @@
-package operator.Controllers; /**
- * Sample Skeleton for 'Login.fxml' Controller Class
- */
+package operator.Controllers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -29,7 +27,10 @@ import operator.Models.OperatorModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+/**
+ * Controller class for Login.fxml
+ * @author Shubham Sharma
+ */
 public class OperatorLogin {
 
     @FXML
@@ -61,6 +62,13 @@ public class OperatorLogin {
 
     private boolean loginAuth = false;
     private OperatorModel operator;
+
+    /**
+     * Checks if the entered username
+     * and password is valid
+     * @param ae On enter press
+     * @throws Exception
+     */
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
         loginAuth = checkLogin();
@@ -68,10 +76,12 @@ public class OperatorLogin {
             updateStatus();
             loginEnter();
         }
-
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * This method is called by the FXMLLoader when initialization is complete
+     */
+    @FXML
     void initialize() {
 
         // set handlers

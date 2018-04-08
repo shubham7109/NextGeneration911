@@ -49,7 +49,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+/**
+ * Controller class for On911Call.fxml
+ * @author Shubham Sharma
+ */
 public class On911Call implements Initializable, MapComponentInitializedListener, DirectionsServiceCallback {
 
     @FXML protected GoogleMapView mapView;
@@ -111,7 +114,13 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     }
 
 
-
+    /**
+     * Constructor to set the instance variables
+     * @param operatorModel Operator information for chat implementation
+     * @param personModel Person information for location
+     * @param connection Connection information
+     * @throws Exception
+     */
     public On911Call(OperatorModel operatorModel, PersonModel personModel, NetworkConnection connection) throws Exception {
         if(personModel != null){
             LAT = Double.parseDouble(personModel.getLatitude());
@@ -137,6 +146,10 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         });
     }
 
+    /**
+     * Creates the map to display the callers location
+     * and all the nearby available deployment options
+     */
     @Override
     public void mapInitialized() {
         MapOptions options = new MapOptions();
@@ -190,12 +203,21 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
     }
 
+    /**
+     * Method called when the directions between two locations are
+     * received from the google API
+     * @param directionsResult Result of the directions received
+     * @param directionStatus Status of the received directions
+     */
     @Override
     public void directionsReceived(DirectionsResult directionsResult, DirectionStatus directionStatus) {
 
     }
 
-
+    /**
+     * Opens ambulance deployment options
+     * @param ae on button press
+     */
     @FXML void ambulanceOnClick(ActionEvent ae){
 
         Stage newWindow = new Stage();
@@ -239,6 +261,11 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         newWindow.show();
     }
 
+
+    /**
+     * Opens fire brigade deployment options
+     * @param ae on button press
+     */
     @FXML void fireBrigadeOnClick(ActionEvent ae){
 
         Stage newWindow = new Stage();
@@ -283,6 +310,10 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
     }
 
+    /**
+     * Opens ambulance state troopers options
+     * @param ae on button press
+     */
     @FXML void stateTroopersOnClick(ActionEvent ae){
 
         Stage newWindow = new Stage();
@@ -326,6 +357,10 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         newWindow.show();
     }
 
+    /**
+     * Opens county officers deployment options
+     * @param ae on button press
+     */
     @FXML void countyOfficersOnClick(ActionEvent ae){
 
         Stage newWindow = new Stage();
@@ -370,6 +405,10 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
     }
 
+    /**
+     * Opens SWAT team deployment options
+     * @param ae on button press
+     */
     @FXML void swatTeamOnClick(ActionEvent ae){
 
         Stage newWindow = new Stage();
@@ -413,6 +452,12 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         newWindow.show();
 
     }
+
+
+    /**
+     * Opens first responders deployment options
+     * @param ae on button press
+     */
     @FXML void firstRespondersOnClick(ActionEvent ae){
 
         Stage newWindow = new Stage();
@@ -457,7 +502,11 @@ public class On911Call implements Initializable, MapComponentInitializedListener
 
     }
 
-
+    /**
+     * To send a message over the server
+     * @param ae On enter press
+     * @throws Exception
+     */
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
         String message = "911 Operator:\n";
@@ -468,6 +517,11 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         this.connection.send(message);
     }
 
+    /**
+     * End the 911 call and set the operator's status to available
+     * @param event On enter press
+     * @throws Exception
+     */
     @FXML
     public void closeWindowAction(ActionEvent event) throws Exception {
 
@@ -542,6 +596,11 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     }
 
 
+    /**
+     * Initialize the view of the controller and start a conneciton
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -669,6 +728,5 @@ public class On911Call implements Initializable, MapComponentInitializedListener
         rd.close();
         return result.toString();
     }
-
 }
 
