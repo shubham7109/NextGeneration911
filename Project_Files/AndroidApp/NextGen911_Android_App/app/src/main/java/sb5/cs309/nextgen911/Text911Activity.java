@@ -23,10 +23,12 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import sb5.cs309.nextgen911.ChatServer.AsyncConnection;
-
 import static sb5.cs309.nextgen911.MainMenu.idKey;
 import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
+
+/**
+ * Contains the controller to send text messages to 911
+ */
 
 public class Text911Activity extends AppCompatActivity {
 
@@ -34,9 +36,7 @@ public class Text911Activity extends AppCompatActivity {
     public String serverIP;
     ArrayList<String> messageList;
     ArrayAdapter<String> adapter;
-    AsyncConnection firstConnection;
-    AsyncConnection secondConnection;
-    boolean firstMessage;
+    TcpClient connection;
     private EditText inputBox;
     private ListView list_of_messages;
     private boolean connected;
@@ -45,95 +45,34 @@ public class Text911Activity extends AppCompatActivity {
         return Text911Activity.context;
     }
 
+    /**
+     * Initialize message list and chat client connection
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_text911);
         Text911Activity.context = getApplicationContext();
-
-        firstMessage = true;
         connected = false;
+
+        initMessages();
         getServerIP();
-        messageList = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(Text911Activity.this,
-                android.R.layout.simple_list_item_1, messageList);
-
-        inputBox = findViewById(R.id.input);
-        list_of_messages = findViewById(R.id.list_of_messages);
-        list_of_messages.setAdapter(adapter);
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String message = sharedPreferences.getString(idKey, "");
-                message += ": ";
-                message += inputBox.getText().toString();
-                inputBox.setText("");
-
-                messageList.add(message);
-                adapter.notifyDataSetChanged();
-
-                updateLocation();
-                try {
-                    if (connected) {
-                        if (firstMessage) {
-                            firstConnection.write(sharedPreferences.getString(idKey, ""));
-                            //firstConnection.write("111");
-                            firstMessage = false;
-                        }
-                        secondConnection.write(message);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-
     }
 
+    //TODO
     private void createClient() {
-
-        firstConnection = new AsyncConnection(serverIP, 5555, 50000, new AsyncConnection.ConnectionHandler() {
-            @Override
-            public void didReceiveData(String data) {
-
-            }
-
-            @Override
-            public void didDisconnect(Exception error) {
-
-            }
-
-            @Override
-            public void didConnect() {
-                connected = true;
-            }
-        });
-
-        secondConnection = new AsyncConnection(serverIP, 7777, 50000, new AsyncConnection.ConnectionHandler() {
-            @Override
-            public void didReceiveData(String data) {
-
-            }
-
-            @Override
-            public void didDisconnect(Exception error) {
-
-            }
-
-            @Override
-            public void didConnect() {
-
-            }
-        });
-        firstConnection.execute();
-        secondConnection.execute();
+        try {
+            connection = new TcpClient(null, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Make a POST request to update last user location with most recent device location
+     */
     public void updateLocation() {
         String id = sharedPreferences.getString(idKey, "");
 
@@ -157,6 +96,11 @@ public class Text911Activity extends AppCompatActivity {
         Networking.getPersonalInfo(id, listener);
     }
 
+    /**
+     * Requests an updated location from the location system manager
+     *
+     * @return Most recent Lat and Long as a tuple
+     */
     public LocationTuple getLocation() {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         boolean locationPerm = ContextCompat.checkSelfPermission(Text911Activity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -200,7 +144,7 @@ public class Text911Activity extends AppCompatActivity {
         return result;
     }
 
-    public final void requestLocationUpdates(LocationManager locationManager, LocationListener locationListener) {
+    private final void requestLocationUpdates(LocationManager locationManager, LocationListener locationListener) {
         boolean locationPerm = ContextCompat.checkSelfPermission(Text911Activity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
         if (locationPerm) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
@@ -208,17 +152,22 @@ public class Text911Activity extends AppCompatActivity {
         }
     }
 
+    /**
+     * close server on exit
+     */
     @Override
     public void onBackPressed() {
         try {
-            firstConnection.disconnect();
-            secondConnection.disconnect();
+            connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        super.onBackPressed();  // optional depending on your needs
+        super.onBackPressed();
     }
 
+    /**
+     * Find the IP of the chat server to connect to
+     */
     public void getServerIP() {
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
@@ -231,6 +180,39 @@ public class Text911Activity extends AppCompatActivity {
         };
         Networking.getOperatorIP(listener);
 
+    }
+
+    private void initMessages() {
+        messageList = new ArrayList<String>();
+        adapter = new ArrayAdapter<String>(Text911Activity.this,
+                android.R.layout.simple_list_item_1, messageList);
+        inputBox = findViewById(R.id.input);
+        list_of_messages = findViewById(R.id.list_of_messages);
+        list_of_messages.setAdapter(adapter);
+        FloatingActionButton fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = sharedPreferences.getString(idKey, "");
+                message += ": ";
+                message += inputBox.getText().toString();
+                inputBox.setText("");
+
+                messageList.add(message);
+                adapter.notifyDataSetChanged();
+
+                updateLocation();
+                try {
+                    if (connected) {
+                        connection.send(message);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
     private static class LocationTuple {

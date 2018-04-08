@@ -1,7 +1,5 @@
 package sb5.cs309.nextgen911;
 
-import android.os.Looper;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -10,25 +8,22 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by mike on 3/24/18.
+ * Various REST api calls, implemented using Volley
  */
 
 public class Networking {
-
-
+    /**
+     * Make a post request to persons server to add/update a person. Overwrites existing persons
+     *
+     * @param personalInfo JSON containing personal Info
+     */
     public static void postPersonalInfo(JSONObject personalInfo) {
         JsonObjectRequest req = new JsonObjectRequest("http://proj-309-sb-5.cs.iastate.edu:8080/persons/", personalInfo,
                 new Response.Listener<JSONObject>() {
@@ -55,9 +50,15 @@ public class Networking {
             }
         };
 
-        AppController.getInstance().getRequestQueue().add(req);
+        VolleyController.getInstance().getRequestQueue().add(req);
     }
 
+    /**
+     * Make a JSON GET request from persons server
+     *
+     * @param ID       ID of request person
+     * @param listener Implements onResponse for a JSONObject Listener
+     */
     public static void getPersonalInfo(final String ID, final Response.Listener<JSONObject> listener) {
         JsonObjectRequest req = new JsonObjectRequest
                 (Request.Method.GET, "http://proj-309-sb-5.cs.iastate.edu:8080/persons/" + ID, null, listener, new Response.ErrorListener() {
@@ -67,9 +68,14 @@ public class Networking {
 
                     }
                 });
-        AppController.getInstance().getRequestQueue().add(req);
+        VolleyController.getInstance().getRequestQueue().add(req);
     }
 
+    /**
+     * Make a String GET request to get the IP of the next available operator
+     *
+     * @param listener Implements onResponse for a JSONObject Listener
+     */
     public static void getOperatorIP(Response.Listener<String> listener) {
         StringRequest req = new StringRequest
                 (Request.Method.GET, "http://proj-309-sb-5.cs.iastate.edu:8080/makecall/", listener, new Response.ErrorListener() {
@@ -79,6 +85,6 @@ public class Networking {
 
                     }
                 });
-        AppController.getInstance().getRequestQueue().add(req);
+        VolleyController.getInstance().getRequestQueue().add(req);
     }
 }

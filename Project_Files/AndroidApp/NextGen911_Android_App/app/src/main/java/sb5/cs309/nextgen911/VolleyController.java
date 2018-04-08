@@ -1,5 +1,6 @@
 package sb5.cs309.nextgen911;
 
+
 import android.app.Application;
 import android.text.TextUtils;
 
@@ -8,23 +9,33 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-public class AppController extends Application {
-    public static final String TAG = AppController.class
-            .getSimpleName();
-    private static AppController mInstance;
-    private RequestQueue mRequestQueue;
-    private ImageLoader mImageLoader;
+/**
+ *
+ * Implements queues and control logic for volley
+ */
 
-    public static synchronized AppController getInstance() {
+public class VolleyController extends Application {
+    private static VolleyController mInstance;
+    private RequestQueue mRequestQueue;
+
+    public static synchronized VolleyController getInstance() {
         return mInstance;
     }
 
+    /**
+     * Creates a singleton instance on app launch
+     */
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
     }
 
+    /**
+     * Creates a volley request queue if not instantiated
+     *
+     * @return an instance of the singleton Volley Request queue
+     */
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -32,20 +43,13 @@ public class AppController extends Application {
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
-// set the default tag if tag is empty
-        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
-        getRequestQueue().add(req);
-    }
-
+    /**
+     * Add a volley request to the queue
+     *
+     * @param req Request to be added
+     */
     public <T> void addToRequestQueue(Request<T> req) {
-        req.setTag(TAG);
+        req.setTag(""); // Empty tag
         getRequestQueue().add(req);
-    }
-
-    public void cancelPendingRequests(Object tag) {
-        if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(tag);
-        }
     }
 }
