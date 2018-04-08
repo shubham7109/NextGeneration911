@@ -11,10 +11,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * Created by mikeonys on 2/16/18.
+ * Contains logic to asks for permissions
  */
 
 public class Permissions {
+    /**
+     * Requests every permission used in the app. Only ungranted permissions are request if call is repeated
+     * @param activity Calling activity
+     * @param requestCode Code to identify this App (911)
+     */
     public static void requestPermissions(Activity activity, int requestCode) {
         ArrayList<String> permissionList = new ArrayList<>();
         permissionList.add(Manifest.permission.READ_PHONE_STATE);
@@ -27,17 +32,4 @@ public class Permissions {
 
         ActivityCompat.requestPermissions(activity, perms, requestCode);
     }
-
-
-    // Currently Unused but useful if permissions need to be checked later.
-    public static void checkPermissions(Context context, Activity activity) {
-        CharSequence text;
-        int duration = Toast.LENGTH_LONG;
-
-        boolean locationPerm = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        boolean sipPerm = ContextCompat.checkSelfPermission(context, Manifest.permission.USE_SIP) == PackageManager.PERMISSION_GRANTED;
-        boolean smsPerm = ContextCompat.checkSelfPermission(context, android.Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED;
-
-    }
-
 }

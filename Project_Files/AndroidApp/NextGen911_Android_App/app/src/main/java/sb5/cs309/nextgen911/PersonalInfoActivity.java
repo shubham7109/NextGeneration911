@@ -24,6 +24,10 @@ import java.util.Locale;
 import static sb5.cs309.nextgen911.MainMenu.idKey;
 import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 
+/**
+ * Controls personal info. entry
+ */
+
 public class PersonalInfoActivity extends AppCompatActivity {
 
     static Context context;
@@ -60,6 +64,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return PersonalInfoActivity.context;
     }
 
+    /**
+     * On launch sets up the navigation bar and attempts to pre-load personal data if device already registered
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +80,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    /**
+     * On submit button push, create a JSON with all entered values, mark this device as registered and make a POST request,
+     */
     public void submit_info(View view) {
         if (check_DOB() && check_ZIP() && check_phoneNumber()) {
             JSONObject personalInfo = new JSONObject();
@@ -108,7 +118,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     // Ensures that date of birth confirms to MM/DD/YYYY standards displays error on failure
-    public boolean check_DOB() {
+    private boolean check_DOB() {
         EditText dob_box = findViewById(R.id.dob_editText);
         String date = dob_box.getText().toString();
 
@@ -136,7 +146,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     // Ensures 5 digit zip code is entered displays error on failure
-    public boolean check_ZIP() {
+    private boolean check_ZIP() {
         EditText zip_box = findViewById(R.id.zipCode_editText);
 
         if (zip_box.getText().toString().length() == 0) {
@@ -152,7 +162,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     // Ensures 10 digit phone number is entered displays error on failure
-    public boolean check_phoneNumber() {
+    private boolean check_phoneNumber() {
         EditText phone_number_box = findViewById(R.id.phoneNumber_editText);
         String phoneNumber = phone_number_box.getText().toString();
         phoneNumber = phoneNumber.replaceAll("[^\\d.]", ""); // Remove all non-numeric characters
@@ -167,51 +177,51 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     // Returns phone number as ID
-    public String getID() {
+    private String getID() {
         return getPhoneNumber().substring(6);
     }
 
-    public String getFirstName() {
+    private String getFirstName() {
         EditText name = findViewById(R.id.firstName_editText);
         return name.getText().toString();
     }
 
-    public void setFirstName(String firstName) {
+    private void setFirstName(String firstName) {
         EditText text = findViewById(R.id.firstName_editText);
         text.setText(firstName);
     }
 
-    public String getMiddleName() {
+    private String getMiddleName() {
         EditText name = findViewById(R.id.middleName_editText);
         return name.getText().toString();
     }
 
-    public void setMiddleName(String middleName) {
+    private void setMiddleName(String middleName) {
         EditText text = findViewById(R.id.middleName_editText);
         text.setText(middleName);
     }
 
-    public String getLastName() {
+    private String getLastName() {
         EditText name = findViewById(R.id.lastName_editText);
         return name.getText().toString();
     }
 
-    public void setLastName(String lastName) {
+    private void setLastName(String lastName) {
         EditText text = findViewById(R.id.lastName_editText);
         text.setText(lastName);
     }
 
-    public String getDOB() {
+    private String getDOB() {
         EditText dob = findViewById(R.id.dob_editText);
         return dob.getText().toString();
     }
 
-    public void setDOB(String DOB) {
+    private void setDOB(String DOB) {
         EditText text = findViewById(R.id.dob_editText);
         text.setText(DOB);
     }
 
-    public String getPhoneNumber() {
+    private String getPhoneNumber() {
         EditText phone_number_box = findViewById(R.id.phoneNumber_editText);
         String phoneNumber = phone_number_box.getText().toString();
         phoneNumber = phoneNumber.replaceAll("[^\\d.]", ""); // Remove all non-numeric characters
@@ -219,13 +229,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    private void setPhoneNumber(String phoneNumber) {
         EditText text = findViewById(R.id.phoneNumber_editText);
         text.setText(phoneNumber);
     }
 
     // Return //0 for female, 1 for male, -1 on no selection
-    public String getGender() {
+    private String getGender() {
         RadioButton male = findViewById(R.id.male);
         RadioButton female = findViewById(R.id.female);
 
@@ -237,7 +247,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             return "";
     }
 
-    public void setGender(String gender) {
+    private void setGender(String gender) {
         if (gender.equals("MALE")) {
             RadioButton button = findViewById(R.id.male);
             button.toggle();
@@ -253,32 +263,32 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     }
 
-    public String getAddress() {
+    private String getAddress() {
         EditText address = findViewById(R.id.home_editText);
         return address.getText().toString();
     }
 
-    public String getCity() {
+    private String getCity() {
         EditText city = findViewById(R.id.city_editText);
         return city.getText().toString();
     }
 
-    public void setCity(String city) {
+    private void setCity(String city) {
         EditText text = findViewById(R.id.city_editText);
         text.setText(city);
     }
 
-    public String getState() {
+    private String getState() {
         EditText state = findViewById(R.id.state_editText);
         return state.getText().toString();
     }
 
-    public void setState(String state) {
+    private void setState(String state) {
         EditText text = findViewById(R.id.state_editText);
         text.setText(state);
     }
 
-    public String getZip() {
+    private String getZip() {
         EditText zip = findViewById(R.id.zipCode_editText);
         if (zip.getText().toString().equals(""))
             return "0";
@@ -286,22 +296,22 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return zip.getText().toString();
     }
 
-    public String getLicencePlate() {
+    private String getLicencePlate() {
         EditText plate = findViewById(R.id.licencePlateNumber_editText);
         return plate.getText().toString();
     }
 
-    public String getVehicle() {
+    private String getVehicle() {
         EditText vehicle = findViewById(R.id.vehicle_editText);
         return vehicle.getText().toString();
     }
 
-    public void setVehicle(String vehicle) {
+    private void setVehicle(String vehicle) {
         EditText text = findViewById(R.id.vehicle_editText);
         text.setText(vehicle);
     }
 
-    public String getHeight() {
+    private String getHeight() {
         EditText height = findViewById(R.id.heightCentimeters_editText);
         if (height.getText().toString().equals(""))
             return "0";
@@ -309,13 +319,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return height.getText().toString();
     }
 
-    public void setHeight(String height) {
+    private void setHeight(String height) {
         EditText text = findViewById(R.id.heightCentimeters_editText);
         if (!height.equals("0"))
             text.setText(height);
     }
 
-    public String getWeight() {
+    private String getWeight() {
         EditText weight = findViewById(R.id.weightKilograms_editText);
         if (weight.getText().toString().equals(""))
             return "0";
@@ -323,13 +333,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return weight.getText().toString();
     }
 
-    public void setWeight(String weight) {
+    private void setWeight(String weight) {
         EditText text = findViewById(R.id.weightKilograms_editText);
         if (!weight.equals("0"))
             text.setText(weight);
     }
 
-    public String getBloodType() {
+    private String getBloodType() {
         RadioButton a = findViewById(R.id.bloodA);
         RadioButton b = findViewById(R.id.bloodB);
         RadioButton ab = findViewById(R.id.bloodAB);
@@ -363,7 +373,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return "";
     }
 
-    public void setBloodType(String bloodType) {
+    private void setBloodType(String bloodType) {
         CheckBox rh = findViewById(R.id.rh_checkBox);
         if (bloodType.contains("+"))
             rh.toggle();
@@ -387,7 +397,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     }
 
-    public void loadJson() {
+    private void loadJson() {
         String id = sharedPreferences.getString(idKey, "");
 
         if (id.equals(""))
@@ -403,6 +413,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
         Networking.getPersonalInfo(id, listener);
     }
 
+    /**
+     * Populate data entry fields with existing JSON data.
+     *
+     * @param personalInfo JSON of personal information to populate data fields
+     */
     public void populateJSONValues(JSONObject personalInfo) {
         String gender, firstName, middleName, lastName, homeAddress, city, state,
                 dateOfBirth, licencePlateNumber, vehicle, bloodType, zipcode, heightCentimeters, weightKilograms, phoneNumber;
@@ -447,22 +462,25 @@ public class PersonalInfoActivity extends AppCompatActivity {
         setWeight(weightKilograms);
     }
 
-    public void setHomeAddress(String homeAddress) {
+    private void setHomeAddress(String homeAddress) {
         EditText text = findViewById(R.id.home_editText);
         text.setText(homeAddress);
     }
 
-    public void setZIP(String ZIP) {
+    private void setZIP(String ZIP) {
         EditText text = findViewById(R.id.zipCode_editText);
         if (!ZIP.equals("0"))
             text.setText(ZIP);
     }
 
-    public void setLicence(String licence) {
+    private void setLicence(String licence) {
         EditText text = findViewById(R.id.licencePlateNumber_editText);
         text.setText(licence);
     }
 
+    /**
+     * Correct navigation bar is correct on resume
+     */
     protected void onResume() {
         super.onResume();
         navigation = findViewById(R.id.navigation);

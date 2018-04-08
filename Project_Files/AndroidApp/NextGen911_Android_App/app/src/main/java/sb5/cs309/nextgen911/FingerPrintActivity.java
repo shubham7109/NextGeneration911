@@ -29,6 +29,10 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+/**
+ * Contains controller to authenticate fingerprint for security.
+ */
+
 public class FingerPrintActivity extends AppCompatActivity {
 
     private static final String KEY_NAME = "yourKey";
@@ -40,6 +44,12 @@ public class FingerPrintActivity extends AppCompatActivity {
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
 
+
+    /**
+     * Immediately request fingerprint permission and attempt to authenticate. Handles all possible failure routes (no permission, no fingerprint reader, no finger registered)
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +126,7 @@ public class FingerPrintActivity extends AppCompatActivity {
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    public boolean initCipher() {
+    private boolean initCipher() {
         try {
             cipher = Cipher.getInstance(
                     KeyProperties.KEY_ALGORITHM_AES + "/"
