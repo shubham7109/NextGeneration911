@@ -33,6 +33,17 @@ public class operatorsController {
 	{
 		return operatorService.getOperator(id);
 	}
+	
+	/**
+	 * Checks if the password entered for the given username is correct
+	 * @param userName username of operator
+	 * @param password password of operator
+	 */
+	@RequestMapping("/login/{userName}/{password}")
+	public boolean checkPassword(@PathVariable("userName") String userName, @PathVariable("password") String password)
+	{
+		return operatorService.checkPassword(userName, password);
+	}
 
 	/**
 	 * adds a operator to the database

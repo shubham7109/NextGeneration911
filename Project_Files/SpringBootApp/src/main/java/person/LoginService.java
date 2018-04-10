@@ -61,8 +61,8 @@ public class LoginService {
 	}
 
 	/**
-	 * checks password of user based upon username
-	 * @param username of login
+	 * checks password of user based upon userName
+	 * @param userName of login
 	 * @param password of login
 	 * @return true is password is correct, otherwise false
 	 */

@@ -82,4 +82,14 @@ public class operatorsService {
 		}*/
 		operatorsRepository.delete(id);
 	}
+	
+	public boolean checkPassword(String userName, String password)
+	{
+		List<Operators> login;
+		login = getAllOperators();
+		for(int i = 0; i < login.size(); i++)
+			if(login.get(i).getUserName().equals(userName) && login.get(i).getPassword().equals(password))
+				return true;
+		return false;
+	}
 }
