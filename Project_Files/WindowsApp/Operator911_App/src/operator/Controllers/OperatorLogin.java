@@ -20,12 +20,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import operator.LoggedInView;
-import operator.Main911Call;
 import operator.Models.OperatorModel;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 /**
  * Controller class for Login.fxml

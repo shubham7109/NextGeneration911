@@ -50,10 +50,10 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Controller class for On911Call.fxml
+ * Controller class for On911Message.fxml
  * @author Shubham Sharma
  */
-public class On911Call implements Initializable, MapComponentInitializedListener, DirectionsServiceCallback {
+public class On911Message implements Initializable, MapComponentInitializedListener, DirectionsServiceCallback {
 
     @FXML protected GoogleMapView mapView;
     @FXML private TextArea messages;
@@ -121,7 +121,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
      * @param connection Connection information
      * @throws Exception
      */
-    public On911Call(OperatorModel operatorModel, PersonModel personModel, NetworkConnection connection) throws Exception {
+    public On911Message(OperatorModel operatorModel, PersonModel personModel, NetworkConnection connection) throws Exception {
         if(personModel != null){
             LAT = Double.parseDouble(personModel.getLatitude());
             LONG = Double.parseDouble(personModel.getLongitude());
@@ -518,7 +518,7 @@ public class On911Call implements Initializable, MapComponentInitializedListener
     }
 
     /**
-     * End the 911 call and set the operator's status to available
+     * End the 911 message and set the operator's status to available
      * @param event On enter press
      * @throws Exception
      */

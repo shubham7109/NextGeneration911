@@ -58,7 +58,7 @@
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="timeElapsed" layoutX="63.0" layoutY="528.0" prefHeight="71.0" prefWidth="165.0" text="On Call for:" textAlignment="CENTER" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="63.0">
+                  <Label fx:id="timeElapsed" layoutX="63.0" layoutY="528.0" prefHeight="71.0" prefWidth="165.0" text="On message for:" textAlignment="CENTER" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="63.0">
                      <font>
                         <Font name="Century Gothic Bold" size="18.0" />
                      </font>
