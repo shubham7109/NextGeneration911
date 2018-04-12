@@ -38,12 +38,14 @@ public class LoginController {
 	 * @param userName username of operator
 	 * @param password password of operator
 	 */
+	/*
 	@RequestMapping("/login/{userName}/{password}")
 	public boolean checkPassword(@PathVariable("userName") String userName, @PathVariable("password") String password)
 	{
 		return loginService.checkPassword(userName, password);
 	}
-
+	*/
+	
 	/**
 	 * adds a login to the database
 	 * @param log Login object
