@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import operator.Controllers.AdminController;
 import operator.Controllers.Controller;
 import operator.Controllers.OperatorLogin;
 import operator.Models.PersonModel;
@@ -22,15 +23,15 @@ import java.util.ArrayList;
  * Class to initialize the Main.fxml view and the calls its controller class
  * @author Shubham Sharma
  */
-public class LoggedInView extends Application{
+public class AdminLoggedIn extends Application{
 
-        private String username;
+    private String username;
 
     /**
      * Constructor to set the username
      * @param username Sets username
      */
-    public LoggedInView(String username) {
+    public AdminLoggedIn(String username) {
         this.username = username;
     }
 
@@ -40,20 +41,19 @@ public class LoggedInView extends Application{
      * @throws Exception
      */
     @Override
-        public void start(Stage primaryStage) throws Exception{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Xmls/Main.fxml"));
-            Controller controller = new Controller(username);
-            loader.setController(controller);
-            AnchorPane anchorPane = loader.load();
+    public void start(Stage primaryStage) throws Exception{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Xmls/AdminLoggedIn.fxml"));
+        AdminController controller = new AdminController(username);
+        loader.setController(controller);
+        AnchorPane anchorPane = loader.load();
 
 
-            primaryStage.setTitle("911 Operator");
+        primaryStage.setTitle("911 Operator - Admin");
 
-            Scene scene = new Scene(anchorPane, 200, 200);
-            primaryStage.setScene(scene);
-            primaryStage.setMaximized(true);
-            primaryStage.show();
-        }
-
-
+        Scene scene = new Scene(anchorPane, 200, 200);
+        primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
+        primaryStage.show();
     }
+
+}

@@ -20,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import operator.AdminLoggedIn;
 import operator.LoggedInView;
 import operator.Models.OperatorModel;
 import org.json.JSONArray;
@@ -32,31 +33,22 @@ public class OperatorLogin {
 
     @FXML
     private Text loginError;
-
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
-
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
-
     @FXML // fx:id="scenetitle"
     private Text scenetitle; // Value injected by FXMLLoader
-
     @FXML // fx:id="userName"
     private Label userName; // Value injected by FXMLLoader
-
     @FXML // fx:id="userTextField"
     private TextField userTextField; // Value injected by FXMLLoader
-
     @FXML // fx:id="pw"
     private Label pw; // Value injected by FXMLLoader
-
     @FXML // fx:id="pwBox"
     private PasswordField pwBox; // Value injected by FXMLLoader
-
     @FXML // fx:id="btn"
     private Button btn; // Value injected by FXMLLoader
-
     private boolean loginAuth = false;
     private OperatorModel operator;
 
@@ -168,20 +160,39 @@ public class OperatorLogin {
             result.append(line);
         }
         rd.close();
+
         return result.toString();
     }
 
     private void loginEnter(){
-        Stage stage = new Stage();
-        stage.setTitle("Operator");
-        LoggedInView loggedInView = new LoggedInView(userTextField.getText());
-        try {
-            loggedInView.start(stage);
-        } catch (Exception e1) {
-            e1.printStackTrace();
+        // If operator is a 911 operator
+        if(operator.getAccesibility() == 1){
+            Stage stage = new Stage();
+            stage.setTitle("Operator");
+            LoggedInView loggedInView = new LoggedInView(userTextField.getText());
+            try {
+                loggedInView.start(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+
+            Stage primaryStage = (Stage) loginError.getScene().getWindow();
+            primaryStage.close();
+        }
+        // If operator has admin privileges
+        else if (operator.getAccesibility() == 0){
+            Stage stage = new Stage();
+            stage.setTitle("Admin");
+            AdminLoggedIn loggedInView = new AdminLoggedIn(userTextField.getText());
+            try {
+                loggedInView.start(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+
+            Stage primaryStage = (Stage) loginError.getScene().getWindow();
+            primaryStage.close();
         }
 
-        Stage primaryStage = (Stage) loginError.getScene().getWindow();
-        primaryStage.close();
     }
 }
