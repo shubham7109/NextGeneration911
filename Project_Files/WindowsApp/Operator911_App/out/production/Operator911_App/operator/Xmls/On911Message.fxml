@@ -10,6 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.image.ImageView?>
 <AnchorPane id="AnchorPane" prefHeight="680.0" prefWidth="1157.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <SplitPane fx:id="splitPane1" dividerPositions="0.14372294372294372" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -91,15 +94,36 @@
                                              </font>
                                           </Label>
                                        </children></AnchorPane>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                       <children>
-                                          <TextArea fx:id="messages" editable="false" layoutX="-32.0" layoutY="-126.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.0" />
-                                          <TextField fx:id="input" layoutX="-13.0" layoutY="166.0" onAction="#onEnter" promptText="Send Message" text="Story County 911, what is your emergency ?" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                                             <padding>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" />
-                                             </padding>
-                                          </TextField>
-                                       </children>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                        <children>
+                                            <TabPane layoutX="45.0" layoutY="11.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <tabs>
+                                                    <Tab text="Messages">
+                                                        <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                <children>
+                                                                    <TextArea fx:id="messages" editable="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.0" />
+                                                                    <TextField fx:id="input" onAction="#onEnter" promptText="Send Message" text="Story County 911, what is your emergency ?" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                                        <padding>
+                                                                            <Insets bottom="5.0" left="5.0" right="5.0" />
+                                                                        </padding>
+                                                                    </TextField>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </content>
+                                                    </Tab>
+                                                    <Tab text="Image">
+                                                        <content>
+                                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                <children>
+                                                                    <ImageView fx:id="sentImage" fitHeight="172.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </content>
+                                                    </Tab>
+                                                </tabs>
+                                            </TabPane>
+                                        </children>
                                     </AnchorPane>
                                 </items>
                               </SplitPane>
@@ -107,7 +131,7 @@
                     </items>
                   </SplitPane>
                </children>
-            </AnchorPane>
+          </AnchorPane>
         </items>
       </SplitPane>
     </children>
