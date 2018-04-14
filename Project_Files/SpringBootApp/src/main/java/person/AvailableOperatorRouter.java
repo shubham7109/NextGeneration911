@@ -26,7 +26,7 @@ public class AvailableOperatorRouter {
 	private Login getAvailableOperator() {
 		List<Login> operators = loginService.getAllLogins();
 		for (int i = 0; i < operators.size(); i++) {
-			if (operators.get(i).getStatus() == 0) {
+			if (operators.get(i).getStatus() == 0 && operators.get(i).getAccesibility() != 0) {
 				return operators.get(i);
 			}
 		}
