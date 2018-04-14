@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -9,7 +14,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1151.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Controllers.ReportsView">
+<AnchorPane prefHeight="700.0" prefWidth="1151.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="operator.Controllers.ReportsView">
    <children>
       <SplitPane dividerPositions="0.6160458452722063" layoutX="496.0" layoutY="250.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -28,6 +33,22 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </LineChart>
+                  <Label fx:id="averageTime" layoutX="115.0" layoutY="86.0" text="Label" AnchorPane.leftAnchor="115.0" AnchorPane.topAnchor="86.0">
+                     <font>
+                        <Font name="Century Gothic Bold Italic" size="18.0" />
+                     </font></Label>
+                  <Label fx:id="bestAverage" layoutX="90.0" layoutY="167.0" text="Label" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="167.0">
+                     <font>
+                        <Font name="Century Gothic Bold Italic" size="18.0" />
+                     </font></Label>
+                  <Label fx:id="quickestTime" layoutX="90.0" layoutY="246.0" text="Label" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="246.0">
+                     <font>
+                        <Font name="Century Gothic Bold Italic" size="18.0" />
+                     </font></Label>
+                  <Label fx:id="totalCallLength" layoutX="111.0" layoutY="327.0" text="Label" AnchorPane.leftAnchor="111.0" AnchorPane.topAnchor="327.0">
+                     <font>
+                        <Font name="Century Gothic Bold Italic" size="18.0" />
+                     </font></Label>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
