@@ -20,6 +20,15 @@ public class MainActivity extends AppCompatActivity {
     private final int requestCode = 20;
     private ImageView imageHolder;
 
+    public static void requestPermissions(Activity activity, int requestCode) {
+        ArrayList<String> permissionList = new ArrayList<>();
+        permissionList.add(Manifest.permission.CAMERA);
+        permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        String[] perms = permissionList.toArray(new String[0]);
+
+        ActivityCompat.requestPermissions(activity, perms, requestCode);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +54,7 @@ public class MainActivity extends AppCompatActivity {
         if (this.requestCode == requestCode && resultCode == RESULT_OK) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             imageHolder.setImageBitmap(bitmap);
+            imageHolder.setVisibility(View.VISIBLE);
         }
-    }
-
-    public static void requestPermissions(Activity activity, int requestCode) {
-        ArrayList<String> permissionList = new ArrayList<>();
-        permissionList.add(Manifest.permission.CAMERA);
-        permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        String[] perms = permissionList.toArray(new String[0]);
-
-        ActivityCompat.requestPermissions(activity, perms, requestCode);
     }
 }
