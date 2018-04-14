@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class InstantMessageRouter {
 	
-	private Client client;
-	
 	@Autowired
 	private LoginService loginService;
 	
