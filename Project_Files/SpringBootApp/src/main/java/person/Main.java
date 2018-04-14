@@ -7,6 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Main {
 
 	public static void main(String[] args) {
+		
+		DeployWanderer w = new DeployWanderer();
+		w.initializeCoord();
+		
 		SpringApplication.run(Main.class, args);
 	}
 
