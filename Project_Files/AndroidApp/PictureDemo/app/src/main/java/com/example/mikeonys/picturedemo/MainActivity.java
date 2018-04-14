@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         if (this.requestCode == requestCode && resultCode == RESULT_OK) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             imageHolder.setImageBitmap(bitmap);
+            imageHolder.setVisibility(View.VISIBLE);
         }
     }
 
