@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.example.mikeonys.tcp_client"
+        applicationId "com.example.mikeonys.picturedemo"
         minSdkVersion 26
         targetSdkVersion 27
         versionCode 1
@@ -25,5 +25,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation 'tech.gusavila92:java-android-websocket-client:1.2.0'
 }

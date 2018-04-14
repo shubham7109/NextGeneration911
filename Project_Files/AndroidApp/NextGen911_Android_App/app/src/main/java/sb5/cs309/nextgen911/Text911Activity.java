@@ -64,7 +64,7 @@ public class Text911Activity extends AppCompatActivity {
     //TODO
     private void createClient() {
         try {
-            connection = new TcpClient(null, 0);
+            connection = new TcpClient("proj-309-sb-5.cs.iastate.edu", 8082);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,7 +174,7 @@ public class Text911Activity extends AppCompatActivity {
             public void onResponse(String response) {
                 Toast.makeText(getAppContext(), response + "", Toast.LENGTH_LONG).show(); //Todo
                 serverIP = response;
-                serverIP = "10.26.47.247";
+                serverIP = "proj-309-sb-5.cs.iastate.edu";
                 createClient();
             }
         };
