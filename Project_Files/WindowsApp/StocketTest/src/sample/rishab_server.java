@@ -8,6 +8,7 @@ public class rishab_server {
             String clientSentence;
             String capitalizedSentence;
             ServerSocket welcomeSocket = new ServerSocket(6789);
+            System.out.println("Server's IP is: " + InetAddress.getLocalHost().getHostAddress());
 
             while (true) {
                 Socket connectionSocket = welcomeSocket.accept();
