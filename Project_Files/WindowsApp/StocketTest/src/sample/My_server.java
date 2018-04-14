@@ -33,7 +33,7 @@ public class My_server extends Application{
         }
 
         private Server createMainServer(){
-            return new Server(6789,data ->{
+            return new Server(8082,data ->{
                 Platform.runLater(()->{
                     messages.appendText(data.toString() + "\n");
                 });
@@ -42,7 +42,7 @@ public class My_server extends Application{
 
 
         private Client createMainClient() throws UnknownHostException {
-            return new Client(IP, 6789, data ->{
+            return new Client(IP, 8082, data ->{
                 Platform.runLater(()->{
                     messages.appendText(data.toString() + "\n");
                 });

@@ -26,6 +26,11 @@ public class ReportsView implements Initializable {
     @FXML private TableColumn<OperatorModel, String> operatorName;
     @FXML private TableColumn<OperatorModel, String> locations;
     @FXML private TableColumn<OperatorModel, String> status;
+    @FXML private TableColumn<OperatorModel, String> totalCalls;
+    @FXML private TableColumn<OperatorModel, String> averageCallLength;
+    @FXML private TableColumn<OperatorModel, String> quickestCallLength;
+    @FXML private TableColumn<OperatorModel, String> lastCallLength;
+
 
     private static String getHTML(String urlToRead) throws Exception {
         StringBuilder result = new StringBuilder();
@@ -61,7 +66,7 @@ public class ReportsView implements Initializable {
                 System.out.println(jsonObject);
             }
         }catch (Exception e){
-
+            System.out.println(e.toString());
         }
 
         ObservableList<OperatorModel> observableList = FXCollections.observableArrayList(operatorModels);
@@ -81,5 +86,26 @@ public class ReportsView implements Initializable {
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         tableView.setItems(observableList);
         tableView.getColumns().add(status);
+
+        totalCalls = new TableColumn("Total calls received");
+        totalCalls.setCellValueFactory(new PropertyValueFactory<>("totalCalls"));
+        tableView.setItems(observableList);
+        tableView.getColumns().add(totalCalls);
+
+        averageCallLength = new TableColumn("Average Call Length (s)");
+        averageCallLength.setCellValueFactory(new PropertyValueFactory<>("averageCallLength"));
+        tableView.setItems(observableList);
+        tableView.getColumns().add(averageCallLength);
+
+        lastCallLength = new TableColumn("Latest call length (s)");
+        lastCallLength.setCellValueFactory(new PropertyValueFactory<>("lastCallLength"));
+        tableView.setItems(observableList);
+        tableView.getColumns().add(lastCallLength);
+
+        quickestCallLength = new TableColumn("Quickest call length (s)");
+        quickestCallLength.setCellValueFactory(new PropertyValueFactory<>("lastCallLength"));
+        tableView.setItems(observableList);
+        tableView.getColumns().add(quickestCallLength);
+
     }
 }
