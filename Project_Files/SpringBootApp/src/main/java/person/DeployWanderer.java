@@ -29,6 +29,14 @@ public class DeployWanderer {
 		return String.valueOf(rand.nextDouble()*(UPPERLONGITUDE - LOWERLONGITUDE) + LOWERLONGITUDE);
 	}
 	
+	private double moveLat() {
+		return 0.0;
+	}
+	
+	private double moveLong() {
+		return 0.0;
+	}
+	
 	public void initializeCoord() {
 		List<Deploy> deploys = deployService.getAllDeploys();
 		
@@ -74,7 +82,23 @@ public class DeployWanderer {
 	
 	public void wander() {
 		
-		
+		/*
+		 	Let deploys be an ArrayList<Deploy>
+		 	
+		 	for some of the deploys in deploys, d
+		 		d.x += moveLat()
+		 		d.y += moveLong()
+		 		
+		 		if d.x < minLat
+		 			d.x = minLat
+		 		if d.x > maxLat
+		 			d.x = maxLat
+		 		if d.y < minLat
+		 			d.y = minLat
+		 		if d.y > maxLat
+		 			d.y = maxLat
+		 		
+		 */
 		
 	}
 	
