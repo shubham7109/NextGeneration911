@@ -60,7 +60,7 @@ public class Controller {
     private Timer timer;
     private OperatorModel operator;
 
-    private boolean isServer = true;
+    private boolean isServer = false;
     private NetworkConnection connection;
 
     {
@@ -81,6 +81,15 @@ public class Controller {
     private Server createServer(){
         return new Server(5555,data ->{
             Platform.runLater(()->{
+                // Does nothing as I am not server
+            });
+        });
+    }
+
+    private Client createClient() throws UnknownHostException {
+        return new Client("10.25.69.139", 6789, data ->{
+            Platform.runLater(()->{
+
                 if(!data.toString().equals("") && callOnce){
                     // Create a controller instance
                     Stage stage = new Stage();
@@ -107,14 +116,6 @@ public class Controller {
                     }
 
                 }
-            });
-        });
-    }
-
-    private Client createClient() throws UnknownHostException {
-        return new Client(InetAddress.getLocalHost().getHostAddress(), 5555, data ->{
-            // Does nothing as I am not client
-            Platform.runLater(()->{
 
             });
         });

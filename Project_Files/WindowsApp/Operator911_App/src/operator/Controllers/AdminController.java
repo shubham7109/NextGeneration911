@@ -315,6 +315,7 @@ public class AdminController {
 
             stage.setTitle("Admin - Reports");
             stage.setScene(new Scene(root));
+            stage.setMaximized(true);
             stage.show();
 
         }catch (Exception e){
