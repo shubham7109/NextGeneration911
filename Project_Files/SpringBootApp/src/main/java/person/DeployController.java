@@ -15,6 +15,9 @@ public class DeployController {
 	@Autowired
 	private DeployService deployService; 
 	
+	@Autowired
+	private DeployWanderer deployWanderer;
+	
 	
 	/**
 	 * @return list of all Deploys
@@ -65,5 +68,10 @@ public class DeployController {
 	public void deleteDeploy(@PathVariable("id") String id)
 	{
 		deployService.deleteDeploy(id);
+	}
+	
+	@RequestMapping("/deploy/initialize")
+	public void initializeDeploys() {
+		deployWanderer.initializeCoord();
 	}
 }

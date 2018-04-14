@@ -8,9 +8,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		DeployWanderer w = new DeployWanderer();
-		w.initializeCoord();
-		
 		SpringApplication.run(Main.class, args);
 	}
 

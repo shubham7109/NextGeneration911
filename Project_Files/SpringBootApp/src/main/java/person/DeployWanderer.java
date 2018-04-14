@@ -1,10 +1,14 @@
 package person;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DeployWanderer {
 	
 	public static final double LOWERLONGITUDE = 42.008784;
@@ -13,7 +17,7 @@ public class DeployWanderer {
 	public static final double RIGHTLATITUDE = -93.597377;
 	
 	@Autowired
-	private DeployService deployService; 
+	private DeployService deployService;
 	
 	private String randomLat() {
 		Random rand = new Random(0);
@@ -28,8 +32,10 @@ public class DeployWanderer {
 	public void initializeCoord() {
 		List<Deploy> deploys = deployService.getAllDeploys();
 		
+		//delete each deploy in deploys
 		for (int i = 0; i < deploys.size(); i++) {
-			deployService.deleteDeploy(String.valueOf(i));
+			Deploy d = deploys.get(i);
+			deployService.deleteDeploy(d.getID());
 		}
 		
 		/*ambulances*/
