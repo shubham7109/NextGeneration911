@@ -5,8 +5,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
-
+/**
+ * Runs a text echo server, expects first message to be username, second to be name of chatroom to join
+ * /listall typed before specifying a chatroom lists all chat rooms with at least one person
+ * /who type in a chatroom lists everyone currently in the chatroom
+ */
 public class Server {
     private static ServerSocket serverSocket = null;
     private static Socket clientSocket = null;
@@ -64,30 +69,36 @@ class clientThread extends Thread {
             String name;
             String roomID;
             while (true) {
-                os.println("Enter your name.");
                 name = is.readLine().trim();
-                if (name.indexOf('@') == -1) {
+                if (name.length() != 0) {
                     break;
-                } else {
-                    os.println("The name should not contain '@' character.");
                 }
             }
 
             while (true) {
-                os.println("Enter a chat room name");
                 roomID = is.readLine().trim();
-                if (roomID.length() != 0) {
+                if (roomID.length() != 0 && roomID.charAt(0) != '/') {
                     break;
-                } else {
-                    os.println("Must enter a room name");
+                }
+                if (roomID.equals("/listall")){
+                    synchronized (this) {
+                        String result = "";
+                        for (Map.Entry<String, ArrayList<clientThread>> entry : chatRooms.entrySet()) {
+                            String key = entry.getKey();
+
+                            result = result + key + "\n";
+                            // do what you have to do here
+                            // In your case, another loop.
+                        }
+                        os.println(result);
+                    }
                 }
             }
 
             /* Welcome the new the client. */
-            os.println("Welcome " + name
-                    + " to chat room: " + roomID + ".\nTo leave enter /quit in a new line.");
+            os.println("Connected to Emergency Services\nPlease type your message below\nTo leave enter /quit in a new line");
             synchronized (this) {
-                clientName = "@" + name;
+                clientName = name;
                 chatRoomName = roomID;
 
                 if(chatRooms.containsKey(roomID))
@@ -99,7 +110,7 @@ class clientThread extends Thread {
 
                 for (clientThread c : chatRooms.get(roomID)) {
                     if (c != this)
-                        c.os.println("*** " + name + " has entered the chat room !!! ***");
+                        c.os.println("*** " + name + " has entered the chat room ***");
                 }
             }
 
@@ -108,6 +119,18 @@ class clientThread extends Thread {
                 if (line.startsWith("/quit")) {
                     break;
                 }
+
+
+                if (line.startsWith("/who")){
+                    synchronized (this){
+                        String result = "Currently connected: ";
+                        for(clientThread c: chatRooms.get(roomID))
+                            result = result + " " + c.clientName;
+                        os.println(result);
+                    }
+                    continue;
+                }
+
                 /* Broadcast it to all other clients. */
                 synchronized (this) {
                     for (clientThread c : chatRooms.get(roomID)) {
@@ -118,14 +141,15 @@ class clientThread extends Thread {
 
             synchronized (this) {
                 for (clientThread c : chatRooms.get(roomID)) {
-                    c.os.println("*** " + name + " is leaving the chat room !!! ***");
+                    c.os.println("*** " + name + " has left ***");
                 }
             }
 
             synchronized (this) {
                 chatRooms.get(roomID).remove(this);
+                if(chatRooms.get(roomID).size() == 0)
+                    chatRooms.remove(roomID);
             }
-
 
             is.close();
             os.close();
