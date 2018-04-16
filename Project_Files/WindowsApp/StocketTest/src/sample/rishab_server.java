@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class rishab_server {
 
-    static final int PORT = 1978;
+    static final int PORT = 1234;
     public static ArrayList<EchoThread> echoThreads = new ArrayList<>();
 
     public static void main(String args[]) {
