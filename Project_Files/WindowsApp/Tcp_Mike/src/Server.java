@@ -4,17 +4,19 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Server {
     private static ServerSocket serverSocket = null;
     private static Socket clientSocket = null;
     private static ArrayList<clientThread> threadList;
+    private static HashMap<String, ArrayList<clientThread>> chatRooms;
 
     public static void main(String args[]) {
         int portNumber = 2222;
         threadList = new ArrayList<>();
-
+        chatRooms = new HashMap<>();
 
         try {
             serverSocket = new ServerSocket(portNumber);
@@ -26,7 +28,7 @@ public class Server {
         while (true) {
             try {
                 clientSocket = serverSocket.accept();
-                clientThread process = new clientThread(clientSocket, threadList);
+                clientThread process = new clientThread(clientSocket, threadList, chatRooms);
                 threadList.add(process);
                 process.start();
 
@@ -41,14 +43,17 @@ public class Server {
 class clientThread extends Thread {
 
     private static ArrayList<clientThread> threadList;
+    private static HashMap<String, ArrayList<clientThread>> chatRooms;
     private String clientName = null;
+    private String chatRoomName = null;
     private DataInputStream is = null;
     private PrintStream os = null;
     private Socket clientSocket = null;
 
-    public clientThread(Socket clientSocket, ArrayList<clientThread> threadList) {
+    public clientThread(Socket clientSocket, ArrayList<clientThread> threadList, HashMap<String, ArrayList<clientThread>> chatRooms) {
         this.clientSocket = clientSocket;
         this.threadList = threadList;
+        this.chatRooms = chatRooms;
     }
 
     public void run() {
@@ -57,6 +62,7 @@ class clientThread extends Thread {
             is = new DataInputStream(clientSocket.getInputStream());
             os = new PrintStream(clientSocket.getOutputStream());
             String name;
+            String roomID;
             while (true) {
                 os.println("Enter your name.");
                 name = is.readLine().trim();
@@ -67,15 +73,33 @@ class clientThread extends Thread {
                 }
             }
 
+            while (true) {
+                os.println("Enter a chat room name");
+                roomID = is.readLine().trim();
+                if (roomID.length() != 0) {
+                    break;
+                } else {
+                    os.println("Must enter a room name");
+                }
+            }
+
             /* Welcome the new the client. */
             os.println("Welcome " + name
-                    + " to our chat room.\nTo leave enter /quit in a new line.");
+                    + " to chat room: " + roomID + ".\nTo leave enter /quit in a new line.");
             synchronized (this) {
                 clientName = "@" + name;
+                chatRoomName = roomID;
 
-                for (clientThread c : threadList) {
+                if(chatRooms.containsKey(roomID))
+                    chatRooms.get(roomID).add(this);
+                else{
+                    chatRooms.put(roomID, new ArrayList<clientThread>());
+                    chatRooms.get(roomID).add(this);
+                }
+
+                for (clientThread c : chatRooms.get(roomID)) {
                     if (c != this)
-                        c.os.println("*** " + name + "has entered the chat room !!! ***");
+                        c.os.println("*** " + name + " has entered the chat room !!! ***");
                 }
             }
 
@@ -86,20 +110,20 @@ class clientThread extends Thread {
                 }
                 /* Broadcast it to all other clients. */
                 synchronized (this) {
-                    for (clientThread c : threadList) {
+                    for (clientThread c : chatRooms.get(roomID)) {
                         c.os.println("<" + name + "> " + line);
                     }
                 }
             }
 
             synchronized (this) {
-                for (clientThread c : threadList) {
+                for (clientThread c : chatRooms.get(roomID)) {
                     c.os.println("*** " + name + " is leaving the chat room !!! ***");
                 }
             }
 
             synchronized (this) {
-                threadList.remove(this);
+                chatRooms.get(roomID).remove(this);
             }
 
 
