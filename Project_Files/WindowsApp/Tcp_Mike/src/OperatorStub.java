@@ -6,10 +6,10 @@ public class OperatorStub {
 
     public static void main(String[] args) {
 
-        int portNumber = 2222;
-        String host = "localhost";
+        int portNumber = 6789;
+        String host = "10.25.69.139";
 
-        Client me = new Client(portNumber, host, "Bob", "123");
+        Client me = new Client(portNumber, host, "Bob", "1");
         me.sendMessage("Hello");
         me.sendMessage("2nd Message");
 

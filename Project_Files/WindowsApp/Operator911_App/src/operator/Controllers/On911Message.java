@@ -629,7 +629,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
 
                     try {
                         setDeploys();
-                        updateMap();
+                        //updateMap();
 
                     } catch (Exception e) {
                         e.printStackTrace();

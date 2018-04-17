@@ -19,7 +19,7 @@ public class Server {
     private static HashMap<String, ArrayList<clientThread>> chatRooms;
 
     public static void main(String args[]) {
-        int portNumber = 2222;
+        int portNumber = 6789;
         threadList = new ArrayList<>();
         chatRooms = new HashMap<>();
 
