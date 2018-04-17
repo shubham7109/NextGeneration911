@@ -9,7 +9,7 @@ public class OperatorStub {
         int portNumber = 6789;
         String host = "10.25.69.139";
 
-        Client me = new Client(portNumber, host, "Bob", "1");
+        Client me = new Client(portNumber, host, "1", "1");
         me.sendMessage("Hello");
         me.sendMessage("2nd Message");
 

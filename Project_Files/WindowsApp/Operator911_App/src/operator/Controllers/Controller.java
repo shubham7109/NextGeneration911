@@ -68,7 +68,7 @@ public class Controller {
     @FXML void openMessageView(ActionEvent ae) throws Exception {
         Stage stage = new Stage();
         stage.setTitle("Welcome");
-        Main911Message main911Call = new Main911Message(username,"1");
+        Main911Message main911Call = new Main911Message(username,"1",client);
         updateStatus();
         main911Call.start(stage);
         Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
@@ -82,13 +82,15 @@ public class Controller {
                 Stage stage = new Stage();
                 stage.setTitle("Welcome");
                 String personID = messages.get(3).substring(3, messages.get(3).indexOf(" has"));
-                Main911Message main911Call = new Main911Message(username, "1");
+                Main911Message main911Call = new Main911Message(username, personID, client);
                 updateStatus();
                 main911Call.start(stage);
                 Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
                 primaryStage.close();
                 timer.cancel();
                 timer.purge();
+
+                isOpen = true;
             }
         }
     }
@@ -353,6 +355,9 @@ public class Controller {
         stage.setTitle("Login View");
         stage.setScene(new Scene(root));
         stage.show();
+        timer.cancel();
+        timer.purge();
+        client.closeConnection();
     }
 
     private void putRequest(String put_url, int status) throws IOException, JSONException {

@@ -95,21 +95,24 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     private ArrayList<Marker> markerArrayList = new ArrayList<>();
     private ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>();
     private PersonModel personModel;
-
+    private Client client;
+    private ArrayList<String> messagesList;
 
 
     /**
      * Constructor to set the instance variables
      * @param operatorModel Operator information for chat implementation
      * @param personModel Person information for location
+     * @param client
      * @throws Exception
      */
-    public On911Message(OperatorModel operatorModel, PersonModel personModel) throws Exception {
+    public On911Message(OperatorModel operatorModel, PersonModel personModel, Client client) throws Exception {
         if(personModel != null){
             LAT = Double.parseDouble(personModel.getLatitude());
             LONG = Double.parseDouble(personModel.getLongitude());
             this.personModel = personModel;
             this.operatorModel = operatorModel;
+            this.client = client;
         }
     }
 
@@ -496,6 +499,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         stage.setTitle("Operator");
         LoggedInView loggedInView = new LoggedInView(operatorModel.getUserName());
         try {
+            client.closeConnection();
             putRequest("http://proj-309-sb-5.cs.iastate.edu:8080/logs");
             loggedInView.start(stage);
         } catch (Exception e1) {
@@ -615,6 +619,9 @@ public class On911Message implements Initializable, MapComponentInitializedListe
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        //messagesList = client.getMessages();
+
         mapView.addMapInializedListener(this);
         messages.setWrapText(true);
         Timer timer = new Timer();
