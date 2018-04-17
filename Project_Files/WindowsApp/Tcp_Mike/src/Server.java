@@ -141,7 +141,10 @@ class clientThread extends Thread {
 
             synchronized (this) {
                 for (clientThread c : chatRooms.get(roomID)) {
-                    c.os.println("*** " + name + " has left ***");
+                    if(c != this)
+                        c.os.println("*** " + name + " has left ***");
+                    else
+                        c.os.println("***disconnected***");
                 }
             }
 
