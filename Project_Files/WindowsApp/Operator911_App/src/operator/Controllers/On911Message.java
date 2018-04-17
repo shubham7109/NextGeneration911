@@ -570,7 +570,6 @@ public class On911Message implements Initializable, MapComponentInitializedListe
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         mapView.addMapInializedListener(this);
         messages.setWrapText(true);
         Timer timer = new Timer();
@@ -582,6 +581,15 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                 Platform.runLater(() -> {
                     time = String.valueOf((System.currentTimeMillis() - startTime)/1000);
                     timeElapsed.setText("On Call for:\n"+time+ " seconds");
+
+                    try {
+                        setDeploys();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
                 });
             }
         }, 1000, 1000);

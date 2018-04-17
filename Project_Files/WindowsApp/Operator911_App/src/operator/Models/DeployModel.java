@@ -21,8 +21,8 @@ public class DeployModel {
     public DeployModel(JSONObject jsonObject) throws JSONException {
         id = jsonObject.getString("id");
         type = jsonObject.getString("type");
-        latitude = jsonObject.getString("latitude");
-        longitude =jsonObject.getString("longitude");
+        longitude = jsonObject.getString("latitude");
+        latitude =jsonObject.getString("longitude");
     }
 
     /**
