@@ -12,7 +12,10 @@ public class LogsService {
 
 	@Autowired
 	private LogsRepository logsRepository;
-	
+
+	/**
+	 * @return list of logs
+	 */
 	public List<Logs> getAllLogs() {
 
 		List<Logs> logs = new ArrayList<>();
@@ -20,6 +23,10 @@ public class LogsService {
 		return logs;
 	}
 
+	/**
+	 * adds a log to the database
+	 * @param log Logs
+	 */
 	public void addLogs(Logs log) {
 		logsRepository.save(log);
 	}

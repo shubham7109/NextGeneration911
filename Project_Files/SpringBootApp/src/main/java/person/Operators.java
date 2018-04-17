@@ -10,29 +10,33 @@ public class Operators
 {
 	@Id
 	private String id;
-	private String userName;
-	private String password;
 	private String firstName;
 	private String lastName;
-	private String status;
+	private int accesibility;
+	private String userName;
+	private String password;
 	private String location;
+	private int status;
 	private String ipAddress;
-
-	public Operators(String id, String userName, String password, String firstName, String lastName, String status,
-			String location, String ipAddress) {
-		super();
-		this.id = id;
-		this.userName = userName;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.status = status;
-		this.location = location;
-		this.ipAddress = ipAddress;
-	}
+	private String image;
 	
 	public Operators() {
 		super();
+	}
+
+	public Operators(String id, String firstName, String lastName, int accesibility, String userName, String password,
+			String location, int status, String ipAddress, String image) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.accesibility = accesibility;
+		this.userName = userName;
+		this.password = password;
+		this.location = location;
+		this.status = status;
+		this.ipAddress = ipAddress;
+		this.image = image;
 	}
 
 	public String getId() {
@@ -41,22 +45,6 @@ public class Operators
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getFirstName() {
@@ -75,12 +63,28 @@ public class Operators
 		this.lastName = lastName;
 	}
 
-	public String getStatus() {
-		return status;
+	public int getAccesibility() {
+		return accesibility;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setAccesibility(int accesibility) {
+		this.accesibility = accesibility;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getLocation() {
@@ -91,6 +95,14 @@ public class Operators
 		this.location = location;
 	}
 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	public String getIpAddress() {
 		return ipAddress;
 	}
@@ -99,7 +111,14 @@ public class Operators
 		this.ipAddress = ipAddress;
 	}
 
+	public String getImage() {
+		return image;
+	}
 
-
-
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	
+	
 }

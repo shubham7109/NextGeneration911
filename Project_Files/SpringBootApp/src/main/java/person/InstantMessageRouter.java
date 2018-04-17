@@ -15,12 +15,20 @@ public class InstantMessageRouter {
 	@Autowired
 	private LoginService loginService;
 	
+	
+	/**
+	 * @return an available operator
+	 */
 	@RequestMapping("/makecall")
 	public String makeCall() {
 		Login oper = getAvailableOperator();
 		return oper.getIpAddress();
 	}
 	
+	/**
+	 * @param id of the person who is calling
+	 * @return an available operator
+	 */
 	@RequestMapping("/makecall/{id}")
 	public String makeIdCall(@PathVariable("id") String id) {
 		Login oper = getAvailableOperator();
