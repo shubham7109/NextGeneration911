@@ -26,7 +26,7 @@ public class DeployWanderer {
 	@Autowired
 	private DeployService deployService;
 	
-	Random rand = new Random(0);
+	Random rand = new Random(System.currentTimeMillis());
 	
 	private String randomLat() {
 		return String.valueOf(rand.nextDouble()*(RIGHTLATITUDE - LEFTLATITUDE) + LEFTLATITUDE);
@@ -37,11 +37,19 @@ public class DeployWanderer {
 	}
 	
 	private double moveLat() {
-		return (rand.nextDouble() + 0.000001) * (RIGHTLATITUDE - LEFTLATITUDE) / 20;
+		double lat = (rand.nextDouble() + 0.000001) * (RIGHTLATITUDE - LEFTLATITUDE) / 20;
+		if (rand.nextInt() < 0) {
+			lat = lat * -1;
+		}
+		return lat;
 	}
 	
 	private double moveLong() {
-		return (rand.nextDouble() + 0.000001) * (UPPERLONGITUDE - LOWERLONGITUDE) / 20;
+		double longi = (rand.nextDouble() + 0.000001) * (UPPERLONGITUDE - LOWERLONGITUDE) / 20;
+		if (rand.nextInt() < 0) {
+			longi = longi * -1;
+		}
+		return longi;
 	}
 	
 	@EventListener(ApplicationReadyEvent.class)
