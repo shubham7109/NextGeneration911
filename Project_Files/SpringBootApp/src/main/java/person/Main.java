@@ -8,6 +8,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		DeployWanderer wanderer = new DeployWanderer();
+		
 		Thread t1 = new Thread (new Runnable() {
 			
 			@Override
@@ -17,10 +19,18 @@ public class Main {
 					Thread.sleep(15000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+				} finally {
+					wanderer.initializeCoord();
 				}
 				
 				while (true) {
-					//DeployWanderer.wander()
+					try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					
+					wanderer.wander();
 				}
 				
 			}

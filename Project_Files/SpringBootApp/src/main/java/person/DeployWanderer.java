@@ -82,23 +82,38 @@ public class DeployWanderer {
 	
 	public void wander() {
 		
-		/*
-		 	Let deploys be an ArrayList<Deploy>
-		 	
-		 	for some of the deploys in deploys, d
-		 		d.x += moveLat()
-		 		d.y += moveLong()
-		 		
-		 		if d.x < minLat
-		 			d.x = minLat
-		 		if d.x > maxLat
-		 			d.x = maxLat
-		 		if d.y < minLat
-		 			d.y = minLat
-		 		if d.y > maxLat
-		 			d.y = maxLat
-		 		
-		 */
+		List<Deploy> deploy = deployService.getAllDeploys();
+		
+		for (int i = 0; i < deploy.size(); i++) {
+			
+			Deploy d = deploy.get(i);
+			
+			// only wander non-stationary Deploys
+			if (d.getType() != "fireBrigade" && d.getType() != "ambulance") {
+				double dLong = Double.parseDouble(d.getLongitude());
+				double dLat = Double.parseDouble(d.getLatitude());
+				
+				dLong += moveLong();
+				dLat += moveLat();
+				
+				//correct out of bounds wandering
+				if (dLong < LOWERLONGITUDE) {
+					dLong = LOWERLONGITUDE;
+				}
+				if (dLong > UPPERLONGITUDE) {
+					dLong = UPPERLONGITUDE;
+				}
+				if (dLat < LEFTLATITUDE) {
+					dLat = LEFTLATITUDE;
+				}
+				if (dLat > RIGHTLATITUDE) {
+					dLat = RIGHTLATITUDE;
+				}
+				
+				d.setLongitude(String.valueOf(dLong));
+				d.setLatitude(String.valueOf(dLat));
+			}
+		}
 		
 	}
 	
