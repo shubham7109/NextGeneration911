@@ -40,4 +40,3 @@ Run the jar, and disown the process. This is necessary so that
 === Notes ===
 	$ lsof jarname.jar
 	this will return the pid number of a process that is accessing this file
-	
