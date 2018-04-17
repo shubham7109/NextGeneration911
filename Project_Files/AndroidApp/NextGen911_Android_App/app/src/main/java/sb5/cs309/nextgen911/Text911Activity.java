@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import com.android.volley.Response;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static sb5.cs309.nextgen911.MainMenu.idKey;
 import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
@@ -30,7 +33,8 @@ public class Text911Activity extends AppCompatActivity {
     TcpClient connection;
     private EditText inputBox;
     private ListView list_of_messages;
-    private boolean connected;
+    boolean connected;
+    int message_count;
 
     public static Context getAppContext() {
         return Text911Activity.context;
@@ -47,15 +51,36 @@ public class Text911Activity extends AppCompatActivity {
         setContentView(R.layout.activity_text911);
         Text911Activity.context = getApplicationContext();
         connected = false;
+        message_count = 0;
 
         initMessages();
         getServerIP();
+
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if(connected){
+                    ArrayList<String> messages = connection.getMessages();
+                    if(messages.size() == message_count)
+                        return;
+                    for(int i = message_count; i < messages.size(); i++){
+                        adapter.add(messages.get(i));
+                    }
+                    adapter.notifyDataSetChanged();
+                    message_count = messages.size();
+                }
+            }
+        }, 0, 1000);
+
     }
 
-    //TODO
     private void createClient() {
         try {
-            connection = new TcpClient(8082, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), serverIP);
+            /*connection = new TcpClient(8082, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), serverIP);
+            */
+            connection = new TcpClient(2222, "10.0.2.2", "Mike", "1234");
+            connected = true;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,11 +92,7 @@ public class Text911Activity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        try {
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        connection.closeConnection();
         super.onBackPressed();
     }
 
@@ -84,7 +105,6 @@ public class Text911Activity extends AppCompatActivity {
             public void onResponse(String response) {
                 Toast.makeText(getAppContext(), response + "", Toast.LENGTH_LONG).show(); //Todo
                 serverIP = response;
-                serverIP = "proj-309-sb-5.cs.iastate.edu";
                 createClient();
             }
         };
@@ -104,18 +124,16 @@ public class Text911Activity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = sharedPreferences.getString(idKey, "");
-                message += ": ";
-                message += inputBox.getText().toString();
-                inputBox.setText("");
-
-                messageList.add(message);
-                adapter.notifyDataSetChanged();
 
                 LocationServices.updateLocation(getAppContext());
                 try {
                     if (connected) {
+                        String message = inputBox.getText().toString();
+                        inputBox.setText("");
                         connection.sendMessage(message);
+                    }
+                    else{
+                        Toast.makeText(getAppContext(), "No Connection", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
