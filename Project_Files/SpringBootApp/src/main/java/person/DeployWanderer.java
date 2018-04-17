@@ -90,7 +90,7 @@ public class DeployWanderer {
 		}	
 	}
 	
-	@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedRate = 5000)
 	public void wander() {
 		System.out.println("Wandering");
 		
