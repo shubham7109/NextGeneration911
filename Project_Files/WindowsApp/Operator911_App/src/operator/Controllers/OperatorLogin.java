@@ -1,6 +1,4 @@
-package operator.Controllers; /**
- * Sample Skeleton for 'Login.fxml' Controller Class
- */
+package operator.Controllers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,45 +20,44 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import operator.AdminLoggedIn;
 import operator.LoggedInView;
-import operator.Main911Call;
 import operator.Models.OperatorModel;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
+/**
+ * Controller class for Login.fxml
+ * @author Shubham Sharma
+ */
 public class OperatorLogin {
 
     @FXML
     private Text loginError;
-
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
-
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
-
     @FXML // fx:id="scenetitle"
     private Text scenetitle; // Value injected by FXMLLoader
-
     @FXML // fx:id="userName"
     private Label userName; // Value injected by FXMLLoader
-
     @FXML // fx:id="userTextField"
     private TextField userTextField; // Value injected by FXMLLoader
-
     @FXML // fx:id="pw"
     private Label pw; // Value injected by FXMLLoader
-
     @FXML // fx:id="pwBox"
     private PasswordField pwBox; // Value injected by FXMLLoader
-
     @FXML // fx:id="btn"
     private Button btn; // Value injected by FXMLLoader
-
     private boolean loginAuth = false;
     private OperatorModel operator;
+
+    /**
+     * Checks if the entered username
+     * and password is valid
+     * @param ae On enter press
+     * @throws Exception
+     */
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
         loginAuth = checkLogin();
@@ -68,10 +65,12 @@ public class OperatorLogin {
             updateStatus();
             loginEnter();
         }
-
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * This method is called by the FXMLLoader when initialization is complete
+     */
+    @FXML
     void initialize() {
 
         // set handlers
@@ -161,20 +160,39 @@ public class OperatorLogin {
             result.append(line);
         }
         rd.close();
+
         return result.toString();
     }
 
     private void loginEnter(){
-        Stage stage = new Stage();
-        stage.setTitle("Operator");
-        LoggedInView loggedInView = new LoggedInView(userTextField.getText());
-        try {
-            loggedInView.start(stage);
-        } catch (Exception e1) {
-            e1.printStackTrace();
+        // If operator is a 911 operator
+        if(operator.getAccesibility() == 1){
+            Stage stage = new Stage();
+            stage.setTitle("Operator");
+            LoggedInView loggedInView = new LoggedInView(userTextField.getText());
+            try {
+                loggedInView.start(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+
+            Stage primaryStage = (Stage) loginError.getScene().getWindow();
+            primaryStage.close();
+        }
+        // If operator has admin privileges
+        else if (operator.getAccesibility() == 0){
+            Stage stage = new Stage();
+            stage.setTitle("Admin");
+            AdminLoggedIn loggedInView = new AdminLoggedIn(userTextField.getText());
+            try {
+                loggedInView.start(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+
+            Stage primaryStage = (Stage) loginError.getScene().getWindow();
+            primaryStage.close();
         }
 
-        Stage primaryStage = (Stage) loginError.getScene().getWindow();
-        primaryStage.close();
     }
 }

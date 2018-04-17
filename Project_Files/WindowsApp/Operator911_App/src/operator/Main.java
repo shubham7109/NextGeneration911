@@ -17,9 +17,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * Main class for the NextGen 911 project.
+ * @author  Shubham Sharma
+ */
 public class Main extends Application {
 
-
+    /**
+     * Overridden method to start Login.fxml view for Controller.java
+     * @param primaryStage Defines the view to be displayed
+     * @throws IOException
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Xmls/Login.fxml"));
@@ -31,6 +39,10 @@ public class Main extends Application {
     }
 
 
+    /**
+     * Main method for the NextGen 911 project
+     * @param args No args needed
+     */
     public static void main(String[] args) {
         launch(args);
     }

@@ -1,50 +1,43 @@
 package operator.Controllers;
 
 import javafx.application.Platform;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import operator.*;
 import operator.Models.LogModel;
 import operator.Models.OperatorModel;
-import operator.Models.PersonModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.*;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Timer;
 
 import static java.lang.Character.isDigit;
 
+/**
+ * Controller class for Main.fxml
+ * @author Shubham Sharma
+ */
 public class Controller {
 
     @FXML public ComboBox operatorStatus;
@@ -67,74 +60,66 @@ public class Controller {
     private Timer timer;
     private OperatorModel operator;
 
-    private boolean isServer = true;
-    private NetworkConnection connection;
-
-    {
-        try {
-            connection = isServer ? createServer() : createClient();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Required default constructor
+     */
     public Controller(){
         // Required Constructor
     }
 
-    private Server createServer(){
-        return new Server(5555,data ->{
-            Platform.runLater(()->{
-                if(!data.toString().equals("") && callOnce){
-                    // Create a controller instance
-                    Stage stage = new Stage();
-                    stage.setTitle("Welcome");
-                    try {
-                        String recieve = data.toString();
-                        boolean isDigit = true;
-                        for(int i=0; i<recieve.length(); i++){
-                            if(!isDigit(recieve.charAt(i))){
-                                isDigit = false;
-                            }
-                        }
-                        if(isDigit){
-                            Main911Call main911Call = new Main911Call(username,recieve , connection);
-                            updateStatus();
-                            main911Call.start(stage);
-                            Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
-                            primaryStage.close();
-                            callOnce = false;
-                        }
-
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-
-                }
-            });
-        });
-    }
-
-    private Client createClient() throws UnknownHostException {
-        return new Client(InetAddress.getLocalHost().getHostAddress(), 5555, data ->{
-            // Does nothing as I am not client
-            Platform.runLater(()->{
-
-            });
-        });
-    }
-
+//    private Client createClient() throws UnknownHostException {
+//        return new Client("10.25.69.139", 6789, data ->{
+//            Platform.runLater(()->{
+//
+//                if(!data.toString().equals("") && callOnce){
+//                    // Create a controller instance
+//                    Stage stage = new Stage();
+//                    stage.setTitle("Welcome");
+//                    try {
+//                        String recieve = data.toString();
+//                        boolean isDigit = true;
+//                        for(int i=0; i<recieve.length(); i++){
+//                            if(!isDigit(recieve.charAt(i))){
+//                                isDigit = false;
+//                            }
+//                        }
+//                        if(isDigit){
+//                            Main911Message main911Call = new Main911Message(username,recieve , connection);
+//                            updateStatus();
+//                            main911Call.start(stage);
+//                            Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
+//                            primaryStage.close();
+//                            callOnce = false;
+//                        }
+//
+//                    } catch (Exception e1) {
+//                        e1.printStackTrace();
+//                    }
+//
+//                }
+//
+//            });
+//        });
+//    }
+//
+    /**
+     * Constructor: Starts the connection to listen's for a 911 Message
+     * @param username gets the username of the operator.
+     */
     public Controller(String username){
         this.username = username;
-        try {
-            connection.startConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
+    /**
+     * This method initializes the view, sets the status of the login user,
+     * updates the IP on the server for the user, pulls in the list of logs,
+     * and displays interactive buttons, images and other information.
+     * @throws Exception
+     */
     @FXML
     public void initialize() throws Exception {
+
+
 
         operatorStatus.getItems().removeAll(operatorStatus.getItems());
         operatorStatus.getItems().addAll("Available", "Unavailable");
@@ -295,10 +280,13 @@ public class Controller {
         });
     }
 
+    /**
+     * Performs GET requests to the given url
+     * @param urlToRead The url to perform the GET request
+     * @return Returns the JSON code as a String
+     * @throws Exception
+     */
     public static String getHTML(String urlToRead) throws Exception {
-
-
-
         StringBuilder result = new StringBuilder();
         URL url = new URL(urlToRead);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -312,9 +300,11 @@ public class Controller {
         return result.toString();
     }
 
-
+    /**
+     * Open's the view to look up person based on their ID
+     * @param event On button click
+     */
     public void openLookUpPerson(ActionEvent event){
-
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/operator/Xmls/LookUpPerson.fxml"));
             Parent root = fxmlLoader.load();
@@ -323,17 +313,17 @@ public class Controller {
             stage.setTitle("Look Up Person");
             stage.setScene(new Scene(root));
             stage.show();
-
-
-
         }catch (Exception e){
             System.out.println(e);
         }
-
     }
 
-    public void openOperatorList(ActionEvent event){
 
+    /**
+     * Open's the view to display the list of operators in the database.
+     * @param event On button click
+     */
+    public void openOperatorList(ActionEvent event){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/operator/Xmls/OperatorList.fxml"));
             Parent root = fxmlLoader.load();
@@ -348,6 +338,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Button to logout the user, open's a view to login as another user and update the status of the user
+     * @param event On button press
+     * @throws Exception
+     */
     @FXML
     void logoutPress(ActionEvent event) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/operator/Xmls/Login.fxml"));
