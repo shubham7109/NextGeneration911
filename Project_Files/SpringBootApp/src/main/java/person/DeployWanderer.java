@@ -4,11 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
-@Service
+@Component
 public class DeployWanderer {
 	
 	public static final double LOWERLONGITUDE = 42.008784;
@@ -19,25 +26,28 @@ public class DeployWanderer {
 	@Autowired
 	private DeployService deployService;
 	
+	Random rand = new Random(0);
+	
 	private String randomLat() {
-		Random rand = new Random(0);
 		return String.valueOf(rand.nextDouble()*(RIGHTLATITUDE - LEFTLATITUDE) + LEFTLATITUDE);
 	}
 	
 	private String randomLong() {
-		Random rand = new Random(1);
 		return String.valueOf(rand.nextDouble()*(UPPERLONGITUDE - LOWERLONGITUDE) + LOWERLONGITUDE);
 	}
 	
 	private double moveLat() {
-		return 0.0;
+		return (rand.nextDouble() + 0.000001) * (RIGHTLATITUDE - LEFTLATITUDE) / 20;
 	}
 	
 	private double moveLong() {
-		return 0.0;
+		return (rand.nextDouble() + 0.000001) * (UPPERLONGITUDE - LOWERLONGITUDE) / 20;
 	}
 	
+	@EventListener(ApplicationReadyEvent.class)
 	public void initializeCoord() {
+		System.out.println("Initializing Deploy Coordinates");
+		
 		List<Deploy> deploys = deployService.getAllDeploys();
 		
 		//delete each deploy in deploys
@@ -80,7 +90,9 @@ public class DeployWanderer {
 		}	
 	}
 	
+	@Scheduled(fixedRate = 10000)
 	public void wander() {
+		System.out.println("Wandering");
 		
 		List<Deploy> deploy = deployService.getAllDeploys();
 		
@@ -112,7 +124,12 @@ public class DeployWanderer {
 				
 				d.setLongitude(String.valueOf(dLong));
 				d.setLatitude(String.valueOf(dLat));
-			}
+			}	
+		}
+		
+		for (int i = 0; i < deploy.size(); i++ ) {
+			Deploy d = deploy.get(i);
+			deployService.updateDeploy(d.getID(), d);
 		}
 		
 	}
