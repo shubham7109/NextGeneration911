@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeployWanderer {
 	
-	public static final double LOWERLONGITUDE = 42.008784;
-	public static final double UPPERLONGITUDE = 42.062149;
-	public static final double LEFTLATITUDE = -93.698529;
-	public static final double RIGHTLATITUDE = -93.597377;
+	public static final double LOWERLONGITUDE = -93.698529;
+	public static final double UPPERLONGITUDE = -93.597377;
+	public static final double LEFTLATITUDE = 42.008784;
+	public static final double RIGHTLATITUDE = 42.062149;
 	
 	@Autowired
 	private DeployService deployService;
@@ -57,9 +57,9 @@ public class DeployWanderer {
 		}
 		
 		/*ambulances*/
-		deploys.add(new Deploy("1", "ambulance", "-93.611287", "42.033162"));
-		deploys.add(new Deploy("2", "ambulance", "-93.611287", "42.033168"));
-		deploys.add(new Deploy("3", "ambulance", "-93.583847", "42.037096"));
+		deploys.add(new Deploy("1", "ambulance", "42.033162", "-93.611287"));
+		deploys.add(new Deploy("2", "ambulance", "42.033168", "-93.611287"));
+		deploys.add(new Deploy("3", "ambulance", "42.037096", "-93.583847"));
 		
 		/*swatTeam*/
 		deploys.add(new Deploy("4", "swatTeam", randomLat(), randomLong()));
@@ -75,10 +75,10 @@ public class DeployWanderer {
 		deploys.add(new Deploy("10", "countyOfficers", randomLat(), randomLong()));
 		
 		/*fireBrigade*/
-		deploys.add(new Deploy("11", "fireBrigade", "-93.36546", "42.020540"));
-		deploys.add(new Deploy("12", "fireBrigade", "-93.36546", "42.020600"));
-		deploys.add(new Deploy("13", "fireBrigade", "-93.36546", "42.020640"));
-		deploys.add(new Deploy("14", "fireBrigade", "-93.38584", "42.021556"));
+		deploys.add(new Deploy("11", "fireBrigade", "42.020540", "-93.36546"));
+		deploys.add(new Deploy("12", "fireBrigade", "42.020600", "-93.36546"));
+		deploys.add(new Deploy("13", "fireBrigade", "42.020640", "-93.36546"));
+		deploys.add(new Deploy("14", "fireBrigade", "42.021556", "-93.38584"));
 		
 		/*firstResponders*/
 		deploys.add(new Deploy("15", "firstResponders", randomLat(), randomLong()));
