@@ -60,17 +60,6 @@ public class Controller {
     private Timer timer;
     private OperatorModel operator;
 
-    private boolean isServer = false;
-    private NetworkConnection connection;
-
-    {
-        try {
-            connection = isServer ? createServer() : createClient();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * Required default constructor
      */
@@ -78,60 +67,47 @@ public class Controller {
         // Required Constructor
     }
 
-    private Server createServer(){
-        return new Server(5555,data ->{
-            Platform.runLater(()->{
-                // Does nothing as I am not server
-            });
-        });
-    }
-
-    private Client createClient() throws UnknownHostException {
-        return new Client("10.25.69.139", 6789, data ->{
-            Platform.runLater(()->{
-
-                if(!data.toString().equals("") && callOnce){
-                    // Create a controller instance
-                    Stage stage = new Stage();
-                    stage.setTitle("Welcome");
-                    try {
-                        String recieve = data.toString();
-                        boolean isDigit = true;
-                        for(int i=0; i<recieve.length(); i++){
-                            if(!isDigit(recieve.charAt(i))){
-                                isDigit = false;
-                            }
-                        }
-                        if(isDigit){
-                            Main911Message main911Call = new Main911Message(username,recieve , connection);
-                            updateStatus();
-                            main911Call.start(stage);
-                            Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
-                            primaryStage.close();
-                            callOnce = false;
-                        }
-
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-
-                }
-
-            });
-        });
-    }
-
+//    private Client createClient() throws UnknownHostException {
+//        return new Client("10.25.69.139", 6789, data ->{
+//            Platform.runLater(()->{
+//
+//                if(!data.toString().equals("") && callOnce){
+//                    // Create a controller instance
+//                    Stage stage = new Stage();
+//                    stage.setTitle("Welcome");
+//                    try {
+//                        String recieve = data.toString();
+//                        boolean isDigit = true;
+//                        for(int i=0; i<recieve.length(); i++){
+//                            if(!isDigit(recieve.charAt(i))){
+//                                isDigit = false;
+//                            }
+//                        }
+//                        if(isDigit){
+//                            Main911Message main911Call = new Main911Message(username,recieve , connection);
+//                            updateStatus();
+//                            main911Call.start(stage);
+//                            Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
+//                            primaryStage.close();
+//                            callOnce = false;
+//                        }
+//
+//                    } catch (Exception e1) {
+//                        e1.printStackTrace();
+//                    }
+//
+//                }
+//
+//            });
+//        });
+//    }
+//
     /**
      * Constructor: Starts the connection to listen's for a 911 Message
      * @param username gets the username of the operator.
      */
     public Controller(String username){
         this.username = username;
-        try {
-            connection.startConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -142,6 +118,8 @@ public class Controller {
      */
     @FXML
     public void initialize() throws Exception {
+
+
 
         operatorStatus.getItems().removeAll(operatorStatus.getItems());
         operatorStatus.getItems().addAll("Available", "Unavailable");

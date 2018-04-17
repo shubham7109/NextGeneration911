@@ -14,8 +14,8 @@ public class rishab_client {
         String sentence;
         String modifiedSentence;
         BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-        Socket clientSocket = new Socket("10.25.69.139", 6789);
-        //Socket clientSocket = new Socket(InetAddress.getLocalHost().getHostAddress(), 1234);
+        //Socket clientSocket = new Socket("10.25.69.139", 6789);
+        Socket clientSocket = new Socket(InetAddress.getLocalHost().getHostAddress(), 6789);
 
         while(true){
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());

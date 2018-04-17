@@ -26,7 +26,6 @@ public class Main911Message extends Application {
 
     private OperatorModel operatorModel;
     private PersonModel personModel;
-    private NetworkConnection connection;
 
     /**
      * Required constructor
@@ -40,13 +39,11 @@ public class Main911Message extends Application {
      * create the OperatorModel and PersonModel
      * @param username username of the operator
      * @param callerID ID of the caller
-     * @param connection Connection status
      * @throws Exception
      */
-    public Main911Message(String username, String callerID, NetworkConnection connection) throws Exception {
+    public Main911Message(String username, String callerID) throws Exception {
         JSONArray operators  = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/login"));
         JSONArray persons = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/persons"));
-        this.connection = connection;
 
         for(int i=0; i<operators.length(); i++){
             if((new OperatorModel(operators.getJSONObject(i)).getUserName()).equals(username)){
@@ -68,7 +65,7 @@ public class Main911Message extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Xmls/On911Message.fxml"));
-        On911Message controller = new On911Message(operatorModel,personModel,connection);
+        On911Message controller = new On911Message(operatorModel,personModel);
         loader.setController(controller);
         AnchorPane anchorPane = loader.load();
 

@@ -6,10 +6,7 @@ import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
 import com.lynden.gmapsfx.service.directions.DirectionStatus;
 import com.lynden.gmapsfx.service.directions.DirectionsResult;
-import com.lynden.gmapsfx.service.directions.DirectionsService;
 import com.lynden.gmapsfx.service.directions.DirectionsServiceCallback;
-import com.lynden.gmapsfx.util.MarkerImageFactory;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,10 +17,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 import operator.Client;
@@ -31,8 +26,6 @@ import operator.LoggedInView;
 import operator.Models.DeployModel;
 import operator.Models.OperatorModel;
 import operator.Models.PersonModel;
-import operator.NetworkConnection;
-import operator.Server;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -102,16 +95,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     private ArrayList<Marker> markerArrayList = new ArrayList<>();
     private ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>();
     private PersonModel personModel;
-    private boolean isServer = true;
-    private NetworkConnection connection;
 
-    {
-        try {
-            connection = isServer ? createServer() : createClient();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     /**
