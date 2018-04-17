@@ -562,6 +562,51 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         System.err.println(connection.getResponseCode());
     }
 
+    private void updateMap(){
+
+        map.removeMarkers(markerArrayList);
+
+        LatLong callerLocation = new LatLong(LAT, LONG);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(callerLocation);
+
+        Marker callerMarker = new Marker(markerOptions);
+        markerOptionsArrayList = new ArrayList<>();
+        markerArrayList = new ArrayList<>();
+
+        for(int i=0; i<deployModels.size(); i++){
+            markerOptionsArrayList.add(new MarkerOptions());
+            LatLong latLong = new LatLong(Double.parseDouble(deployModels.get(i).getLatitude()),Double.parseDouble(deployModels.get(i).getLongitude()));
+            markerOptionsArrayList.get(i).position(latLong);
+
+            markerArrayList.add(new Marker(markerOptionsArrayList.get(i)));
+
+            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+            infoWindowOptions.content(deployModels.get(i).getType());
+
+            InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+            //infoWindow.open(map, markerArrayList.get(i));
+
+            map.addMarker(markerArrayList.get(i));
+
+            int finalI = i;
+            map.addUIEventHandler(markerArrayList.get(i), UIEventType.click, (JSObject obj) -> {
+                infoWindow.open(map,markerArrayList.get(finalI));
+            });
+        }
+        callerLocation = new LatLong(LAT, LONG);
+        map.setCenter(callerLocation);
+        map.addMarker(callerMarker);
+        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+        infoWindowOptions.content("CALLER LOCATION");
+        InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+        infoWindow.open(map, callerMarker);
+
+        map.addUIEventHandler(callerMarker, UIEventType.click, (JSObject obj) -> {
+            infoWindow.open(map,callerMarker);
+        });
+    }
+
 
     /**
      * Initialize the view of the controller and start a conneciton
@@ -584,6 +629,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
 
                     try {
                         setDeploys();
+                        updateMap();
 
                     } catch (Exception e) {
                         e.printStackTrace();
