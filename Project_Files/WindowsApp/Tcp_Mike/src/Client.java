@@ -5,23 +5,21 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class Client implements Runnable {
 
     private static Socket clientSocket = null;
     private static PrintStream os = null;
     private static DataInputStream is = null;
-    private static BufferedReader inputLine = null;
     private static boolean closed = false;
+    private ArrayList<String> messages;
 
-    public static void main(String[] args) {
 
-        int portNumber = 2222;
-        String host = "localhost";
-
+    public Client(int port, String host, String userName, String chatRoomName) {
+        messages = new ArrayList<>();
         try {
-            clientSocket = new Socket(host, portNumber);
-            inputLine = new BufferedReader(new InputStreamReader(System.in));
+            clientSocket = new Socket(host, port);
             os = new PrintStream(clientSocket.getOutputStream());
             is = new DataInputStream(clientSocket.getInputStream());
         } catch (UnknownHostException e) {
@@ -30,33 +28,47 @@ public class Client implements Runnable {
             System.err.println("I/O Error");
         }
 
-
         if (clientSocket != null && os != null && is != null) {
-            try {
-                new Thread(new Client()).start();
-                while (!closed) {
-                    os.println(inputLine.readLine().trim());
-                }
-                os.close();
-                is.close();
-                clientSocket.close();
-            } catch (IOException e) {
-                System.err.println("IOException:  " + e);
-            }
+            new Thread(this).start();
         }
+        sendMessage(userName);
+        sendMessage(chatRoomName);
     }
 
     public void run() {
         String responseLine;
         try {
             while ((responseLine = is.readLine()) != null) {
-                System.out.println(responseLine);
-                if (responseLine.indexOf("*** Bye") != -1)
+                messages.add(responseLine);
+                if (responseLine.indexOf("***disconnected***") != -1)
                     break;
             }
             closed = true;
         } catch (IOException e) {
             System.err.println("IOException:  " + e);
         }
+    }
+
+    public void sendMessage(String message) {
+        if (closed) {
+            closeConnection();
+            System.err.println("Connection closed");
+        } else {
+            os.println(message);
+        }
+    }
+
+    public void closeConnection() {
+        try {
+            os.close();
+            is.close();
+            clientSocket.close();
+        } catch (IOException e) {
+            System.err.println("IOException:  " + e);
+        }
+    }
+
+    public ArrayList<String> getMessages() {
+        return messages;
     }
 }
