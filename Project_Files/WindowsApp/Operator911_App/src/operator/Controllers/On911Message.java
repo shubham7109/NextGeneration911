@@ -102,32 +102,15 @@ public class On911Message implements Initializable, MapComponentInitializedListe
      * Constructor to set the instance variables
      * @param operatorModel Operator information for chat implementation
      * @param personModel Person information for location
-     * @param connection Connection information
      * @throws Exception
      */
-    public On911Message(OperatorModel operatorModel, PersonModel personModel, NetworkConnection connection) throws Exception {
+    public On911Message(OperatorModel operatorModel, PersonModel personModel) throws Exception {
         if(personModel != null){
             LAT = Double.parseDouble(personModel.getLatitude());
             LONG = Double.parseDouble(personModel.getLongitude());
             this.personModel = personModel;
             this.operatorModel = operatorModel;
         }
-    }
-
-    private Client createClient() throws UnknownHostException {
-        return new Client(InetAddress.getLocalHost().getHostAddress(), 7777, data ->{
-            Platform.runLater(()->{
-                messages.appendText("Caller ("+ personModel.getFirstName() +"): "+data.toString() + "\n");
-            });
-        });
-    }
-
-    private Server createServer(){
-        return new Server(7777,data ->{
-            Platform.runLater(()->{
-                messages.appendText("Caller ("+ personModel.getFirstName() +"):\n"+data.toString() + "\n\n");
-            });
-        });
     }
 
     /**
@@ -498,7 +481,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         input.setText("");
 
         messages.appendText(message + "\n\n");
-        this.connection.send(message);
+        //this.connection.send(message);
     }
 
     /**
@@ -587,12 +570,6 @@ public class On911Message implements Initializable, MapComponentInitializedListe
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        try {
-            connection.startConnection();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         mapView.addMapInializedListener(this);
         messages.setWrapText(true);

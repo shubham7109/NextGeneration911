@@ -102,6 +102,17 @@ public class Controller {
 //        });
 //    }
 //
+    @FXML void openMessageView(ActionEvent ae) throws Exception {
+        Stage stage = new Stage();
+        stage.setTitle("Welcome");
+        Main911Message main911Call = new Main911Message(username,"1");
+        updateStatus();
+        main911Call.start(stage);
+        Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
+        primaryStage.close();
+        callOnce = false;
+    }
+
     /**
      * Constructor: Starts the connection to listen's for a 911 Message
      * @param username gets the username of the operator.
