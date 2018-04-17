@@ -104,8 +104,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 personalInfo.put("bloodType", getBloodType());
                 personalInfo.put("heightCentimeters", getHeight());
                 personalInfo.put("weightKilograms", getWeight());
-                personalInfo.put("latitude", "0"); // Null Value
-                personalInfo.put("longitude", "0"); // Null Value
+
+                LocationServices.LocationTuple l = LocationServices.getLocation(getAppContext());
+
+                personalInfo.put("latitude", l.lat); // Null Value
+                personalInfo.put("longitude", l.lng); // Null Value
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
