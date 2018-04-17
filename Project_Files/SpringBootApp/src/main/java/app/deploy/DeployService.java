@@ -1,4 +1,4 @@
-package person;
+package app.deploy;
 
 import java.util.ArrayList;
 import java.util.List;

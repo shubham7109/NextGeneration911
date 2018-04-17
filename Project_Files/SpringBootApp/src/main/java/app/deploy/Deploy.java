@@ -1,4 +1,4 @@
-package person;
+package app.deploy;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

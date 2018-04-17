@@ -1,7 +1,4 @@
-package person;
-
-import java.util.ArrayList;
-import java.util.List;
+package app.person;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

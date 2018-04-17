@@ -1,4 +1,4 @@
-package person;
+package app.person;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,4 @@
-package person;
-
-import java.util.List;
+package app.login;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,4 +1,4 @@
-package person;
+package app.logs;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
