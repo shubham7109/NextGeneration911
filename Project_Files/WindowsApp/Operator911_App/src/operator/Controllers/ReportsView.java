@@ -5,6 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,6 +24,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -41,6 +46,7 @@ public class ReportsView implements Initializable {
     @FXML private Label bestAverage;
     @FXML private Label quickestTime;
     @FXML private Label totalCallLength;
+    @FXML private LineChart<String,Number> lineChart;
 
 
 
@@ -134,6 +140,7 @@ public class ReportsView implements Initializable {
         tableView.getColumns().add(quickestCallLength);
 
         setLabels();
+        setLineChart();
     }
 
     private void setLabels(){
@@ -166,6 +173,50 @@ public class ReportsView implements Initializable {
                                   quickestTime + " secs");
 
         this.totalCallLength.setText(logModels.size() + " calls ");
+    }
+
+    private void setLineChart(){
+        lineChart.setTitle("911 Calls per day");
+        ArrayList<String> dates  = new ArrayList<>();
+        ArrayList<XYChart.Series> series = new ArrayList<>();
+        Collections.reverse(logModels);
+
+        for(int i=0; i<operatorModels.size(); i++){
+            series.add(new XYChart.Series());
+            series.get(i).setName(operatorModels.get(i).getFirstName());
+
+        }
+        for(LogModel logModel : logModels){
+            if(!dates.contains(logModel.getDate()))
+                dates.add(logModel.getDate());
+        }
+
+        for(String date : dates){
+            for(int i=0; i< operatorModels.size(); i++){
+                String name = operatorModels.get(i).getFirstName()+" "+operatorModels.get(i).getLastName();
+                series.get(i).getData().add(new XYChart.Data(date, countCalls(name,date)));
+            }
+        }
+
+        for(XYChart.Series seriess : series){
+            lineChart.getData().addAll(seriess);
+        }
+
 
     }
+
+
+    private int countCalls(String operatorName, String date){
+
+        int count =0;
+
+        for(LogModel logModel : logModels){
+            if(logModel.getOperatorName().equals(operatorName) && logModel.getDate().equals(date)){
+                count++;
+            }
+        }
+
+        return count;
+    }
+
 }
