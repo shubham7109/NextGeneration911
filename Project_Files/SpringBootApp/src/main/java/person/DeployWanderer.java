@@ -46,8 +46,6 @@ public class DeployWanderer {
 	
 	@EventListener(ApplicationReadyEvent.class)
 	public void initializeCoord() {
-		System.out.println("Initializing Deploy Coordinates");
-		
 		List<Deploy> deploys = deployService.getAllDeploys();
 		
 		//delete each deploy in deploys
@@ -92,8 +90,6 @@ public class DeployWanderer {
 	
 	@Scheduled(fixedRate = 5000)
 	public void wander() {
-		System.out.println("Wandering");
-		
 		List<Deploy> deploy = deployService.getAllDeploys();
 		
 		for (int i = 0; i < deploy.size(); i++) {
