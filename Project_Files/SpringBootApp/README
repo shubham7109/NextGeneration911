@@ -36,3 +36,8 @@ Run the jar, and disown the process. This is necessary so that
 	process runs.
 	$ java -jar jarname.jar &
 	$ disown
+
+=== Notes ===
+	$ lsof jarname.jar
+	this will return the pid number of a process that is accessing this file
+	
