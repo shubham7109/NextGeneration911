@@ -1,13 +1,8 @@
 package sb5.cs309.nextgen911;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,10 +12,6 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static sb5.cs309.nextgen911.MainMenu.idKey;
@@ -64,93 +55,12 @@ public class Text911Activity extends AppCompatActivity {
     //TODO
     private void createClient() {
         try {
-            connection = new TcpClient("proj-309-sb-5.cs.iastate.edu", 8082);
+            connection = new TcpClient(8082, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), serverIP);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Make a POST request to update last user location with most recent device location
-     */
-    public void updateLocation() {
-        String id = sharedPreferences.getString(idKey, "");
-
-        if (id.equals(""))
-            return;
-
-        //Make get request
-        com.android.volley.Response.Listener<JSONObject> listener = new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    LocationTuple loc = getLocation();
-                    response.put("latitude", loc.lat);
-                    response.put("longitude", loc.lng);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Networking.postPersonalInfo(response);
-            }
-        };
-        Networking.getPersonalInfo(id, listener);
-    }
-
-    /**
-     * Requests an updated location from the location system manager
-     *
-     * @return Most recent Lat and Long as a tuple
-     */
-    public LocationTuple getLocation() {
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        boolean locationPerm = ContextCompat.checkSelfPermission(Text911Activity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
-        if (locationPerm) {
-            DecimalFormat decimalFormat = new DecimalFormat(".###"); // 5 digits gives +- 100 m
-
-            /* An empty listener is needed to update the location */
-            LocationListener locationListener = new LocationListener() {
-                public void onLocationChanged(Location location) {
-                }
-
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-                }
-
-                public void onProviderEnabled(String provider) {
-                }
-
-                public void onProviderDisabled(String provider) {
-                }
-            };
-
-
-            requestLocationUpdates(lm, locationListener);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-            double longitude = location.getLongitude();
-            double latitude = location.getLatitude();
-
-            LocationTuple result = new LocationTuple();
-            result.lat = latitude + "";
-            result.lng = longitude + "";
-
-            return result;
-        }
-
-        LocationTuple result = new LocationTuple();
-        result.lat = "0";
-        result.lng = "0";
-
-        return result;
-    }
-
-    private final void requestLocationUpdates(LocationManager locationManager, LocationListener locationListener) {
-        boolean locationPerm = ContextCompat.checkSelfPermission(Text911Activity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        if (locationPerm) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        }
-    }
 
     /**
      * close server on exit
@@ -202,10 +112,10 @@ public class Text911Activity extends AppCompatActivity {
                 messageList.add(message);
                 adapter.notifyDataSetChanged();
 
-                updateLocation();
+                LocationServices.updateLocation(getAppContext());
                 try {
                     if (connected) {
-                        connection.send(message);
+                        connection.sendMessage(message);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -213,11 +123,6 @@ public class Text911Activity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private static class LocationTuple {
-        public String lat;
-        public String lng;
     }
 }
 

@@ -1,65 +1,74 @@
 package sb5.cs309.nextgen911;
 
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+public class TcpClient implements Runnable {
 
-/**
- * Implements a basic TCP client to send text messages and images
- */
+    private static Socket clientSocket = null;
+    private static PrintStream os = null;
+    private static DataInputStream is = null;
+    private static boolean closed = false;
+    private ArrayList<String> messages;
 
-public class TcpClient extends WebSocketClient {
 
-    /**
-     * @param url  URL to connect to
-     * @param port Port to connect to
-     * @throws URISyntaxException Ensure proper URL format
-     */
-    public TcpClient(String url, int port) throws URISyntaxException {
-        super(new URI(url + ":" + port));
+    public TcpClient(int port, String host, String userName, String chatRoomName) {
+        messages = new ArrayList<>();
+        try {
+            clientSocket = new Socket(host, port);
+            os = new PrintStream(clientSocket.getOutputStream());
+            is = new DataInputStream(clientSocket.getInputStream());
+        } catch (UnknownHostException e) {
+            System.err.println("Failed to resolve hostname");
+        } catch (IOException e) {
+            System.err.println("I/O Error");
+        }
+
+        if (clientSocket != null && os != null && is != null) {
+            new Thread(this).start();
+        }
+        sendMessage(userName);
+        sendMessage(chatRoomName);
     }
 
-    /**
-     * On connection notify chat interface of open connection
-     *
-     * @param handshakedata Server connection response code
-     */
-    @Override
-    public void onOpen(ServerHandshake handshakedata) {
-
+    public void run() {
+        String responseLine;
+        try {
+            while ((responseLine = is.readLine()) != null) {
+                messages.add(responseLine);
+                if (responseLine.indexOf("***disconnected***") != -1)
+                    break;
+            }
+            closed = true;
+        } catch (IOException e) {
+            System.err.println("IOException:  " + e);
+        }
     }
 
-    /**
-     * Update chat UI on receipt of a message
-     *
-     * @param message Message received
-     */
-    @Override
-    public void onMessage(String message) {
-
+    public void sendMessage(String message) {
+        if (closed) {
+            closeConnection();
+            System.err.println("Connection closed");
+        } else {
+            os.println(message);
+        }
     }
 
-    /**
-     * Notify user that server has closed
-     *
-     * @param code   Server return code
-     * @param reason Optional exit string
-     * @param remote
-     */
-    @Override
-    public void onClose(int code, String reason, boolean remote) {
-
+    public void closeConnection() {
+        try {
+            os.close();
+            is.close();
+            clientSocket.close();
+        } catch (IOException e) {
+            System.err.println("IOException:  " + e);
+        }
     }
 
-    /**
-     * Reattempt connection on error, but notify user
-     *
-     * @param ex Exception causing error
-     */
-    @Override
-    public void onError(Exception ex) {
-
+    public ArrayList<String> getMessages() {
+        return messages;
     }
 }
