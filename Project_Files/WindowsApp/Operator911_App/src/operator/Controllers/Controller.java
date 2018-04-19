@@ -81,7 +81,7 @@ public class Controller {
             if(messages.get(3).contains("entered the chat room ***") ) {
                 Stage stage = new Stage();
                 stage.setTitle("Welcome");
-                String personID = messages.get(3).substring(3, messages.get(3).indexOf(" has"));
+                String personID = messages.get(3).substring(4, messages.get(3).indexOf(" has"));
                 Main911Message main911Call = new Main911Message(username, personID, client);
                 updateStatus();
                 main911Call.start(stage);
@@ -89,7 +89,7 @@ public class Controller {
                 primaryStage.close();
                 timer.cancel();
                 timer.purge();
-
+                client.closeConnection();
                 isOpen = true;
             }
         }

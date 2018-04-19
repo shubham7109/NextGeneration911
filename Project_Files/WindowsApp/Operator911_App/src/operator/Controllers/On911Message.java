@@ -42,6 +42,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Controller class for On911Message.fxml
  * @author Shubham Sharma
@@ -97,6 +99,9 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     private PersonModel personModel;
     private Client client;
     private ArrayList<String> messagesList;
+    private int messagesCount =0;
+    private int portNumber = 6789;
+    private String host = "10.25.69.139";
 
 
     /**
@@ -113,6 +118,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
             this.personModel = personModel;
             this.operatorModel = operatorModel;
             this.client = client;
+            messagesList = new ArrayList<>();
         }
     }
 
@@ -479,12 +485,8 @@ public class On911Message implements Initializable, MapComponentInitializedListe
      */
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
-        String message = "911 Operator:\n";
-        message += input.getText();
+        client.sendMessage(input.getText());
         input.setText("");
-
-        messages.appendText(message + "\n\n");
-        //this.connection.send(message);
     }
 
     /**
@@ -613,17 +615,26 @@ public class On911Message implements Initializable, MapComponentInitializedListe
 
 
     /**
-     * Initialize the view of the controller and start a conneciton
+     * Initialize the view of the controller and start a connection
      * @param location
      * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //messagesList = client.getMessages();
-
-        mapView.addMapInializedListener(this);
+        // Waits for the android user to join the room
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        client = new Client(portNumber, host, operatorModel.getFirstName(), operatorModel.getId());
+        messagesList = client.getMessages();
         messages.setWrapText(true);
+        mapView.addMapInializedListener(this);
+
+
+
         Timer timer = new Timer();
         timeElapsed.setAlignment(Pos.CENTER);
         long startTime = System.currentTimeMillis();
@@ -637,6 +648,10 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                     try {
                         setDeploys();
                         //updateMap();
+                        messages.clear();
+                        for(String text : client.getMessages()){
+                            messages.appendText(text + "\n");
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -661,6 +676,8 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                 e.printStackTrace();
             }
         });
+
+
     }
 
     private void setDeploys() throws Exception {

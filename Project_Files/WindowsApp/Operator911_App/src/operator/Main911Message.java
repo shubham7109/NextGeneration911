@@ -86,7 +86,7 @@ public class Main911Message extends Application {
         Scene scene = new Scene(anchorPane, 200, 200);
         stage.setScene(scene);
         stage.setMaximized(true);
-        stage.initStyle(StageStyle.UNDECORATED);
+        //stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
