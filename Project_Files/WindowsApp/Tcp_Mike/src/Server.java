@@ -19,7 +19,7 @@ public class Server {
     private static HashMap<String, ArrayList<clientThread>> chatRooms;
 
     public static void main(String args[]) {
-        int portNumber = 2222;
+        int portNumber = 6789;
         threadList = new ArrayList<>();
         chatRooms = new HashMap<>();
 
@@ -47,8 +47,8 @@ public class Server {
 
 class clientThread extends Thread {
 
-    private static ArrayList<clientThread> threadList;
-    private static HashMap<String, ArrayList<clientThread>> chatRooms;
+    private volatile static ArrayList<clientThread> threadList;
+    private volatile static HashMap<String, ArrayList<clientThread>> chatRooms;
     private String clientName = null;
     private String chatRoomName = null;
     private DataInputStream is = null;
@@ -116,7 +116,7 @@ class clientThread extends Thread {
 
             while (true) {
                 String line = is.readLine();
-                if (line.startsWith("/quit")) {
+                if (line == null || line.startsWith("/quit")) {
                     break;
                 }
 
@@ -141,11 +141,12 @@ class clientThread extends Thread {
 
             synchronized (this) {
                 for (clientThread c : chatRooms.get(roomID)) {
-                    c.os.println("*** " + name + " has left ***");
+                    if(c != this)
+                        c.os.println("*** " + name + " has left ***");
+                    else
+                        c.os.println("***disconnected***");
                 }
-            }
 
-            synchronized (this) {
                 chatRooms.get(roomID).remove(this);
                 if(chatRooms.get(roomID).size() == 0)
                     chatRooms.remove(roomID);

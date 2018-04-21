@@ -59,49 +59,42 @@ public class Controller {
     private ArrayList<LogModel> logModels;
     private Timer timer;
     private OperatorModel operator;
+    private Boolean isOpen = false;
+    private int portNumber = 6789;
+    private String host = "10.25.69.139";
+    private Client client;
 
-    /**
-     * Required default constructor
-     */
-    public Controller(){
-        // Required Constructor
+    //
+    @FXML void openMessageView(ActionEvent ae) throws Exception {
+        Stage stage = new Stage();
+        stage.setTitle("Welcome");
+        Main911Message main911Call = new Main911Message(username,"1",client);
+        updateStatus();
+        main911Call.start(stage);
+        Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
+        primaryStage.close();
     }
 
-//    private Client createClient() throws UnknownHostException {
-//        return new Client("10.25.69.139", 6789, data ->{
-//            Platform.runLater(()->{
-//
-//                if(!data.toString().equals("") && callOnce){
-//                    // Create a controller instance
-//                    Stage stage = new Stage();
-//                    stage.setTitle("Welcome");
-//                    try {
-//                        String recieve = data.toString();
-//                        boolean isDigit = true;
-//                        for(int i=0; i<recieve.length(); i++){
-//                            if(!isDigit(recieve.charAt(i))){
-//                                isDigit = false;
-//                            }
-//                        }
-//                        if(isDigit){
-//                            Main911Message main911Call = new Main911Message(username,recieve , connection);
-//                            updateStatus();
-//                            main911Call.start(stage);
-//                            Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
-//                            primaryStage.close();
-//                            callOnce = false;
-//                        }
-//
-//                    } catch (Exception e1) {
-//                        e1.printStackTrace();
-//                    }
-//
-//                }
-//
-//            });
-//        });
-//    }
-//
+    private void checkCallStatus() throws Exception {
+        ArrayList<String> messages = client.getMessages();
+        if (messages.size() > 3 && !isOpen){
+            if(messages.get(3).contains("entered the chat room ***") ) {
+                Stage stage = new Stage();
+                stage.setTitle("Welcome");
+                String personID = messages.get(3).substring(4, messages.get(3).indexOf(" has"));
+                Main911Message main911Call = new Main911Message(username, personID, client);
+                updateStatus();
+                main911Call.start(stage);
+                Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
+                primaryStage.close();
+                timer.cancel();
+                timer.purge();
+                client.closeConnection();
+                isOpen = true;
+            }
+        }
+    }
+
     /**
      * Constructor: Starts the connection to listen's for a 911 Message
      * @param username gets the username of the operator.
@@ -211,6 +204,8 @@ public class Controller {
                 operator = operatorModels.get(i);
         }
 
+        client = new Client(portNumber, host, operator.getFirstName(), operator.getId());
+
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -222,9 +217,15 @@ public class Controller {
                     sdf = new SimpleDateFormat("HH:mm:ss");
                     time =  time + sdf.format(cal.getTime());
                     timeLabel.setText(time);
+                    try {
+                        checkCallStatus();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 });
             }
         }, 1000, 1000);
+
 
         profileImage.setImage(new Image(operator.getImage()));
         operatorsName.setText(operator.getFirstName() + " " + operator.getLastName());
@@ -354,6 +355,9 @@ public class Controller {
         stage.setTitle("Login View");
         stage.setScene(new Scene(root));
         stage.show();
+        timer.cancel();
+        timer.purge();
+        client.closeConnection();
     }
 
     private void putRequest(String put_url, int status) throws IOException, JSONException {

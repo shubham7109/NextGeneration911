@@ -26,6 +26,7 @@ public class Main911Message extends Application {
 
     private OperatorModel operatorModel;
     private PersonModel personModel;
+    private Client client;
 
     /**
      * Required constructor
@@ -41,9 +42,10 @@ public class Main911Message extends Application {
      * @param callerID ID of the caller
      * @throws Exception
      */
-    public Main911Message(String username, String callerID) throws Exception {
+    public Main911Message(String username, String callerID, Client client) throws Exception {
         JSONArray operators  = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/login"));
         JSONArray persons = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/persons"));
+        this.client = client;
 
         for(int i=0; i<operators.length(); i++){
             if((new OperatorModel(operators.getJSONObject(i)).getUserName()).equals(username)){
@@ -65,7 +67,7 @@ public class Main911Message extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Xmls/On911Message.fxml"));
-        On911Message controller = new On911Message(operatorModel,personModel);
+        On911Message controller = new On911Message(operatorModel,personModel,client);
         loader.setController(controller);
         AnchorPane anchorPane = loader.load();
 
@@ -84,7 +86,7 @@ public class Main911Message extends Application {
         Scene scene = new Scene(anchorPane, 200, 200);
         stage.setScene(scene);
         stage.setMaximized(true);
-        stage.initStyle(StageStyle.UNDECORATED);
+        //stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 

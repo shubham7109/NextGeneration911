@@ -42,6 +42,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Controller class for On911Message.fxml
  * @author Shubham Sharma
@@ -95,39 +97,29 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     private ArrayList<Marker> markerArrayList = new ArrayList<>();
     private ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>();
     private PersonModel personModel;
-
+    private Client client;
+    private ArrayList<String> messagesList;
+    private int messagesCount =0;
+    private int portNumber = 6789;
+    private String host = "10.25.69.139";
 
 
     /**
      * Constructor to set the instance variables
      * @param operatorModel Operator information for chat implementation
      * @param personModel Person information for location
-     * @param connection Connection information
+     * @param client
      * @throws Exception
      */
-    public On911Message(OperatorModel operatorModel, PersonModel personModel, NetworkConnection connection) throws Exception {
+    public On911Message(OperatorModel operatorModel, PersonModel personModel, Client client) throws Exception {
         if(personModel != null){
             LAT = Double.parseDouble(personModel.getLatitude());
             LONG = Double.parseDouble(personModel.getLongitude());
             this.personModel = personModel;
             this.operatorModel = operatorModel;
+            this.client = client;
+            messagesList = new ArrayList<>();
         }
-    }
-
-    private Client createClient() throws UnknownHostException {
-        return new Client(InetAddress.getLocalHost().getHostAddress(), 7777, data ->{
-            Platform.runLater(()->{
-                messages.appendText("Caller ("+ personModel.getFirstName() +"): "+data.toString() + "\n");
-            });
-        });
-    }
-
-    private Server createServer(){
-        return new Server(7777,data ->{
-            Platform.runLater(()->{
-                messages.appendText("Caller ("+ personModel.getFirstName() +"):\n"+data.toString() + "\n\n");
-            });
-        });
     }
 
     /**
@@ -493,12 +485,8 @@ public class On911Message implements Initializable, MapComponentInitializedListe
      */
     @FXML
     public void onEnter(ActionEvent ae) throws Exception {
-        String message = "911 Operator:\n";
-        message += input.getText();
+        client.sendMessage(input.getText());
         input.setText("");
-
-        messages.appendText(message + "\n\n");
-        this.connection.send(message);
     }
 
     /**
@@ -513,6 +501,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         stage.setTitle("Operator");
         LoggedInView loggedInView = new LoggedInView(operatorModel.getUserName());
         try {
+            client.closeConnection();
             putRequest("http://proj-309-sb-5.cs.iastate.edu:8080/logs");
             loggedInView.start(stage);
         } catch (Exception e1) {
@@ -579,23 +568,73 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         System.err.println(connection.getResponseCode());
     }
 
+    private void updateMap(){
+
+        map.removeMarkers(markerArrayList);
+
+        LatLong callerLocation = new LatLong(LAT, LONG);
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(callerLocation);
+
+        Marker callerMarker = new Marker(markerOptions);
+        markerOptionsArrayList = new ArrayList<>();
+        markerArrayList = new ArrayList<>();
+
+        for(int i=0; i<deployModels.size(); i++){
+            markerOptionsArrayList.add(new MarkerOptions());
+            LatLong latLong = new LatLong(Double.parseDouble(deployModels.get(i).getLatitude()),Double.parseDouble(deployModels.get(i).getLongitude()));
+            markerOptionsArrayList.get(i).position(latLong);
+
+            markerArrayList.add(new Marker(markerOptionsArrayList.get(i)));
+
+            InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+            infoWindowOptions.content(deployModels.get(i).getType());
+
+            InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+            //infoWindow.open(map, markerArrayList.get(i));
+
+            map.addMarker(markerArrayList.get(i));
+
+            int finalI = i;
+            map.addUIEventHandler(markerArrayList.get(i), UIEventType.click, (JSObject obj) -> {
+                infoWindow.open(map,markerArrayList.get(finalI));
+            });
+        }
+        callerLocation = new LatLong(LAT, LONG);
+        map.setCenter(callerLocation);
+        map.addMarker(callerMarker);
+        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+        infoWindowOptions.content("CALLER LOCATION");
+        InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+        infoWindow.open(map, callerMarker);
+
+        map.addUIEventHandler(callerMarker, UIEventType.click, (JSObject obj) -> {
+            infoWindow.open(map,callerMarker);
+        });
+    }
+
 
     /**
-     * Initialize the view of the controller and start a conneciton
+     * Initialize the view of the controller and start a connection
      * @param location
      * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        // Waits for the android user to join the room
         try {
-            connection.startConnection();
-        } catch (Exception e) {
+            sleep(1000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        mapView.addMapInializedListener(this);
+        client = new Client(portNumber, host, operatorModel.getFirstName(), operatorModel.getId());
+        messagesList = client.getMessages();
         messages.setWrapText(true);
+        mapView.addMapInializedListener(this);
+
+
+
         Timer timer = new Timer();
         timeElapsed.setAlignment(Pos.CENTER);
         long startTime = System.currentTimeMillis();
@@ -605,6 +644,20 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                 Platform.runLater(() -> {
                     time = String.valueOf((System.currentTimeMillis() - startTime)/1000);
                     timeElapsed.setText("On Call for:\n"+time+ " seconds");
+
+                    try {
+                        setDeploys();
+                        //updateMap();
+                        messages.clear();
+                        for(String text : client.getMessages()){
+                            messages.appendText(text + "\n");
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
                 });
             }
         }, 1000, 1000);
@@ -623,6 +676,8 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                 e.printStackTrace();
             }
         });
+
+
     }
 
     private void setDeploys() throws Exception {
