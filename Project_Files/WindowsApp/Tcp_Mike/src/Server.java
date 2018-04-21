@@ -47,8 +47,8 @@ public class Server {
 
 class clientThread extends Thread {
 
-    private static ArrayList<clientThread> threadList;
-    private static HashMap<String, ArrayList<clientThread>> chatRooms;
+    private volatile static ArrayList<clientThread> threadList;
+    private volatile static HashMap<String, ArrayList<clientThread>> chatRooms;
     private String clientName = null;
     private String chatRoomName = null;
     private DataInputStream is = null;
@@ -116,7 +116,7 @@ class clientThread extends Thread {
 
             while (true) {
                 String line = is.readLine();
-                if (line.startsWith("/quit")) {
+                if (line == null || line.startsWith("/quit")) {
                     break;
                 }
 
@@ -146,9 +146,7 @@ class clientThread extends Thread {
                     else
                         c.os.println("***disconnected***");
                 }
-            }
 
-            synchronized (this) {
                 chatRooms.get(roomID).remove(this);
                 if(chatRooms.get(roomID).size() == 0)
                     chatRooms.remove(roomID);

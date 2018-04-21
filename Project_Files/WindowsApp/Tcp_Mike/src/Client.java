@@ -1,8 +1,6 @@
 import java.io.DataInputStream;
-import java.io.PrintStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ public class Client implements Runnable {
     private static Socket clientSocket = null;
     private static PrintStream os = null;
     private static DataInputStream is = null;
-    private static boolean closed = false;
+    private volatile boolean closed = false;
     private ArrayList<String> messages;
 
 
@@ -42,10 +40,15 @@ public class Client implements Runnable {
                 messages.add(responseLine);
                 if (responseLine.indexOf("***disconnected***") != -1)
                     break;
+
             }
             closed = true;
+            os.close();
+            is.close();
+            clientSocket.close();
+
         } catch (IOException e) {
-            System.err.println("IOException:  " + e);
+            System.err.println("IOException in RUN:  " + e);
         }
     }
 
@@ -59,13 +62,7 @@ public class Client implements Runnable {
     }
 
     public void closeConnection() {
-        try {
-            os.close();
-            is.close();
-            clientSocket.close();
-        } catch (IOException e) {
-            System.err.println("IOException:  " + e);
-        }
+        sendMessage("/quit");
     }
 
     public ArrayList<String> getMessages() {

@@ -8,9 +8,10 @@ public class OperatorStub {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         int portNumber = 6789;
-        String host = "10.25.69.139";
+        //String host = "10.25.69.139";
+        String host = "localhost";
 
-        Client me = new Client(portNumber, host, "1", "1");
+        Client me = new Client(portNumber, host, "1", "2");
         me.sendMessage("Hello");
         me.sendMessage("2nd Message");
 
@@ -18,7 +19,7 @@ public class OperatorStub {
 
         while(messages.size() == 0) {
             try {
-                sleep(1000);
+                sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -28,22 +29,22 @@ public class OperatorStub {
                     me.getMessages()) {
                 System.out.println(line);
             }
-            sleep(2000);
-
             me.closeConnection();
+
+            sleep(1000);
 
             // I'm trying to add a new client but it throws an exception
             // I need this, cause when I open the 911 call view, I create a new client
 
             Client new_CLient = new Client(portNumber, host, "2", "1");
-            new_CLient.sendMessage("Hello");
+            new_CLient.sendMessage("Hello from 2nd");
             new_CLient.sendMessage("2nd Message");
 
             messages = new_CLient.getMessages();
 
             while(messages.size() == 0) {
                 try {
-                    sleep(1000);
+                    sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -53,9 +54,8 @@ public class OperatorStub {
                     new_CLient.getMessages()) {
                 System.out.println(line);
             }
-        sleep(2000);
+        sleep(1000);
         new_CLient.closeConnection();
-
 
     }
 }
