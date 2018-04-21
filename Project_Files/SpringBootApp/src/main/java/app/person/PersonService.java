@@ -1,6 +1,10 @@
 package app.person;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +59,27 @@ public class PersonService {
 	 */
 	public void deletePerson(String id) {
 		personRepository.delete(id);
+	}
+	
+	private void save(Person person) {
+		String s = person.getPicture();
+		s = s.replace("\n", "").replace("\r", "");
+		byte[] decoded = Base64.getDecoder().decode(s);
+		FileOutputStream outs = null;
+		try {
+			outs = new FileOutputStream("test.png.jpg");
+			outs.write(decoded);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				outs.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		personRepository.save(person);
 	}
 }
