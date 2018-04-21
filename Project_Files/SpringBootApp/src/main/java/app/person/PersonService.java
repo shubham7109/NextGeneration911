@@ -12,14 +12,6 @@ public class PersonService {
 	@Autowired
 	private PersonRepository personRepository;
 	
-	/*
-	private List<Person> persons = new ArrayList<>(Arrays.asList(
-			new Person(123),
-			new Person(456),
-			new Person(789)
-			));
-	*/
-	
 	/**
 	 * @return a list of persons
 	 */
@@ -54,13 +46,6 @@ public class PersonService {
 	 * @param person person
 	 */
 	public void updatePerson(int id, Person person) {
-		/* for (int i = 0; i < persons.size(); i++) {
-			Person p = persons.get(i);
-			if (p.getId() == id) {
-				persons.set(i, person);
-				return;
-			}
-		}*/
 		personRepository.save(person);
 	}
 	
@@ -69,12 +54,6 @@ public class PersonService {
 	 * @param id of person
 	 */
 	public void deletePerson(String id) {
-		/*for (int i = 0; i < persons.size(); i++) {
-			Person p = persons.get(i);
-			if (p.getId() == id) {
-				persons.remove(i);
-			}
-		}*/
 		personRepository.delete(id);
 	}
 }
