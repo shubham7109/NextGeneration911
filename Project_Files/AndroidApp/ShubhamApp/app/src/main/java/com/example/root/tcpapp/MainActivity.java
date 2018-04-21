@@ -2,12 +2,16 @@ package com.example.root.tcpapp;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -19,22 +23,32 @@ import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Client client;
+    private int portNUmber = 6789;
+    private String host = "10.25.69.139";
+    private Button setConnection;
+    private EditText clientName;
+    private EditText roomNumber;
+    private Context view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        View view = this.findViewById(android.R.id.content).getRootView();
-
+        view = getApplicationContext();
+        setConnection = findViewById(R.id.set_connection);
+        clientName = findViewById(R.id.client_name);
+        roomNumber = findViewById(R.id.room_number);
         Button button = findViewById(R.id.send_button);
         final EditText editText = findViewById(R.id.input);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        setConnection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TCPsend(v).execute(String.valueOf(editText.getText()));
+                setConnection();
             }
         });
-
     }
 
     public void setViews(String message){
@@ -47,49 +61,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    class TCPsend extends AsyncTask<String, Void, String> {
-
-
-
-        private View mainView;
-        private String message="";
-
-        public TCPsend(View mainActivity) {
-            this.mainView = mainActivity;
-
+    private void setConnection() {
+        String name = String.valueOf(clientName.getText());
+        String number = String.valueOf(roomNumber.getText());
+        if(!name.equals("") || !number.equals(""))
+        {
+            client = new Client(portNUmber,host,name,number, view);
+            client.execute();
         }
-
-        protected String doInBackground(String... send) {
-
-            String sentence;
-            String modifiedSentence="";
-            BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-            Socket clientSocket = null;
-            try {
-                clientSocket = new Socket("10.25.69.139", 8082);
-                //Socket clientSocket = new Socket(InetAddress.getLocalHost().getHostAddress(), 1234);
-
-                DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-                BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                System.out.println("Sending string...");
-                sentence = send[0];
-                outToServer.writeBytes(sentence + '\n');
-                modifiedSentence = inFromServer.readLine();
-                System.out.println("FROM SERVER: " + modifiedSentence);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            message = modifiedSentence;
-
-            return modifiedSentence;
-
-        }
-
-        protected void onPostExecute(String message) {
-            setViews(this.message);
-        }
+        else
+            Toast.makeText(view, "Name or number is null", Toast.LENGTH_SHORT).show();
     }
 
 }
