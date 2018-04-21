@@ -3,6 +3,7 @@ package sb5.cs309.nextgen911;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -114,8 +117,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
                 LocationServices.LocationTuple l = LocationServices.getLocation(getAppContext());
 
-                personalInfo.put("latitude", l.lat); // Null Value
-                personalInfo.put("longitude", l.lng); // Null Value
+                personalInfo.put("latitude", l.lat);
+                personalInfo.put("longitude", l.lng);
+
+                //personalInfo.put("photo", getPhoto()); TODO Implement this field in database
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -407,6 +412,23 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     }
 
+    private String getPhoto(){
+        BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageHolder.getDrawable());
+        Bitmap bitmap;
+        if(bitmapDrawable==null){
+            return "";
+        }else
+        {
+            bitmap = bitmapDrawable.getBitmap();
+        }
+
+        return ImageHandler.encodeBase64(bitmap);
+    }
+
+    private void setPhoto(String url){
+        Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(imageHolder);
+    }
+
     private void loadJson() {
         String id = sharedPreferences.getString(idKey, "");
 
@@ -430,7 +452,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
      */
     public void populateJSONValues(JSONObject personalInfo) {
         String gender, firstName, middleName, lastName, homeAddress, city, state,
-                dateOfBirth, licencePlateNumber, vehicle, bloodType, zipcode, heightCentimeters, weightKilograms, phoneNumber;
+                dateOfBirth, licencePlateNumber, vehicle, bloodType, zipcode, heightCentimeters, weightKilograms, phoneNumber, photo;
 
         // Load all JSON values
         try {
@@ -449,6 +471,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             heightCentimeters = personalInfo.getString("heightCentimeters");
             weightKilograms = personalInfo.getString("weightKilograms");
             phoneNumber = personalInfo.getString("phoneNumber");
+            //photo = personalInfo.getString("photo"); TODO implement in database
         } catch (JSONException e) {
             throw new RuntimeException(e); // Non-recoverable
         }
@@ -470,6 +493,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         setBloodType(bloodType);
         setHeight(heightCentimeters);
         setWeight(weightKilograms);
+        //setPhoto(photo);
     }
 
     private void setHomeAddress(String homeAddress) {
