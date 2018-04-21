@@ -2,14 +2,18 @@ package sb5.cs309.nextgen911;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -22,6 +26,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static sb5.cs309.nextgen911.MainMenu.idKey;
+import static sb5.cs309.nextgen911.MainMenu.requestCode;
 import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 
 /**
@@ -31,6 +36,7 @@ import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 public class PersonalInfoActivity extends AppCompatActivity {
 
     static Context context;
+    private ImageView imageHolder;
     BottomNavigationView navigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -74,6 +80,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         PersonalInfoActivity.context = getApplicationContext();
         loadJson();
+        startCamera();
 
         navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
@@ -488,5 +495,30 @@ public class PersonalInfoActivity extends AppCompatActivity {
         super.onResume();
         navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_personal_info);
+    }
+
+    private void startCamera(){
+        Permissions.requestPermissions(this, requestCode);
+
+        imageHolder = (ImageView) findViewById(R.id.captured_photo);
+        imageHolder.setVisibility(View.GONE);
+        Button capturedImageButton = (Button) findViewById(R.id.photo_button);
+        capturedImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(photoCaptureIntent, requestCode);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            imageHolder.setImageBitmap(bitmap);
+            imageHolder.setVisibility(View.VISIBLE);
+        }
     }
 }

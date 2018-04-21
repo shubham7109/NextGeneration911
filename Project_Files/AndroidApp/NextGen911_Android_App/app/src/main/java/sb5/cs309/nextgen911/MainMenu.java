@@ -26,7 +26,7 @@ public class MainMenu extends AppCompatActivity {
      * Hashmap mapping of ID field in shared preferences
      */
     public static final String idKey = "ID";
-    private static final int requestCode = 911;
+    public static final int requestCode = 911;
     /**
      * Access to app's shared data
      */

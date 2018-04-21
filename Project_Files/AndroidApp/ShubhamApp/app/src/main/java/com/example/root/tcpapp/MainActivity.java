@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
             Socket clientSocket = null;
             try {
-                clientSocket = new Socket("10.25.69.139", 8082);
+                clientSocket = new Socket("10.25.69.139", 6789);
                 //Socket clientSocket = new Socket(InetAddress.getLocalHost().getHostAddress(), 1234);
 
                 DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
