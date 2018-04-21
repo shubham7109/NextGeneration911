@@ -59,7 +59,10 @@ public class PersonModel {
      * @return Returns the latitude of the person
      */
     public String getLatitude() {
-        return latitude;
+        if(Integer.valueOf(latitude)!=0)
+            return latitude;
+        else
+            return "42.026868";
     }
 
     /**
@@ -67,7 +70,10 @@ public class PersonModel {
      * @return Returns the longitude of the person
      */
     public String getLongitude() {
-        return longitude;
+        if (Integer.valueOf(longitude) != 0)
+            return longitude;
+        else
+            return "-93.644317";
     }
 
     /**

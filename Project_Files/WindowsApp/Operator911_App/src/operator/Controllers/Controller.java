@@ -36,21 +36,33 @@ import static java.lang.Character.isDigit;
 
 /**
  * Controller class for Main.fxml
+ *
  * @author Shubham Sharma
  */
 public class Controller {
 
-    @FXML public ComboBox operatorStatus;
-    @FXML private Label operatorsName;
-    @FXML private TableView<LogModel> logView;
-    @FXML private Label timeLabel;
-    @FXML private TableColumn<LogModel, String> date;
-    @FXML private TableColumn<LogModel, String> time;
-    @FXML private TableColumn<LogModel, String> callLength;
-    @FXML private TableColumn<LogModel, String> operatorName;
-    @FXML private TableColumn<LogModel, String> phoneNumber;
-    @FXML private ImageView profileImage;
-    @FXML private Button logoutButton;
+    @FXML
+    public ComboBox operatorStatus;
+    @FXML
+    private Label operatorsName;
+    @FXML
+    private TableView<LogModel> logView;
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private TableColumn<LogModel, String> date;
+    @FXML
+    private TableColumn<LogModel, String> time;
+    @FXML
+    private TableColumn<LogModel, String> callLength;
+    @FXML
+    private TableColumn<LogModel, String> operatorName;
+    @FXML
+    private TableColumn<LogModel, String> phoneNumber;
+    @FXML
+    private ImageView profileImage;
+    @FXML
+    private Button logoutButton;
 
     private boolean callOnce = true;
     private String username;
@@ -64,11 +76,11 @@ public class Controller {
     private String host = "10.25.69.139";
     private Client client;
 
-    //
-    @FXML void openMessageView(ActionEvent ae) throws Exception {
+    @FXML
+    void openMessageView(ActionEvent ae) throws Exception {
         Stage stage = new Stage();
         stage.setTitle("Welcome");
-        Main911Message main911Call = new Main911Message(username,"1",client);
+        Main911Message main911Call = new Main911Message(username, "1", client);
         updateStatus();
         main911Call.start(stage);
         Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
@@ -77,29 +89,37 @@ public class Controller {
 
     private void checkCallStatus() throws Exception {
         ArrayList<String> messages = client.getMessages();
-        if (messages.size() > 3 && !isOpen){
-            if(messages.get(3).contains("entered the chat room ***") ) {
+        if(messages == null || messages.size() == 0){
+
+        }
+        else{
+
+            if (messages.get(0).contains("entered the chat room ***") && !isOpen) {
+                timer.cancel();
+                timer.purge();
+                client.closeConnection();
+                Thread.sleep(100);
                 Stage stage = new Stage();
                 stage.setTitle("Welcome");
-                String personID = messages.get(3).substring(4, messages.get(3).indexOf(" has"));
+                String personID = messages.get(0).substring(4, messages.get(0).indexOf(" has"));
                 Main911Message main911Call = new Main911Message(username, personID, client);
                 updateStatus();
                 main911Call.start(stage);
                 Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
                 primaryStage.close();
-                timer.cancel();
-                timer.purge();
-                client.closeConnection();
+
                 isOpen = true;
             }
         }
+
     }
 
     /**
      * Constructor: Starts the connection to listen's for a 911 Message
+     *
      * @param username gets the username of the operator.
      */
-    public Controller(String username){
+    public Controller(String username) {
         this.username = username;
     }
 
@@ -107,11 +127,11 @@ public class Controller {
      * This method initializes the view, sets the status of the login user,
      * updates the IP on the server for the user, pulls in the list of logs,
      * and displays interactive buttons, images and other information.
+     *
      * @throws Exception
      */
     @FXML
     public void initialize() throws Exception {
-
 
 
         operatorStatus.getItems().removeAll(operatorStatus.getItems());
@@ -131,7 +151,7 @@ public class Controller {
                                 setBackground(Background.EMPTY);
                                 setText("");
                             } else {
-                                if(item.equals("Available"))
+                                if (item.equals("Available"))
                                     setTextFill(Color.GREEN);
                                 else
                                     setTextFill(Color.RED);
@@ -145,27 +165,27 @@ public class Controller {
                     };
                 }, operatorStatus.valueProperty()));
         operatorStatus.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-            @Override public ListCell<String> call(ListView<String> param) {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
                 final ListCell<String> cell = new ListCell<String>() {
                     {
                         super.setPrefWidth(100);
                     }
-                    @Override public void updateItem(String item,
-                                                     boolean empty) {
+
+                    @Override
+                    public void updateItem(String item,
+                                           boolean empty) {
                         super.updateItem(item, empty);
                         if (item != null) {
                             setText(item);
                             if (item.contains("Unavailable")) {
                                 setTextFill(Color.RED);
-                            }
-                            else if (item.contains("Available")){
+                            } else if (item.contains("Available")) {
                                 setTextFill(Color.GREEN);
-                            }
-                            else {
+                            } else {
                                 setTextFill(Color.BLACK);
                             }
-                        }
-                        else {
+                        } else {
                             setText(null);
                         }
                     }
@@ -174,33 +194,33 @@ public class Controller {
             }
         });
         logModels = new ArrayList<>();
-        try{
+        try {
             String response = getHTML(URL);
             JSONArray jsonArray = new JSONArray(response);
-            for(int i=0; i<jsonArray.length(); i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 logModels.add(new LogModel(jsonObject));
                 System.out.println(jsonObject);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         ArrayList<OperatorModel> operatorModels;
         operatorModels = new ArrayList<>();
 
-        try{
+        try {
             String response = getHTML(LOGIN_URL);
             JSONArray jsonArray = new JSONArray(response);
-            for(int i=0; i<jsonArray.length(); i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 operatorModels.add(new OperatorModel(jsonObject));
                 System.out.println(jsonObject);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
-        for(int i=0; i< operatorModels.size(); i++){
-            if(operatorModels.get(i).getUserName().equals(username))
+        for (int i = 0; i < operatorModels.size(); i++) {
+            if (operatorModels.get(i).getUserName().equals(username))
                 operator = operatorModels.get(i);
         }
 
@@ -213,9 +233,9 @@ public class Controller {
                 Platform.runLater(() -> {
                     Calendar cal = Calendar.getInstance();
                     SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yy");
-                    String time =sdf.format(cal.getTime()) + "\n";
+                    String time = sdf.format(cal.getTime()) + "\n";
                     sdf = new SimpleDateFormat("HH:mm:ss");
-                    time =  time + sdf.format(cal.getTime());
+                    time = time + sdf.format(cal.getTime());
                     timeLabel.setText(time);
                     try {
                         checkCallStatus();
@@ -259,18 +279,17 @@ public class Controller {
         operatorStatus.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(newValue == "Unavailable") {
+                if (newValue == "Unavailable") {
                     try {
-                        putRequest(LOGIN_URL+operator.getId(),1);
+                        putRequest(LOGIN_URL + operator.getId(), 1);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else
-                {
+                } else {
                     try {
-                        putRequest(LOGIN_URL+operator.getId(),0);
+                        putRequest(LOGIN_URL + operator.getId(), 0);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -283,6 +302,7 @@ public class Controller {
 
     /**
      * Performs GET requests to the given url
+     *
      * @param urlToRead The url to perform the GET request
      * @return Returns the JSON code as a String
      * @throws Exception
@@ -303,10 +323,11 @@ public class Controller {
 
     /**
      * Open's the view to look up person based on their ID
+     *
      * @param event On button click
      */
-    public void openLookUpPerson(ActionEvent event){
-        try{
+    public void openLookUpPerson(ActionEvent event) {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/operator/Xmls/LookUpPerson.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
@@ -314,7 +335,7 @@ public class Controller {
             stage.setTitle("Look Up Person");
             stage.setScene(new Scene(root));
             stage.show();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -322,10 +343,11 @@ public class Controller {
 
     /**
      * Open's the view to display the list of operators in the database.
+     *
      * @param event On button click
      */
-    public void openOperatorList(ActionEvent event){
-        try{
+    public void openOperatorList(ActionEvent event) {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/operator/Xmls/OperatorList.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
@@ -334,13 +356,14 @@ public class Controller {
             stage.setScene(new Scene(root));
             stage.show();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     /**
      * Button to logout the user, open's a view to login as another user and update the status of the user
+     *
      * @param event On button press
      * @throws Exception
      */
@@ -350,7 +373,7 @@ public class Controller {
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
-        putRequest(LOGIN_URL+operator.getId(),3);
+        putRequest(LOGIN_URL + operator.getId(), 3);
         primaryStage.close();
         stage.setTitle("Login View");
         stage.setScene(new Scene(root));
@@ -363,16 +386,16 @@ public class Controller {
     private void putRequest(String put_url, int status) throws IOException, JSONException {
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id",operator.getId());
-        jsonObject.put("firstName",operator.getFirstName());
-        jsonObject.put("lastName",operator.getLastName());
-        jsonObject.put("accesibility",operator.getAccesibility());
-        jsonObject.put("userName",operator.getUserName());
-        jsonObject.put("password",operator.getPassword());
-        jsonObject.put("location",operator.getLocation());
-        jsonObject.put("status",status);
-        jsonObject.put("ipAddress",operator.getIpAddress());
-        jsonObject.put("image",operator.getImage());
+        jsonObject.put("id", operator.getId());
+        jsonObject.put("firstName", operator.getFirstName());
+        jsonObject.put("lastName", operator.getLastName());
+        jsonObject.put("accesibility", operator.getAccesibility());
+        jsonObject.put("userName", operator.getUserName());
+        jsonObject.put("password", operator.getPassword());
+        jsonObject.put("location", operator.getLocation());
+        jsonObject.put("status", status);
+        jsonObject.put("ipAddress", operator.getIpAddress());
+        jsonObject.put("image", operator.getImage());
 
         URL url = new URL(put_url);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -389,16 +412,16 @@ public class Controller {
 
     private void updateStatus() throws Exception {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id",operator.getId());
-        jsonObject.put("firstName",operator.getFirstName());
-        jsonObject.put("lastName",operator.getLastName());
-        jsonObject.put("accesibility",operator.getAccesibility());
-        jsonObject.put("userName",operator.getUserName());
-        jsonObject.put("password",operator.getPassword());
-        jsonObject.put("location",operator.getLocation());
-        jsonObject.put("status",2);
+        jsonObject.put("id", operator.getId());
+        jsonObject.put("firstName", operator.getFirstName());
+        jsonObject.put("lastName", operator.getLastName());
+        jsonObject.put("accesibility", operator.getAccesibility());
+        jsonObject.put("userName", operator.getUserName());
+        jsonObject.put("password", operator.getPassword());
+        jsonObject.put("location", operator.getLocation());
+        jsonObject.put("status", 2);
         jsonObject.put("ipAddress", InetAddress.getLocalHost().getHostAddress());
-        jsonObject.put("image",operator.getImage());
+        jsonObject.put("image", operator.getImage());
 
         URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/login/" + operator.getId());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

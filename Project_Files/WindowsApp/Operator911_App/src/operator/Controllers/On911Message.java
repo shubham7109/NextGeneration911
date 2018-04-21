@@ -503,6 +503,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         try {
             client.closeConnection();
             putRequest("http://proj-309-sb-5.cs.iastate.edu:8080/logs");
+            sleep(100);
             loggedInView.start(stage);
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -648,7 +649,6 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                     try {
                         setDeploys();
                         //updateMap();
-                        messages.clear();
                         for(String text : client.getMessages()){
                             messages.appendText(text + "\n");
                         }

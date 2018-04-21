@@ -11,27 +11,31 @@ public class OperatorStub {
         String host = "10.25.69.139";
         //String host = "localhost";
 
-        Client me = new Client(portNumber, host, "1", "123");
-        me.sendMessage("Hello");
-        me.sendMessage("2nd Message");
-
-        ArrayList<String> messages = me.getMessages();
-
-        while(messages.size() == 0) {
-            try {
-                sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        while(true){
-            for (String line:
-                    me.getMessages()) {
-                System.out.println(line);
-            }
+        Client me = new Client(portNumber, host, "1", "1");
+        while (true){
+            me.sendMessage(String.valueOf(System.currentTimeMillis()));
             sleep(1000);
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         }
+//        me.sendMessage("Hello");
+//        me.sendMessage("2nd Message");
+//
+//        ArrayList<String> messages = me.getMessages();
+//
+//        while(messages.size() == 0) {
+//            try {
+//                sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        while(true){
+//            for (String line:
+//                    me.getMessages()) {
+//                System.out.println(line);
+//            }
+//            sleep(1000);
+//            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+//        }
 
 //            me.closeConnection();
 //
