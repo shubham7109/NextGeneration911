@@ -95,6 +95,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     private OperatorModel operatorModel;
     private GoogleMap map;
     private ArrayList<Marker> markerArrayList = new ArrayList<>();
+    private Marker callerMarker;
     private ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>();
     private PersonModel personModel;
     private Client client;
@@ -143,7 +144,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(callerLocation);
 
-        Marker callerMarker = new Marker(markerOptions);
+        callerMarker = new Marker(markerOptions);
 
         for(int i=0; i<deployModels.size(); i++){
             markerOptionsArrayList.add(new MarkerOptions());
@@ -572,12 +573,12 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     private void updateMap(){
 
         map.removeMarkers(markerArrayList);
-
+        map.removeMarker(callerMarker);
         LatLong callerLocation = new LatLong(LAT, LONG);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(callerLocation);
 
-        Marker callerMarker = new Marker(markerOptions);
+        callerMarker = new Marker(markerOptions);
         markerOptionsArrayList = new ArrayList<>();
         markerArrayList = new ArrayList<>();
 
@@ -602,7 +603,6 @@ public class On911Message implements Initializable, MapComponentInitializedListe
             });
         }
         callerLocation = new LatLong(LAT, LONG);
-        map.setCenter(callerLocation);
         map.addMarker(callerMarker);
         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
         infoWindowOptions.content("CALLER LOCATION");
@@ -639,6 +639,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         Timer timer = new Timer();
         timeElapsed.setAlignment(Pos.CENTER);
         long startTime = System.currentTimeMillis();
+        final int[] count = {0};
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -647,8 +648,12 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                     timeElapsed.setText("On Call for:\n"+time+ " seconds");
 
                     try {
-                        setDeploys();
-                        //updateMap();
+                        if(count[0] >= 15){
+                            setDeploys();
+                            updateMap();
+                            count[0] =0;
+                        }
+
                         for(String text : client.getMessages()){
                             messages.appendText(text + "\n");
                         }
@@ -657,7 +662,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                         e.printStackTrace();
                     }
 
-
+                    count[0]++;
                 });
             }
         }, 1000, 1000);

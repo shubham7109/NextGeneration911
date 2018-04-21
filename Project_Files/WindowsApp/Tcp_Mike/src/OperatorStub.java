@@ -12,9 +12,15 @@ public class OperatorStub {
         //String host = "localhost";
 
         Client me = new Client(portNumber, host, "1", "1");
-        while (true){
+        while (true) {
             me.sendMessage(String.valueOf(System.currentTimeMillis()));
+            for (String line :
+                    me.getMessages()) {
+                System.out.println(line);
+            }
             sleep(1000);
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
         }
 //        me.sendMessage("Hello");
 //        me.sendMessage("2nd Message");
