@@ -40,8 +40,7 @@ public class PersonService {
 	 * @param person to be added
 	 */
 	public void addPerson(Person person) {
-		//persons.add(person);
-		personRepository.save(person);
+		save(person);
 	}
 	
 	/**
@@ -50,7 +49,7 @@ public class PersonService {
 	 * @param person person
 	 */
 	public void updatePerson(int id, Person person) {
-		personRepository.save(person);
+		save(person);
 	}
 	
 	/**
@@ -62,21 +61,31 @@ public class PersonService {
 	}
 	
 	private void save(Person person) {
-		String s = person.getPicture();
-		s = s.replace("\n", "").replace("\r", "");
-		byte[] decoded = Base64.getDecoder().decode(s);
-		FileOutputStream outs = null;
-		try {
-			outs = new FileOutputStream("user_images/" + new String(person.getId()) + ".jpg");
-			outs.write(decoded);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
+		
+		if (person.getPicture() != null) {
+			//decode string as jpg and save to file
+			String s = person.getPicture();
+			s = s.replace("\n", "").replace("\r", "");
+			byte[] decoded = Base64.getDecoder().decode(s);
+			FileOutputStream outs = null;
 			try {
-				outs.close();
+				outs = new FileOutputStream("user_images/" + new String(person.getId()) + ".jpg");
+				outs.write(decoded);
 			} catch (IOException e) {
 				e.printStackTrace();
+			} finally {
+				try {
+					outs.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+			
+			//set picture to the url for that picture
+			person.setPicture("user_images/" + new String(person.getId()) + ".jpg");
+		}
+		else {
+			person.setPicture("user_images/default.png");
 		}
 		
 		personRepository.save(person);
