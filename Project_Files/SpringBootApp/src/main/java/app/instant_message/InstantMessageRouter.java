@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.login.Login;
-import app.login.LoginService;
 import app.operator.*;
+import app.logs.*;
 
 @RestController
 public class InstantMessageRouter {
@@ -39,7 +38,21 @@ public class InstantMessageRouter {
 	
 	/* return the first available operator whose status is 0 (who is available) */
 	private Operators getAvailableOperator() {
+		// let operators be a list of all operators
 		List<Operators> operators = operatorsService.getAllOperators();
+		
+		/*
+		let hist be a list of logs, sorted in reverse chronological order where logs.date = today's date
+		
+		if there is at least 1 operators who has not received a call today
+			then return the id of the first operator in operators who has not received a call today and whose status == 0 and whose accessibility != 0
+		
+		else
+			return the id of the first operator in hist whose status == 0 and whose accessibility != 0
+			
+		*/
+		
+		
 		for (int i = 0; i < operators.size(); i++) {
 			if (operators.get(i).getStatus() == 0) {
 				return operators.get(i);
