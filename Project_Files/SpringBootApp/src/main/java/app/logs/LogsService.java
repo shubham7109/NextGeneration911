@@ -19,6 +19,7 @@ public class LogsService {
 
 		List<Logs> logs = new ArrayList<>();
 		logsRepository.findAll().forEach(logs::add);
+		logs.sort(new LogsReverseComparator());
 		return logs;
 	}
 

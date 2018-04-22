@@ -44,7 +44,6 @@ public class InstantMessageRouter {
 	/* return the first available operator whose status is 0 (who is available) */
 	private Operators getAvailableOperator() {
 		// let availOper be a list of all available operators
-		
 		List<Operators> operators = operatorsService.getAllOperators();
 		List<Operators> availOper = new ArrayList<Operators>();
 		for (int i = 0; i < operators.size(); i++) {
@@ -53,18 +52,36 @@ public class InstantMessageRouter {
 			}
 		}
 		
+		//let logs be a list of logs sorted in reverse chronological order
+		List<Logs> logs = logsService.getAllLogs();
+		
 		if (!availOper.isEmpty()) {
 			//TODO: Choose operator
+			// let called be an array of ints such that:
+			//		iff availOper.get(i) has received a call today, then called[i] = true
+			boolean[] called = new boolean[availOper.size()];
+			for (int i = 0; i < availOper.size(); i++) {
+				called[i] = false;
+			}
+			for (int i = 0; i < logs.size(); i++) {
+				for (int j = 0; j < availOper.size(); j++) {
+					if ( logs.get(i).getOperatorName() == availOper.get(j).getFirstName() + " " + availOper.get(j).getLastName()) {
+						called[j] = true;
+					}
+				}
+			}
+			
+			for (int i = 0; i < called.length; i++) {
+				if (called[i] = false) {
+					return availOper.get(i);
+				}
+			}
+			
 			
 			return new Operators();
 		}
 		
 		return new Operators();
-		
-		
-		List<Logs> logs = logsService.getAllLogs();
-		
-		LocalDateTime a = LocalDateTime.now();
 		
 		/*
 		let hist be a list of logs, sorted in reverse chronological order where logs.date = today's date
