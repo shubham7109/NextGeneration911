@@ -67,7 +67,7 @@ public class PersonService {
 		byte[] decoded = Base64.getDecoder().decode(s);
 		FileOutputStream outs = null;
 		try {
-			outs = new FileOutputStream("test.png.jpg");
+			outs = new FileOutputStream("user_images/" + new String(person.getId()) + ".jpg");
 			outs.write(decoded);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -78,7 +78,6 @@ public class PersonService {
 				e.printStackTrace();
 			}
 		}
-		
 		
 		personRepository.save(person);
 	}
