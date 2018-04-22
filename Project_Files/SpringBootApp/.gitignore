@@ -3,3 +3,4 @@
 *.jar
 *.log
 doc/*
+/user_images/*

@@ -1,5 +1,6 @@
 package app.person;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -40,7 +41,12 @@ public class PersonService {
 	 * @param person to be added
 	 */
 	public void addPerson(Person person) {
-		save(person);
+		try {
+			save(person);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -49,7 +55,12 @@ public class PersonService {
 	 * @param person person
 	 */
 	public void updatePerson(int id, Person person) {
-		save(person);
+		try {
+			save(person);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -60,26 +71,18 @@ public class PersonService {
 		personRepository.delete(id);
 	}
 	
-	private void save(Person person) {
+	private void save(Person person) throws IOException {
 		
 		if (person.getPicture() != null) {
 			//decode string as jpg and save to file
 			String s = person.getPicture();
 			s = s.replace("\n", "").replace("\r", "");
 			byte[] decoded = Base64.getDecoder().decode(s);
+			File file = new File("user_images/" + new String(person.getId()) + ".jpg");
 			FileOutputStream outs = null;
-			try {
-				outs = new FileOutputStream("user_images/" + new String(person.getId()) + ".jpg");
-				outs.write(decoded);
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					outs.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			outs = new FileOutputStream("user_images/" + new String(person.getId()) + ".jpg");
+			outs.write(decoded);
+			outs.close();
 			
 			//set picture to the url for that picture
 			person.setPicture("user_images/" + new String(person.getId()) + ".jpg");
