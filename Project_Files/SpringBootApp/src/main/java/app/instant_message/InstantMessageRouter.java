@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.login.Login;
 import app.login.LoginService;
+import app.operator.*;
 
 @RestController
 public class InstantMessageRouter {
 	
 	@Autowired
-	private LoginService loginService;
+	private OperatorsService operatorsService;
 	
 	
 	/**
@@ -22,8 +23,8 @@ public class InstantMessageRouter {
 	 */
 	@RequestMapping("/makecall")
 	public String makeCall() {
-		Login oper = getAvailableOperator();
-		return oper.getID();
+		Operators oper = getAvailableOperator();
+		return oper.getId();
 	}
 	
 	/**
@@ -32,20 +33,20 @@ public class InstantMessageRouter {
 	 */
 	@RequestMapping("/makecall/{id}")
 	public String makeIdCall(@PathVariable("id") String id) {
-		Login oper = getAvailableOperator();
-		return oper.getID();
+		Operators oper = getAvailableOperator();
+		return oper.getId();
 	}
 	
 	/* return the first available operator whose status is 0 (who is available) */
-	private Login getAvailableOperator() {
-		List<Login> operators = loginService.getAllLogins();
+	private Operators getAvailableOperator() {
+		List<Operators> operators = operatorsService.getAllOperators();
 		for (int i = 0; i < operators.size(); i++) {
 			if (operators.get(i).getStatus() == 0) {
 				return operators.get(i);
 			}
 		}
 		//TODO: Replace with Operators Table
-		return new Login();
+		return new Operators();
 	}
 
 }
