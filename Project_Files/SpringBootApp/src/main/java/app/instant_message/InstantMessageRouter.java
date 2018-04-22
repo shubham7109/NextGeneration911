@@ -1,5 +1,7 @@
 package app.instant_message;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class InstantMessageRouter {
 	
 	@Autowired
 	private OperatorsService operatorsService;
+	
+	@Autowired
+	private LogsService logsService;
 	
 	
 	/**
@@ -38,8 +43,28 @@ public class InstantMessageRouter {
 	
 	/* return the first available operator whose status is 0 (who is available) */
 	private Operators getAvailableOperator() {
-		// let operators be a list of all operators
+		// let availOper be a list of all available operators
+		
 		List<Operators> operators = operatorsService.getAllOperators();
+		List<Operators> availOper = new ArrayList<Operators>();
+		for (int i = 0; i < operators.size(); i++) {
+			if (operators.get(i).getStatus() == 0 && operators.get(i).getAccesibility() != 0) {
+				availOper.add(operators.get(i));
+			}
+		}
+		
+		if (!availOper.isEmpty()) {
+			//TODO: Choose operator
+			
+			return new Operators();
+		}
+		
+		return new Operators();
+		
+		
+		List<Logs> logs = logsService.getAllLogs();
+		
+		LocalDateTime a = LocalDateTime.now();
 		
 		/*
 		let hist be a list of logs, sorted in reverse chronological order where logs.date = today's date
@@ -52,7 +77,8 @@ public class InstantMessageRouter {
 			
 		*/
 		
-		
+		/*
+		=== Old Code ===
 		for (int i = 0; i < operators.size(); i++) {
 			if (operators.get(i).getStatus() == 0) {
 				return operators.get(i);
@@ -60,6 +86,7 @@ public class InstantMessageRouter {
 		}
 		//TODO: Replace with Operators Table
 		return new Operators();
+		*/
 	}
 
 }
