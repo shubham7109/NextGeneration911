@@ -1,24 +1,31 @@
 package app.logs;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
 
 public class LogsReverseComparator implements Comparator<Logs> {
 	
 	public int compare(Logs a, Logs b) {
 		
-		if (a.getDate().compareTo(b.getDate()) < 0) {
-			return 1;
-		} else if (a.getDate().compareTo(b.getDate()) > 0) {
-			return -1;
-		} else {
-			if (a.getTime().compareTo(b.getTime()) < 0 ) {
-				return 1;
-			} else if (a.getTime().compareTo(b.getTime()) > 0) {
-				return -1;
-			}
+		SimpleDateFormat f = new SimpleDateFormat("MMM-dd-yy");
+		Date da = new Date();
+		try { da = f.parse(a.getDate());} catch (ParseException e) {}
+		Date db = new Date();
+		try { db = f.parse(a.getDate());} catch (ParseException e) {}
+		
+		if (db.equals(da)) {
+			SimpleDateFormat g = new SimpleDateFormat("HH:mm");
+			Date ta = new Date();
+			try { ta = g.parse(a.getTime());} catch (ParseException e) {}
+			Date tb = new Date();
+			try { ta = g.parse(a.getTime());} catch (ParseException e) {}
+			
+			return ta.compareTo(tb) * -1;
 		}
 		
-		return 0;
+		return da.compareTo(db) * -1;
 	}
 	
 }
