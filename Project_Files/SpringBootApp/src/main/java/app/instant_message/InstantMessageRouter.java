@@ -48,6 +48,65 @@ public class InstantMessageRouter {
 	private Operators getAvailableOperator() {
 		
 		// let availOper be a list of all available operators
+		List<Operators> availOper = availOps();
+		
+		//let todayLogs be a list of each operator's most recent call log, sorted in chronological order
+		List<Logs> latestOpLog = latestOpLog(availOper);	
+		latestOpLog.sort(new LogsComparator());
+		
+		if (!availOper.isEmpty()) {
+			//if an operator has not yet received a call today, then return that operator
+			//		let called be an array of ints such that:
+			//			iff availOper.get(i) has received a call today, then called[i] = true
+			boolean[] called = new boolean[availOper.size()];
+			for (int i = 0; i < availOper.size(); i++) {
+				called[i] = false;
+			}
+			for (int i = 0; i < latestOpLog.size(); i++) {
+				for (int j = 0; j < availOper.size(); j++) {
+					if ( latestOpLog.get(i).getOperatorName() == availOper.get(j).getFirstName() + " " + availOper.get(j).getLastName()) {
+						called[j] = true;
+					}
+				}
+			}
+			
+			
+			
+			for (int i = 0; i < called.length; i++) {
+				if (called[i] = false) {
+					System.out.println("Returning operator who has not reveived a call");
+					return availOper.get(i);
+				}
+			}
+			
+			
+			System.out.println("Returning first operator on latestOpLog");
+			//return the operator who appears first on the sorted
+			for ( int i = 0; i < availOper.size(); i++) {
+				if (latestOpLog.get(0).getOperatorName().equals(availOper.get(i).getFirstName() + " " + availOper.get(i).getLastName())) {
+					return availOper.get(i);
+				}
+			}
+			
+			
+			
+		}
+		System.out.println("outputs new operator");
+		return new Operators();
+		
+		/*
+		=== Old Code ===
+		for (int i = 0; i < operators.size(); i++) {
+			if (operators.get(i).getStatus() == 0) {
+				return operators.get(i);
+			}
+		}
+		//TODO: Replace with Operators Table
+		return new Operators();
+		*/
+	}
+	
+	private List<Operators> availOps() {
 		List<Operators> operators = operatorsService.getAllOperators();
 		List<Operators> availOper = new ArrayList<Operators>();
 		for (int i = 0; i < operators.size(); i++) {
@@ -55,8 +114,11 @@ public class InstantMessageRouter {
 				availOper.add(operators.get(i));
 			}
 		}
-		
-		//let todayLogs be a list of each operator's most recent call log, sorted in chronological order
+		System.out.println("Operators: " + operators.toString());
+		return availOper;
+	}
+	
+	private List<Logs> latestOpLog(List<Operators> availOper) {
 		List<Logs> logs = logsService.getAllLogs();
 		List<Logs> latestOpLog = new ArrayList<Logs>();
 		
@@ -86,53 +148,9 @@ public class InstantMessageRouter {
 			}
 		}
 		
-		latestOpLog.sort(new LogsComparator());
+		System.out.println("Logs: " + latestOpLog.toString());
 		
-		
-		if (!availOper.isEmpty()) {
-			//if an operator has not yet received a call today, then return that operator
-			//		let called be an array of ints such that:
-			//			iff availOper.get(i) has received a call today, then called[i] = true
-			boolean[] called = new boolean[availOper.size()];
-			for (int i = 0; i < availOper.size(); i++) {
-				called[i] = false;
-			}
-			for (int i = 0; i < logs.size(); i++) {
-				for (int j = 0; j < availOper.size(); j++) {
-					if ( logs.get(i).getOperatorName() == availOper.get(j).getFirstName() + " " + availOper.get(j).getLastName()) {
-						called[j] = true;
-					}
-				}
-			}
-			
-			for (int i = 0; i < called.length; i++) {
-				if (called[i] = false) {
-					return availOper.get(i);
-				}
-			}
-			
-			//return the operator who appears first on the sorted
-			for ( int i = 0; i < availOper.size(); i++) {
-				if (latestOpLog.get(0).getOperatorName().equals(availOper.get(i).getFirstName() + " " + availOper.get(i).getLastName())) {
-					return availOper.get(i);
-				}
-			}
-			
-			
-		}
-		
-		return new Operators();
-		
-		/*
-		=== Old Code ===
-		for (int i = 0; i < operators.size(); i++) {
-			if (operators.get(i).getStatus() == 0) {
-				return operators.get(i);
-			}
-		}
-		//TODO: Replace with Operators Table
-		return new Operators();
-		*/
+		return latestOpLog;
 	}
 
 }
