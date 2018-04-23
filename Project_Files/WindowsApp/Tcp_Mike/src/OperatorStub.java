@@ -11,7 +11,7 @@ public class OperatorStub {
         String host = "10.25.69.139";
         //String host = "localhost";
 
-        Client me = new Client(portNumber, host, "1", "1");
+        Client me = new Client(portNumber, host, "0", "1");
         while (true) {
             me.sendMessage(String.valueOf(System.currentTimeMillis()));
             for (String line :

@@ -16,6 +16,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -81,6 +83,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     @FXML private Button countyOfficers;
     @FXML private Button swatTeam;
     @FXML private Button firstResponders;
+    @FXML private ImageView profileImage;
     private String time;
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
     private double LAT;
@@ -675,13 +678,14 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                 setPerons();
                 setDeploys();
                 splitPane1.setDividerPosition(0,0.23);
-                splitPane2.setDividerPosition(0,0.70);
-                splitPane3.setDividerPosition(0,0.70);
+                splitPane2.setDividerPosition(0,0.80);
+                splitPane3.setDividerPosition(0,0.20);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
 
+        profileImage.setImage(new Image(personModel.getImageURL()));
 
     }
 
