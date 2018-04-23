@@ -1,13 +1,8 @@
 package app.instant_message;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +19,7 @@ public class InstantMessageRouter {
 	private OperatorsService operatorsService;
 	
 	@Autowired
-	private LogsService logsService;
-	
-	Random rand = new Random(System.currentTimeMillis());
-	
+	private LogsService logsService;	
 	
 	/**
 	 * @return an available operator
@@ -48,18 +40,13 @@ public class InstantMessageRouter {
 		return oper.getId();
 	}
 	
-	/* return the first available operator whose status is 0 (who is available) */
+	/* return the available operator whose status is 0 (who is available) and who hasn't received a call for the longest time */
 	private Operators getAvailableOperator() {
 		
 		// let availOper be a list of all available operators
-		List<Operators> availOper = availOps();
+		List<Operators> availOper = availOps();		
 		
-		int call = rand.nextInt(availOper.size());
-		
-		return availOper.get(call);
-		
-		/*
-		//let todayLogs be a list of each operator's most recent call log, sorted in chronological order
+		//let latestOpLog be a list of each operator's most recent call log, sorted in chronological order
 		List<Logs> latestOpLog = latestOpLog(availOper);	
 		
 		if (!availOper.isEmpty()) {
@@ -73,35 +60,34 @@ public class InstantMessageRouter {
 			for (int i = 0; i < latestOpLog.size(); i++) {
 				for (int j = 0; j < availOper.size(); j++) {
 					if ( latestOpLog.get(i).getOperatorName().equals(availOper.get(j).getFirstName() + " " + availOper.get(j).getLastName())) {
-						System.out.println("Match found");
+						//System.out.println("Match found");
 						called[j] = true;
 					}
 				}
 			}
 			
 			for (int i = 0; i < called.length; i++) {
-				System.out.println(called[i]);
+				//System.out.println(called[i]);
 				if (called[i] == false) {
-					System.out.println("Returning operator who has not reveived a call");
+					//System.out.println("Returning operator who has not reveived a call");
 					return availOper.get(i);
 				}
 			}
 			
-			System.out.println("Returning first operator on latestOpLog");
-			//return the operator who appears first on the sorted
-			return availOper.get(0);
-//			for ( int i = 0; i < availOper.size(); i++) {
-//				if (latestOpLog.get(0).getOperatorName().equals(availOper.get(i).getFirstName() + " " + availOper.get(i).getLastName())) {
-//					return availOper.get(i);
-//				}
-//			}
+			//System.out.println("Returning first operator on latestOpLog: ");
+			//return the operator who appears first in latestOpLog
+			for ( int i = 0; i < availOper.size(); i++) {
+				if (latestOpLog.get(0).getOperatorName().equals(availOper.get(i).getFirstName() + " " + availOper.get(i).getLastName())) {
+					return availOper.get(i);
+				}
+			}
 			
 			
 			
 		}
 		System.out.println("outputs new operator");
 		return new Operators();
-		*/
+		
 		
 		/*
 		=== Old Code ===
@@ -135,7 +121,7 @@ public class InstantMessageRouter {
 		logs.sort(new LogsComparator());
 		Collections.reverse(logs);
 		
-		for (int i = 0; i < logs.size() && i < 1000; i++) {
+		for (int i = 0; i < logs.size(); i++) {
 			Logs l = logs.get(i);
 			String ln = l.getOperatorName();
 			
@@ -161,7 +147,7 @@ public class InstantMessageRouter {
 		
 		latestOpLog.sort(new LogsComparator());
 		
-		System.out.println("latestOpLog: " + latestOpLog.toString());
+		//System.out.println("latestOpLog: " + latestOpLog.toString());
 		
 		return latestOpLog;
 	}
