@@ -4,7 +4,7 @@
   
   <groupId>SB_5</groupId>
   <artifactId>911SpringBoot</artifactId>
-  <version>0.2.1</version>
+  <version>0.2.2</version>
   <name>SpringBootApp</name>
   <packaging>jar</packaging>
 
