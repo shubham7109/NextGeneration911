@@ -26,10 +26,12 @@ public class LoginController {
 	 * @param id
 	 * @return login with the given id or null if the id doesn't exist
 	 */
+	
 	@RequestMapping("/login/{id}")
 	public Login getLogin(@PathVariable("id") String id) {
 		return loginService.getLogin(id);
 	}
+	
 
 	/**
 	 * Checks if the password entered for the given username is correct

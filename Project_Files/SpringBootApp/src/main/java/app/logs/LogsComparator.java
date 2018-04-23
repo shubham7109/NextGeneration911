@@ -17,14 +17,14 @@ public class LogsComparator implements Comparator<Logs> {
 		Date da = new Date();
 		try { da = f.parse(a.getDate());} catch (ParseException e) {System.out.println(dpe);}
 		Date db = new Date();
-		try { db = f.parse(a.getDate());} catch (ParseException e) {System.out.println(dpe);}
+		try { db = f.parse(b.getDate());} catch (ParseException e) {System.out.println(dpe);}
 		
 		if (db.equals(da)) {
 			SimpleDateFormat g = new SimpleDateFormat("HH:mm");
 			Date ta = new Date();
 			try { ta = g.parse(a.getTime());} catch (ParseException e) {System.out.println(dpe);}
 			Date tb = new Date();
-			try { ta = g.parse(a.getTime());} catch (ParseException e) {System.out.println(dpe);}
+			try { tb = g.parse(b.getTime());} catch (ParseException e) {System.out.println(dpe);}
 			
 			return ta.compareTo(tb);
 		}
