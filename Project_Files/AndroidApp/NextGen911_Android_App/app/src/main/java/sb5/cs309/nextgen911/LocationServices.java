@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 
-
 import static sb5.cs309.nextgen911.MainMenu.idKey;
 
 /**
@@ -36,8 +35,8 @@ public class LocationServices {
             public void onResponse(JSONObject response) {
                 try {
                     LocationTuple loc = getLocation(context);
-                    response.put("latitude", loc.lat+"");
-                    response.put("longitude", loc.lng+"");
+                    response.put("latitude", loc.lat + "");
+                    response.put("longitude", loc.lng + "");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -78,9 +77,15 @@ public class LocationServices {
             requestLocationUpdates(lm, locationListener, context);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-            double longitude = location.getLongitude();
-            double latitude = location.getLatitude();
-
+            String longitude;
+            String latitude;
+            if (location == null) {
+                longitude = "0";
+                latitude = "0";
+            } else {
+                longitude = location.getLongitude()  +"";
+                latitude = location.getLatitude() + "";
+            }
             LocationTuple result = new LocationTuple();
             result.lat = latitude + "";
             result.lng = longitude + "";
@@ -107,4 +112,6 @@ public class LocationServices {
         public String lat;
         public String lng;
     }
+
+
 }

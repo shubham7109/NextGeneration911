@@ -3,11 +3,11 @@ package sb5.cs309.nextgen911;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -15,10 +15,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import static java.lang.Thread.sleep;
 import static sb5.cs309.nextgen911.MainMenu.idKey;
 import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 
@@ -33,12 +30,13 @@ public class Text911Activity extends AppCompatActivity {
     ArrayList<String> messageList;
     ArrayAdapter<String> adapter;
     TCP_Client connection;
+    boolean connected;
+    Handler m_handler, background_handler;
+    Runnable m_handlerTask, background_handlerTask;
+    volatile boolean stop, hasChanged, firstExit;
+    volatile String message;
     private EditText inputBox;
     private ListView list_of_messages;
-    boolean connected;
-    Handler m_handler;
-    Runnable m_handlerTask;
-    boolean stop;
 
     public static Context getAppContext() {
         return Text911Activity.context;
@@ -51,35 +49,71 @@ public class Text911Activity extends AppCompatActivity {
         setContentView(R.layout.activity_text911);
         Text911Activity.context = getApplicationContext();
         connected = false;
+        hasChanged = false;
+        firstExit = true;
+        message = "";
 
-        initMessages();
-        getServerIP();
+
+        HandlerThread readThread = new HandlerThread("");
+        readThread.start();
+        background_handler = new Handler(readThread.getLooper());
+        background_handlerTask = new Runnable() {
+            @Override
+            public void run() {
+                if (!stop) {
+                    String new_message = connection.getMessages();
+                    if (new_message.contains("$")) {
+                        //
+                    } else if (new_message.contains("has left") && firstExit) {
+                        firstExit = false;
+                    }
+                    else if(new_message.contains("has left")){
+                        connection.stopConnection();
+                        stop = true;
+                        message = message + "\n" + "***Disconnected***";
+                        hasChanged = true;
+                    }
+                    else if (!new_message.equals("")) {
+                        synchronized (this) {
+                            message = message + "\n" + new_message;
+                            hasChanged = true;
+                        }
+                    }
+
+                } else {
+                    background_handler.removeCallbacks(background_handlerTask); // cancel run
+                }
+                background_handler.postDelayed(background_handlerTask, 200);
+            }
+        };
 
         m_handler = new Handler();
         m_handlerTask = new Runnable() {
             @Override
             public void run() {
-                if (!stop) {
-                    String message = connection.getMessages();
-                    if(!message.equals("")) {
+                synchronized (this) {
+                    if (hasChanged) {
                         adapter.add(message);
-                        adapter.notifyDataSetChanged();
+                        message = "";
+                        hasChanged = false;
                     }
-
-                } else {
-                    //m_handler.removeCallbacks(m_handlerTask); // cancel run
+                    adapter.notifyDataSetChanged();
                 }
-                m_handler.postDelayed(m_handlerTask, 250);
+                m_handler.postDelayed(m_handlerTask, 200);
             }
         };
+
+        initMessages();
+        getServerIP();
 
     }
 
     private void createClient() {
-            connection = new TCP_Client(6789, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), serverIP);
-            connected = true;
-            connection.startConnection();
-            m_handlerTask.run();
+        connection = new TCP_Client(6789, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), "1");
+        connected = true;
+        connection.startConnection();
+        background_handlerTask.run();
+        m_handlerTask.run();
     }
 
 
@@ -103,7 +137,6 @@ public class Text911Activity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 serverIP = response;
-                serverIP = "1";
                 createClient();
             }
         };
@@ -130,8 +163,7 @@ public class Text911Activity extends AppCompatActivity {
                         String message = inputBox.getText().toString();
                         inputBox.setText("");
                         connection.send(message);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(getAppContext(), "No Connection", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
