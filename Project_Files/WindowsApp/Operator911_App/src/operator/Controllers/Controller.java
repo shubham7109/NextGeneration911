@@ -67,7 +67,7 @@ public class Controller {
     private boolean callOnce = true;
     private String username;
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/logs";
-    private String LOGIN_URL = "http://proj-309-sb-5.cs.iastate.edu:8080/login/";
+    private String LOGIN_URL = "http://proj-309-sb-5.cs.iastate.edu:8080/operators/";
     private ArrayList<LogModel> logModels;
     private Timer timer;
     private OperatorModel operator;
@@ -423,7 +423,7 @@ public class Controller {
         jsonObject.put("ipAddress", InetAddress.getLocalHost().getHostAddress());
         jsonObject.put("image", operator.getImage());
 
-        URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/login/" + operator.getId());
+        URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/operators/" + operator.getId());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("PUT");
         connection.setDoOutput(true);

@@ -532,7 +532,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         jsonObject.put("ipAddress",operatorModel.getIpAddress());
         jsonObject.put("image",operatorModel.getImage());
 
-        URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/login/"+operatorModel.getId());
+        URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/operators/"+operatorModel.getId());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("PUT");
         connection.setDoOutput(true);
