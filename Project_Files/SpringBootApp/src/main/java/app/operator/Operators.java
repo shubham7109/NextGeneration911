@@ -119,6 +119,10 @@ public class Operators
 		this.image = image;
 	}
 	
+	public String toString() {
+		return "Operator: " + firstName + " " + lastName;
+	}
+	
 	
 	
 }
