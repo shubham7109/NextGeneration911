@@ -1,7 +1,10 @@
 package app.instant_message;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,7 @@ public class InstantMessageRouter {
 	
 	/* return the first available operator whose status is 0 (who is available) */
 	private Operators getAvailableOperator() {
+		
 		// let availOper be a list of all available operators
 		List<Operators> operators = operatorsService.getAllOperators();
 		List<Operators> availOper = new ArrayList<Operators>();
@@ -52,13 +56,43 @@ public class InstantMessageRouter {
 			}
 		}
 		
-		//let logs be a list of logs sorted in reverse chronological order
+		//let todayLogs be a list of each operator's most recent call log, sorted in chronological order
 		List<Logs> logs = logsService.getAllLogs();
+		List<Logs> latestOpLog = new ArrayList<Logs>();
+		
+		SimpleDateFormat f = new SimpleDateFormat("MMM-dd-yy");
+		
+		for (int i = 0; i < logs.size() && i < 1000; i++) {
+			Logs l = logs.get(i);
+			String ln = l.getOperatorName();
+			
+			boolean InLatestOpLog = false;
+			for (int j = 0; j < latestOpLog.size(); j++) {
+				if (ln.equals(latestOpLog.get(j).getOperatorName())) {
+					InLatestOpLog = true;
+				}
+			}
+			
+			boolean inAvailOps = false;
+			for (int j = 0; j < availOper.size(); j++) {
+				Operators op = availOper.get(j);
+				if (ln.equals(op.getFirstName() + " " + op.getLastName())) {
+					inAvailOps = true;
+				}
+			}
+			
+			if (!InLatestOpLog && inAvailOps) {
+				latestOpLog.add(l);
+			}
+		}
+		
+		latestOpLog.sort(new LogsComparator());
+		
 		
 		if (!availOper.isEmpty()) {
-			//TODO: Choose operator
-			// let called be an array of ints such that:
-			//		iff availOper.get(i) has received a call today, then called[i] = true
+			//if an operator has not yet received a call today, then return that operator
+			//		let called be an array of ints such that:
+			//			iff availOper.get(i) has received a call today, then called[i] = true
 			boolean[] called = new boolean[availOper.size()];
 			for (int i = 0; i < availOper.size(); i++) {
 				called[i] = false;
@@ -77,22 +111,17 @@ public class InstantMessageRouter {
 				}
 			}
 			
+			//return the operator who appears first on the sorted
+			for ( int i = 0; i < availOper.size(); i++) {
+				if (latestOpLog.get(0).getOperatorName().equals(availOper.get(i).getFirstName() + " " + availOper.get(i).getLastName())) {
+					return availOper.get(i);
+				}
+			}
 			
-			return new Operators();
+			
 		}
 		
 		return new Operators();
-		
-		/*
-		let hist be a list of logs, sorted in reverse chronological order where logs.date = today's date
-		
-		if there is at least 1 operators who has not received a call today
-			then return the id of the first operator in operators who has not received a call today and whose status == 0 and whose accessibility != 0
-		
-		else
-			return the id of the first operator in hist whose status == 0 and whose accessibility != 0
-			
-		*/
 		
 		/*
 		=== Old Code ===
