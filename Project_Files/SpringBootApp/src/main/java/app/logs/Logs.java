@@ -91,6 +91,6 @@ public class Logs {
 	}
 	
 	public String toString() {
-		return "Log: " + operatorName;
+		return "Log: " + operatorName + " " + date + " " + time;
 	}
 }

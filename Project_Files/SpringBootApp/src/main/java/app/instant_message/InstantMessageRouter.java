@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -52,7 +53,6 @@ public class InstantMessageRouter {
 		
 		//let todayLogs be a list of each operator's most recent call log, sorted in chronological order
 		List<Logs> latestOpLog = latestOpLog(availOper);	
-		latestOpLog.sort(new LogsComparator());
 		
 		if (!availOper.isEmpty()) {
 			//if an operator has not yet received a call today, then return that operator
@@ -64,21 +64,22 @@ public class InstantMessageRouter {
 			}
 			for (int i = 0; i < latestOpLog.size(); i++) {
 				for (int j = 0; j < availOper.size(); j++) {
-					if ( latestOpLog.get(i).getOperatorName() == availOper.get(j).getFirstName() + " " + availOper.get(j).getLastName()) {
+					System.out.println(latestOpLog.get(i).getOperatorName());
+					System.out.println(availOper.get(j).getFirstName() + " " + availOper.get(j).getLastName());
+					if ( latestOpLog.get(i).getOperatorName().equals(availOper.get(j).getFirstName() + " " + availOper.get(j).getLastName())) {
+						System.out.println("Match found");
 						called[j] = true;
 					}
 				}
 			}
 			
-			
-			
 			for (int i = 0; i < called.length; i++) {
-				if (called[i] = false) {
+				System.out.println(called[i]);
+				if (called[i] == false) {
 					System.out.println("Returning operator who has not reveived a call");
 					return availOper.get(i);
 				}
 			}
-			
 			
 			System.out.println("Returning first operator on latestOpLog");
 			//return the operator who appears first on the sorted
@@ -118,11 +119,13 @@ public class InstantMessageRouter {
 		return availOper;
 	}
 	
+	//TODO: this method is not returning logs in the right order!
 	private List<Logs> latestOpLog(List<Operators> availOper) {
 		List<Logs> logs = logsService.getAllLogs();
 		List<Logs> latestOpLog = new ArrayList<Logs>();
-		
-		SimpleDateFormat f = new SimpleDateFormat("MMM-dd-yy");
+				
+		logs.sort(new LogsComparator());
+		Collections.reverse(logs);
 		
 		for (int i = 0; i < logs.size() && i < 1000; i++) {
 			Logs l = logs.get(i);
@@ -147,6 +150,8 @@ public class InstantMessageRouter {
 				latestOpLog.add(l);
 			}
 		}
+		
+		latestOpLog.sort(new LogsComparator());
 		
 		System.out.println("Logs: " + latestOpLog.toString());
 		

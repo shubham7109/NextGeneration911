@@ -9,6 +9,9 @@ public class LogsReverseComparator implements Comparator<Logs> {
 	
 	public int compare(Logs a, Logs b) {
 		
+		LogsComparator c = new LogsComparator();
+		return -1 * c.compare(a, b);
+		/*
 		SimpleDateFormat f = new SimpleDateFormat("MMM-dd-yy");
 		Date da = new Date();
 		try { da = f.parse(a.getDate());} catch (ParseException e) {}
@@ -26,6 +29,7 @@ public class LogsReverseComparator implements Comparator<Logs> {
 		}
 		
 		return da.compareTo(db) * -1;
+		*/
 	}
 	
 }
