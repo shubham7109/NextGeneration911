@@ -1,14 +1,19 @@
 package sb5.cs309.nextgen911;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,6 +22,7 @@ import com.android.volley.Response;
 import java.util.ArrayList;
 
 import static sb5.cs309.nextgen911.MainMenu.idKey;
+import static sb5.cs309.nextgen911.MainMenu.requestCode;
 import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 
 /**
@@ -33,7 +39,7 @@ public class Text911Activity extends AppCompatActivity {
     boolean connected;
     Handler m_handler, background_handler;
     Runnable m_handlerTask, background_handlerTask;
-    volatile boolean stop, hasChanged, firstExit;
+    volatile boolean stop, hasChanged, firstExit,photoFlag;
     volatile String message;
     private EditText inputBox;
     private ListView list_of_messages;
@@ -51,6 +57,7 @@ public class Text911Activity extends AppCompatActivity {
         connected = false;
         hasChanged = false;
         firstExit = true;
+        photoFlag = false;
         message = "";
 
 
@@ -73,6 +80,24 @@ public class Text911Activity extends AppCompatActivity {
                         message = message + "\n" + "***Disconnected***";
                         hasChanged = true;
                     }
+                    else if(photoFlag || new_message.contains("<Photo>")){
+                        synchronized (this){
+                            if(photoFlag == false) {
+                                int end = new_message.indexOf("</Photo>");
+                                if(end != -1){
+                                    message = "<PHOTO>";
+                                    photoFlag = false;
+                                }
+                            }
+                            photoFlag = true;
+                            int end = new_message.indexOf("</Photo>");
+                            if(end != -1){
+                                message = "<PHOTO>"; // TODO Remove to process
+                                photoFlag = false;
+                            }
+
+                        }
+                    }
                     else if (!new_message.equals("")) {
                         synchronized (this) {
                             message = message + "\n" + new_message;
@@ -83,7 +108,7 @@ public class Text911Activity extends AppCompatActivity {
                 } else {
                     background_handler.removeCallbacks(background_handlerTask); // cancel run
                 }
-                background_handler.postDelayed(background_handlerTask, 200);
+                background_handler.postDelayed(background_handlerTask, 5);
             }
         };
 
@@ -105,11 +130,12 @@ public class Text911Activity extends AppCompatActivity {
 
         initMessages();
         getServerIP();
+        startCamera();
 
     }
 
     private void createClient() {
-        connection = new TCP_Client(6789, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), "1");
+        connection = new TCP_Client(6789, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), "test");
         connected = true;
         connection.startConnection();
         background_handlerTask.run();
@@ -119,13 +145,15 @@ public class Text911Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        connection.stopConnection();
+        if(connected)
+            connection.stopConnection();
         super.onBackPressed();
     }
 
     @Override
     public void onDestroy() {
-        connection.stopConnection();
+        if(connected)
+            connection.stopConnection();
         super.onDestroy();
     }
 
@@ -172,6 +200,30 @@ public class Text911Activity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void startCamera(){
+        Permissions.requestPermissions(this, requestCode);
+
+        FloatingActionButton capturedImageButton = findViewById(R.id.photo_button);
+        capturedImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(photoCaptureIntent, requestCode);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            String photo = ImageHandler.encodeBase64(bitmap);
+            connection.send("<Photo>" + photo);
+            connection.send("</Photo>");
+        }
     }
 }
 

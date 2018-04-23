@@ -24,3 +24,4 @@ public class ImageHandler {
         return BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
     }
 }
+
