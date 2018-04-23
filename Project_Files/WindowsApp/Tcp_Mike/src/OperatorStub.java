@@ -1,4 +1,7 @@
 import java.io.IOException;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
@@ -16,6 +19,8 @@ public class OperatorStub {
         ArrayList<String> messages;
         int length = 0;
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now;
 
         while(true){
             messages = me.getMessages();
@@ -23,6 +28,8 @@ public class OperatorStub {
                 System.out.println(messages.get(i));
             }
             length = messages.size();
+            now = LocalDateTime.now();
+            me.sendMessage(dtf.format(now));
             sleep(1000);
         }
 

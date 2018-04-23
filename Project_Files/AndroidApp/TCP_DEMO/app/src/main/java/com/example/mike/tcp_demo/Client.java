@@ -8,6 +8,9 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+import static java.lang.Thread.sleep;
 
 public class Client {
 
@@ -34,11 +37,32 @@ public class Client {
         conn.execute(this);
     }
 
-    public void stopConnection(){
+    public void stopConnection() {
         StopConnection conn = new StopConnection();
         conn.execute(this);
     }
 
+    public void send(String message) {
+        Message m = new Message(this, message);
+        new SendMessage().execute(m);
+    }
+
+    public String getMessages() {
+        GetMessageTask task = new GetMessageTask();
+        task.execute(this);
+
+        if (task.getStatus() == AsyncTask.Status.FINISHED) {
+            try {
+                return task.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        return "Failed in client";
+
+    }
 }
 
 class StartConnection extends AsyncTask<Client, Void, Void> {
@@ -81,6 +105,48 @@ class StopConnection extends AsyncTask<Client, Void, Void> {
 
         return null;
     }
-
 }
+
+class SendMessage extends AsyncTask<Message, Void, Void>{
+
+    @Override
+    protected Void doInBackground(Message... messages) {
+        Client client = messages[0].c;
+        String message = messages[0].m;
+
+        if(message.equals("/quit"))
+            return  null;
+
+        if(client.closed == false){
+            client.os.println(message);
+        }
+
+        return null;
+    }
+}
+
+
+class Message{
+    public Client c;
+    public String m;
+
+    public Message(Client client, String message){
+        c = client;
+        m = message;
+    }
+}
+
+class GetMessageTask extends AsyncTask<Client, Void, String>{
+
+    @Override
+    protected String doInBackground(Client... clients) {
+        try {
+            return clients[0].is.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Failed in Async";
+    }
+}
+
 
