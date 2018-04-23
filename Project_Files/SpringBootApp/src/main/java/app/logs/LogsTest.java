@@ -19,20 +19,20 @@ public class LogsTest {
 		b.setTime("10:16");
 		b.setOperatorName("b");
 		
+		Logs c = new Logs();
+		c.setDate("Apr-18-18");
+		c.setTime("15:28");
+		c.setOperatorName("c");
+		
 		List<Logs> logs = new ArrayList<Logs>();
 		logs.add(a);
 		logs.add(b);
+		logs.add(c);
 		
 		LogsComparator lc = new LogsComparator();
 		LogsReverseComparator rlc = new LogsReverseComparator();
 		
-		System.out.println(lc.compare(a, b));
-		System.out.println(rlc.compare(a, b));
-		
-		
-		System.out.println(logs.toString());
-		
-		logs.sort(new LogsComparator());
+		logs.sort(lc);
 		System.out.println(logs.toString());
 		
 		Collections.reverse(logs);

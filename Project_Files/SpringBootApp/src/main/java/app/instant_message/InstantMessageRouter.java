@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,8 @@ public class InstantMessageRouter {
 	
 	@Autowired
 	private LogsService logsService;
+	
+	Random rand = new Random(System.currentTimeMillis());
 	
 	
 	/**
@@ -51,6 +54,11 @@ public class InstantMessageRouter {
 		// let availOper be a list of all available operators
 		List<Operators> availOper = availOps();
 		
+		int call = rand.nextInt(availOper.size());
+		
+		return availOper.get(call);
+		
+		/*
 		//let todayLogs be a list of each operator's most recent call log, sorted in chronological order
 		List<Logs> latestOpLog = latestOpLog(availOper);	
 		
@@ -64,8 +72,6 @@ public class InstantMessageRouter {
 			}
 			for (int i = 0; i < latestOpLog.size(); i++) {
 				for (int j = 0; j < availOper.size(); j++) {
-					System.out.println(latestOpLog.get(i).getOperatorName());
-					System.out.println(availOper.get(j).getFirstName() + " " + availOper.get(j).getLastName());
 					if ( latestOpLog.get(i).getOperatorName().equals(availOper.get(j).getFirstName() + " " + availOper.get(j).getLastName())) {
 						System.out.println("Match found");
 						called[j] = true;
@@ -83,17 +89,19 @@ public class InstantMessageRouter {
 			
 			System.out.println("Returning first operator on latestOpLog");
 			//return the operator who appears first on the sorted
-			for ( int i = 0; i < availOper.size(); i++) {
-				if (latestOpLog.get(0).getOperatorName().equals(availOper.get(i).getFirstName() + " " + availOper.get(i).getLastName())) {
-					return availOper.get(i);
-				}
-			}
+			return availOper.get(0);
+//			for ( int i = 0; i < availOper.size(); i++) {
+//				if (latestOpLog.get(0).getOperatorName().equals(availOper.get(i).getFirstName() + " " + availOper.get(i).getLastName())) {
+//					return availOper.get(i);
+//				}
+//			}
 			
 			
 			
 		}
 		System.out.println("outputs new operator");
 		return new Operators();
+		*/
 		
 		/*
 		=== Old Code ===
@@ -115,7 +123,7 @@ public class InstantMessageRouter {
 				availOper.add(operators.get(i));
 			}
 		}
-		System.out.println("Operators: " + operators.toString());
+		System.out.println("Available Operators: " + availOper.toString());
 		return availOper;
 	}
 	
@@ -153,7 +161,7 @@ public class InstantMessageRouter {
 		
 		latestOpLog.sort(new LogsComparator());
 		
-		System.out.println("Logs: " + latestOpLog.toString());
+		System.out.println("latestOpLog: " + latestOpLog.toString());
 		
 		return latestOpLog;
 	}
