@@ -20,7 +20,7 @@
       <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="561">
               <caret line="38" column="48" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="48" />
             </state>
           </provider>
@@ -29,8 +29,8 @@
       <file leaf-file-name="OperatorStub.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/OperatorStub.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="24" column="20" lean-forward="true" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
+            <state relative-caret-position="408">
+              <caret line="30" column="37" lean-forward="true" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -191,10 +191,10 @@
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="7" sideWeight="0.5005208" side_tool="true" visible="true" weight="0.344245" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5005208" side_tool="true" visible="true" weight="0.344245" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.344245" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49947917" visible="true" weight="0.344245" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
@@ -380,15 +380,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="561">
           <caret line="38" column="48" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/OperatorStub.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="24" column="20" lean-forward="true" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
+        <state relative-caret-position="408">
+          <caret line="30" column="37" lean-forward="true" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="37" />
         </state>
       </provider>
     </entry>

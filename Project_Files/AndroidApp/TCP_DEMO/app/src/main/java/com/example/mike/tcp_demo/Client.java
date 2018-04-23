@@ -10,8 +10,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import static java.lang.Thread.sleep;
-
 public class Client {
 
     public static Socket clientSocket = null;
@@ -51,15 +49,15 @@ public class Client {
         GetMessageTask task = new GetMessageTask();
         task.execute(this);
 
-        if (task.getStatus() == AsyncTask.Status.FINISHED) {
-            try {
-                return task.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+
+        try {
+            return task.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
+
         return "Failed in client";
 
     }
@@ -107,17 +105,17 @@ class StopConnection extends AsyncTask<Client, Void, Void> {
     }
 }
 
-class SendMessage extends AsyncTask<Message, Void, Void>{
+class SendMessage extends AsyncTask<Message, Void, Void> {
 
     @Override
     protected Void doInBackground(Message... messages) {
         Client client = messages[0].c;
         String message = messages[0].m;
 
-        if(message.equals("/quit"))
-            return  null;
+        if (message.equals("/quit"))
+            return null;
 
-        if(client.closed == false){
+        if (client.closed == false) {
             client.os.println(message);
         }
 
@@ -126,17 +124,17 @@ class SendMessage extends AsyncTask<Message, Void, Void>{
 }
 
 
-class Message{
+class Message {
     public Client c;
     public String m;
 
-    public Message(Client client, String message){
+    public Message(Client client, String message) {
         c = client;
         m = message;
     }
 }
 
-class GetMessageTask extends AsyncTask<Client, Void, String>{
+class GetMessageTask extends AsyncTask<Client, Void, String> {
 
     @Override
     protected String doInBackground(Client... clients) {
