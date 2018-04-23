@@ -36,8 +36,8 @@ public class LocationServices {
             public void onResponse(JSONObject response) {
                 try {
                     LocationTuple loc = getLocation(context);
-                    response.put("latitude", loc.lat);
-                    response.put("longitude", loc.lng);
+                    response.put("latitude", loc.lat+"");
+                    response.put("longitude", loc.lng+"");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

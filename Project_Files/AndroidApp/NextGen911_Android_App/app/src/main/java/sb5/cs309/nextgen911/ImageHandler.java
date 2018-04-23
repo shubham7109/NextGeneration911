@@ -13,7 +13,7 @@ import java.io.ByteArrayOutputStream;
 public class ImageHandler {
     public static String encodeBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 75, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] b = byteArrayOutputStream.toByteArray();
 
         return Base64.encodeToString(b, Base64.DEFAULT);

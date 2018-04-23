@@ -103,7 +103,7 @@ public class Text911Activity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 serverIP = response;
-                serverIP = "test";
+                serverIP = "1";
                 createClient();
             }
         };
