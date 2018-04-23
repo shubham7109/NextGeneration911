@@ -602,16 +602,16 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                 infoWindow.open(map,markerArrayList.get(finalI));
             });
         }
-        callerLocation = new LatLong(LAT, LONG);
+        //callerLocation = new LatLong(LAT, LONG);
         map.addMarker(callerMarker);
-        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-        infoWindowOptions.content("CALLER LOCATION");
-        InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
-        infoWindow.open(map, callerMarker);
-
-        map.addUIEventHandler(callerMarker, UIEventType.click, (JSObject obj) -> {
-            infoWindow.open(map,callerMarker);
-        });
+//        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+//        infoWindowOptions.content("CALLER LOCATION");
+        //InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+        //infoWindow.open(map, callerMarker);
+//
+//        map.addUIEventHandler(callerMarker, UIEventType.click, (JSObject obj) -> {
+//            infoWindow.open(map,callerMarker);
+//        });
     }
 
 
@@ -650,7 +650,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                     try {
                         if(count[0] >= 15){
                             setDeploys();
-                            updateMap();
+                            //updateMap();
                             count[0] =0;
                         }
 
