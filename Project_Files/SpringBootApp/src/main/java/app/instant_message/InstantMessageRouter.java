@@ -123,7 +123,7 @@ public class InstantMessageRouter {
 				availOper.add(operators.get(i));
 			}
 		}
-		System.out.println("Available Operators: " + availOper.toString());
+		//System.out.println("Available Operators: " + availOper.toString());
 		return availOper;
 	}
 	
