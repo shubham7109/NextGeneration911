@@ -92,7 +92,7 @@ public class Text911Activity extends AppCompatActivity {
                             photoFlag = true;
                             int end = new_message.indexOf("</Photo>");
                             if(end != -1){
-                                message = "<PHOTO>"; // TODO Remove to process
+                                message = "";
                                 photoFlag = false;
                             }
 
@@ -121,10 +121,11 @@ public class Text911Activity extends AppCompatActivity {
                         adapter.add(message);
                         message = "";
                         hasChanged = false;
+                        adapter.notifyDataSetChanged();
+                        list_of_messages.setSelection(adapter.getCount() - 1);
                     }
-                    adapter.notifyDataSetChanged();
                 }
-                m_handler.postDelayed(m_handlerTask, 200);
+                m_handler.postDelayed(m_handlerTask, 50);
             }
         };
 
@@ -221,8 +222,7 @@ public class Text911Activity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             String photo = ImageHandler.encodeBase64(bitmap);
-            connection.send("<Photo>" + photo);
-            connection.send("</Photo>");
+            connection.send("<Photo>\n" + photo + "</Photo>");
         }
     }
 }
