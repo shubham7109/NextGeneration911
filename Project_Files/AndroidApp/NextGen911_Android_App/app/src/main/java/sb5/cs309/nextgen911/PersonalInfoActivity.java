@@ -120,7 +120,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 personalInfo.put("latitude", l.lat);
                 personalInfo.put("longitude", l.lng);
 
-                //personalInfo.put("photo", getPhoto()); TODO Implement this field in database
+                personalInfo.put("picture", getPhoto());
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -426,7 +426,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     private void setPhoto(String url){
-        Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(imageHolder);
+        Picasso.get().load("proj-309-sb-5.cs.iastate.edu/" + url).into(imageHolder);
+        imageHolder.setVisibility(View.VISIBLE);
     }
 
     private void loadJson() {
@@ -471,7 +472,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             heightCentimeters = personalInfo.getString("heightCentimeters");
             weightKilograms = personalInfo.getString("weightKilograms");
             phoneNumber = personalInfo.getString("phoneNumber");
-            //photo = personalInfo.getString("photo"); TODO implement in database
+            photo = personalInfo.getString("picture");
         } catch (JSONException e) {
             throw new RuntimeException(e); // Non-recoverable
         }
@@ -493,7 +494,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         setBloodType(bloodType);
         setHeight(heightCentimeters);
         setWeight(weightKilograms);
-        //setPhoto(photo);
+        setPhoto(photo);
     }
 
     private void setHomeAddress(String homeAddress) {

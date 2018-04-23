@@ -2,6 +2,7 @@ package sb5.cs309.nextgen911;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.lang.Thread.sleep;
 import static sb5.cs309.nextgen911.MainMenu.idKey;
 import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
 
@@ -30,70 +32,64 @@ public class Text911Activity extends AppCompatActivity {
     public String serverIP;
     ArrayList<String> messageList;
     ArrayAdapter<String> adapter;
-    TcpClient connection;
+    TCP_Client connection;
     private EditText inputBox;
     private ListView list_of_messages;
     boolean connected;
-    int message_count;
+    Handler m_handler;
+    Runnable m_handlerTask;
+    boolean stop;
 
     public static Context getAppContext() {
         return Text911Activity.context;
     }
 
-    /**
-     * Initialize message list and chat client connection
-     *
-     * @param savedInstanceState
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text911);
         Text911Activity.context = getApplicationContext();
         connected = false;
-        message_count = 0;
 
         initMessages();
         getServerIP();
 
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+        m_handler = new Handler();
+        m_handlerTask = new Runnable() {
             @Override
             public void run() {
-                if(connected){
-                    ArrayList<String> messages = connection.getMessages();
-                    if(messages.size() == message_count)
-                        return;
-                    for(int i = message_count; i < messages.size(); i++){
-                        adapter.add(messages.get(i));
-                    }
+                if (!stop) {
+                    adapter.add(connection.getMessages());
                     adapter.notifyDataSetChanged();
-                    message_count = messages.size();
+
+                } else {
+                    m_handler.removeCallbacks(m_handlerTask); // cancel run
                 }
+                m_handler.postDelayed(m_handlerTask, 1000);
             }
-        }, 0, 1000);
+        };
 
     }
 
     private void createClient() {
-        try {
-            /*connection = new TcpClient(8082, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), serverIP);
-            */
-            connection = new TcpClient(2222, "10.0.2.2", "Mike", "1234");
+            connection = new TCP_Client(6789, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), serverIP);
             connected = true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            connection.startConnection();
+            m_handlerTask.run();
     }
 
 
-    /**
-     * close server on exit
-     */
     @Override
     public void onBackPressed() {
-        connection.closeConnection();
+        connection.stopConnection();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onDestroy() {
+        connection.stopConnection();
+        super.onDestroy();
     }
 
     /**
@@ -103,7 +99,6 @@ public class Text911Activity extends AppCompatActivity {
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getAppContext(), response + "", Toast.LENGTH_LONG).show(); //Todo
                 serverIP = response;
                 createClient();
             }
@@ -130,7 +125,7 @@ public class Text911Activity extends AppCompatActivity {
                     if (connected) {
                         String message = inputBox.getText().toString();
                         inputBox.setText("");
-                        connection.sendMessage(message);
+                        connection.send(message);
                     }
                     else{
                         Toast.makeText(getAppContext(), "No Connection", Toast.LENGTH_LONG).show();
