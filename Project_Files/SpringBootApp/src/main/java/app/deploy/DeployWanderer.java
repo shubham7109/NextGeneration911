@@ -31,7 +31,7 @@ public class DeployWanderer {
 	}
 	
 	private double moveLat() {
-		double lat = (rand.nextDouble() + 0.000001) * (RIGHTLATITUDE - LEFTLATITUDE) / 20;
+		double lat = (rand.nextDouble() + 0.000001) * (RIGHTLATITUDE - LEFTLATITUDE) / 40;
 		if (rand.nextInt() < 0) {
 			lat = lat * -1;
 		}
@@ -39,7 +39,7 @@ public class DeployWanderer {
 	}
 	
 	private double moveLong() {
-		double longi = (rand.nextDouble() + 0.000001) * (UPPERLONGITUDE - LOWERLONGITUDE) / 20;
+		double longi = (rand.nextDouble() + 0.000001) * (UPPERLONGITUDE - LOWERLONGITUDE) / 40;
 		if (rand.nextInt() < 0) {
 			longi = longi * -1;
 		}
@@ -90,7 +90,7 @@ public class DeployWanderer {
 		}	
 	}
 	
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedRate = 10000)
 	public void wander() {
 		List<Deploy> deploy = deployService.getAllDeploys();
 		
