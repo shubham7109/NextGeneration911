@@ -89,4 +89,8 @@ public class Logs {
 	{
 		return phoneNumber;
 	}
+	
+	public String toString() {
+		return "Log: " + operatorName;
+	}
 }
