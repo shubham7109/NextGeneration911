@@ -1,7 +1,6 @@
 package app.person;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,6 +78,9 @@ public class PersonService {
 			s = s.replace("\n", "").replace("\r", "");
 			byte[] decoded = Base64.getDecoder().decode(s);
 			File file = new File("user_images/" + new String(person.getId()) + ".jpg");
+			if (!file.exists()) {
+				file.createNewFile();
+			}
 			FileOutputStream outs = null;
 			outs = new FileOutputStream("user_images/" + new String(person.getId()) + ".jpg");
 			outs.write(decoded);
