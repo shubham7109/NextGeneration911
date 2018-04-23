@@ -605,16 +605,16 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                 infoWindow.open(map,markerArrayList.get(finalI));
             });
         }
-        callerLocation = new LatLong(LAT, LONG);
+        //callerLocation = new LatLong(LAT, LONG);
         map.addMarker(callerMarker);
-        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-        infoWindowOptions.content("CALLER LOCATION");
-        InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
-        infoWindow.open(map, callerMarker);
-
-        map.addUIEventHandler(callerMarker, UIEventType.click, (JSObject obj) -> {
-            infoWindow.open(map,callerMarker);
-        });
+//        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+//        infoWindowOptions.content("CALLER LOCATION");
+        //InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+        //infoWindow.open(map, callerMarker);
+//
+//        map.addUIEventHandler(callerMarker, UIEventType.click, (JSObject obj) -> {
+//            infoWindow.open(map,callerMarker);
+//        });
     }
 
 
@@ -653,11 +653,12 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                     try {
                         if(count[0] >= 15){
                             setDeploys();
-                            updateMap();
+                            //updateMap();
                             count[0] =0;
                         }
 
                         for(String text : client.getMessages()){
+                            if(!text.contains("$"))
                             messages.appendText(text + "\n");
                         }
 
@@ -670,6 +671,15 @@ public class On911Message implements Initializable, MapComponentInitializedListe
             }
         }, 1000, 1000);
 
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    client.sendMessage("$");
+
+                });
+            }
+        }, 200, 200);
         // TODO CHANGE THIS
         Platform.runLater(()->{
             int id = 111;
