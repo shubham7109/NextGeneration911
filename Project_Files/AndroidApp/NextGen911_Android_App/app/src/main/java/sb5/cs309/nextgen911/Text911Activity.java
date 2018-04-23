@@ -60,13 +60,16 @@ public class Text911Activity extends AppCompatActivity {
             @Override
             public void run() {
                 if (!stop) {
-                    adapter.add(connection.getMessages());
-                    adapter.notifyDataSetChanged();
+                    String message = connection.getMessages();
+                    if(!message.equals("")) {
+                        adapter.add(message);
+                        adapter.notifyDataSetChanged();
+                    }
 
                 } else {
-                    m_handler.removeCallbacks(m_handlerTask); // cancel run
+                    //m_handler.removeCallbacks(m_handlerTask); // cancel run
                 }
-                m_handler.postDelayed(m_handlerTask, 1000);
+                m_handler.postDelayed(m_handlerTask, 250);
             }
         };
 
@@ -100,6 +103,7 @@ public class Text911Activity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 serverIP = response;
+                serverIP = "test";
                 createClient();
             }
         };

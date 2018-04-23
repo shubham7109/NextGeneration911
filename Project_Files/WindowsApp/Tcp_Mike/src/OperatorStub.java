@@ -3,6 +3,7 @@ import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static java.lang.Thread.sleep;
 
@@ -28,8 +29,11 @@ public class OperatorStub {
                 System.out.println(messages.get(i));
             }
             length = messages.size();
-            now = LocalDateTime.now();
-            me.sendMessage(dtf.format(now));
+            if(Math.random() > 0.5) {
+                length = messages.size();
+                now = LocalDateTime.now();
+                me.sendMessage(dtf.format(now));
+            }
             sleep(1000);
         }
 
