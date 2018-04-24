@@ -1,5 +1,9 @@
 package app.text_logs;
 
-public class TextLogRepository {
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TextLogRepository extends CrudRepository<TextLog, String> {
 
 }
