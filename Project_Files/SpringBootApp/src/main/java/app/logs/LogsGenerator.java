@@ -59,7 +59,7 @@ public class LogsGenerator {
 			l.setOperatorName(operators.get(op));
 			l.setPhoneNumber(phoneNumbers.get(rand.nextInt(phoneNumbers.size())));
 			l.setTime(Integer.toString(rand.nextInt(23)) + ":" + Integer.toString(rand.nextInt(59)));
-			l.setOperatorId(Integer.toString(opid.get(i)));
+			l.setOperatorId(Integer.toString(opid.get(op)));
 			
 			logs.add(l);
 			
