@@ -14,21 +14,14 @@ public class OperatorStub {
         int length = 0;
         Client me = new Client(portNumber, host, "3", "test");
 
-<<<<<<< HEAD
+
         for (int j =0; j< 5; j++) {
             //me.sendMessage(String.valueOf(System.currentTimeMillis()));
             me.sendMessage(j + "");
             messages = me.getMessages();
             for (int i = length; i < messages.size(); i++) {
                 System.out.println(messages.get(i));
-=======
-        Client me = new Client(portNumber, host, "0", "1");
-        while (true) {
-            me.sendMessage(String.valueOf(System.currentTimeMillis()));
-            for (String line :
-                    me.getMessages()) {
-                System.out.println(line);
->>>>>>> 59f4339eacb1c60506d54fd953881d1a9d747353
+
             }
             length = messages.size();
             sleep(1000);
