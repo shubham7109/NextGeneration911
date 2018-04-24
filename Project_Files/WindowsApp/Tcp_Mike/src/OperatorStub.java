@@ -12,30 +12,54 @@ public class OperatorStub {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         int portNumber = 6789;
-        String host = "10.25.69.139";
         //String host = "localhost";
-
-        Client me = new Client(portNumber, host, "observer", "test");
-        me.sendMessage("Im in");
+        String host = "proj-309-sb-5.cs.iastate.edu";
         ArrayList<String> messages;
         int length = 0;
+        Client me = new Client(portNumber, host, "listener", "test");
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now;
 
-        while(true){
+
+        for (int j = 0; j < 5; j++) {
+            //me.sendMessage(String.valueOf(System.currentTimeMillis()));
+            me.sendMessage(j + "");
+            sleep(500);
             messages = me.getMessages();
-            for(int i = length; i < messages.size(); i++){
+            for (int i = length; i < messages.size(); i++) {
                 System.out.println(messages.get(i));
             }
             length = messages.size();
-            if(Math.random() > 0.5) {
-                length = messages.size();
-                now = LocalDateTime.now();
-                me.sendMessage(dtf.format(now));
-            }
-            sleep(1000);
         }
+
+
+        me.sendMessage("/history");
+        sleep(1000);
+        messages = me.getMessages();
+        for (int i = length; i < messages.size(); i++) {
+            System.out.println(messages.get(i));
+        }
+        me.closeConnection();
+
+//        me.sendMessage("Hello");
+//        me.sendMessage("2nd Message");
+//
+//        ArrayList<String> messages = me.getMessages();
+//
+//        while(messages.size() == 0) {
+//            try {
+//                sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        while(true){
+//            for (String line:
+//                    me.getMessages()) {
+//                System.out.println(line);
+//            }
+//            sleep(1000);
+//            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+//        }
 
 //            me.closeConnection();
 //

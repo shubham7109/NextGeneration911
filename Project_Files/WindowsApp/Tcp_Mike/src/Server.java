@@ -17,11 +17,14 @@ public class Server {
     private static Socket clientSocket = null;
     private static ArrayList<clientThread> threadList;
     private static HashMap<String, ArrayList<clientThread>> chatRooms;
+    private static HashMap<String, ArrayList<String>> history;
 
     public static void main(String args[]) {
         int portNumber = 6789;
         threadList = new ArrayList<>();
         chatRooms = new HashMap<>();
+        history = new HashMap<>();
+
 
         try {
             serverSocket = new ServerSocket(portNumber);
@@ -33,7 +36,7 @@ public class Server {
         while (true) {
             try {
                 clientSocket = serverSocket.accept();
-                clientThread process = new clientThread(clientSocket, threadList, chatRooms);
+                clientThread process = new clientThread(clientSocket, threadList, chatRooms, history);
                 threadList.add(process);
                 process.start();
 
@@ -49,19 +52,30 @@ class clientThread extends Thread {
 
     private volatile static ArrayList<clientThread> threadList;
     private volatile static HashMap<String, ArrayList<clientThread>> chatRooms;
+    private static HashMap<String, ArrayList<String>> history;
     private String clientName = null;
     private String chatRoomName = null;
     private DataInputStream is = null;
     private PrintStream os = null;
     private Socket clientSocket = null;
 
-    public clientThread(Socket clientSocket, ArrayList<clientThread> threadList, HashMap<String, ArrayList<clientThread>> chatRooms) {
+    public clientThread(Socket clientSocket, ArrayList<clientThread> threadList, HashMap<String, ArrayList<clientThread>> chatRooms, HashMap<String, ArrayList<String>> history) {
         this.clientSocket = clientSocket;
         this.threadList = threadList;
         this.chatRooms = chatRooms;
+        this.history = history;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof clientThread){
+            return ((clientThread) obj).clientName == this.clientName;
+        }
+        return false;
     }
 
     public void run() {
+        ArrayList<String> roomHistory;
 
         try {
             is = new DataInputStream(clientSocket.getInputStream());
@@ -101,6 +115,7 @@ class clientThread extends Thread {
                 clientName = name;
                 chatRoomName = roomID;
 
+
                 if(chatRooms.containsKey(roomID))
                     chatRooms.get(roomID).add(this);
                 else{
@@ -108,16 +123,33 @@ class clientThread extends Thread {
                     chatRooms.get(roomID).add(this);
                 }
 
+                if(history.containsKey(roomID))
+                    roomHistory = history.get(roomID);
+                else{
+                    history.put(roomID, new ArrayList<String>());
+                    roomHistory = history.get(roomID);
+                }
+
                 for (clientThread c : chatRooms.get(roomID)) {
                     if (c != this)
                         c.os.println("*** " + name + " has entered the chat room ***");
                 }
+                roomHistory.add("(History)*** " + name + " has entered the chat room ***");
             }
 
             while (true) {
                 String line = is.readLine();
                 if (line == null || line.startsWith("/quit")) {
                     break;
+                }
+
+                if(line.startsWith("/history")){
+                    synchronized (this){
+                        for(String s: roomHistory){
+                            os.println(s);
+                        }
+                    }
+                    continue;
                 }
 
 
@@ -136,20 +168,26 @@ class clientThread extends Thread {
                     for (clientThread c : chatRooms.get(roomID)) {
                         c.os.println("<" + name + "> " + line);
                     }
+                    roomHistory.add("(History)<" + name + "> " + line);
                 }
             }
 
             synchronized (this) {
                 for (clientThread c : chatRooms.get(roomID)) {
-                    if(c != this)
+                    if (c != this)
                         c.os.println("*** " + name + " has left ***");
                     else
                         c.os.println("***disconnected***");
-                }
 
-                chatRooms.get(roomID).remove(this);
-                if(chatRooms.get(roomID).size() == 0)
-                    chatRooms.remove(roomID);
+                    roomHistory.add("(History)*** " + name + " has left ***");
+                }
+                synchronized (this) {
+                    chatRooms.get(roomID).remove(this);
+                    if (chatRooms.get(roomID).size() == 0) {
+                        chatRooms.remove(roomID);
+                        history.remove(roomID);
+                    }
+                }
             }
 
             is.close();

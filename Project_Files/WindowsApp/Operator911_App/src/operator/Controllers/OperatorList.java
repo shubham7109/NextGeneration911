@@ -26,12 +26,13 @@ import java.util.ResourceBundle;
  */
 public class OperatorList implements Initializable{
 
-    private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/login";
+    private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/operators";
     private ArrayList<OperatorModel> operatorModels;
     @FXML private TableView<OperatorModel> tableView;
     @FXML private TableColumn<OperatorModel, String> operatorName;
     @FXML private TableColumn<OperatorModel, String> locations;
     @FXML private TableColumn<OperatorModel, String> status;
+    @FXML private TableColumn<OperatorModel, String> id;
 
     private static String getHTML(String urlToRead) throws Exception {
         StringBuilder result = new StringBuilder();
@@ -87,5 +88,10 @@ public class OperatorList implements Initializable{
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         tableView.setItems(observableList);
         tableView.getColumns().add(status);
+
+        id = new TableColumn("id");
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableView.setItems(observableList);
+        tableView.getColumns().add(id);
     }
 }

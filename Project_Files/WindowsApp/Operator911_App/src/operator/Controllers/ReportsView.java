@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 
 public class ReportsView implements Initializable {
 
-    private String login_url = "http://proj-309-sb-5.cs.iastate.edu:8080/login";
+    private String login_url = "http://proj-309-sb-5.cs.iastate.edu:8080/operators";
     private String logs_url  = "http://proj-309-sb-5.cs.iastate.edu:8080/logs";
     private ArrayList<OperatorModel> operatorModels;
     private ArrayList<LogModel> logModels;
