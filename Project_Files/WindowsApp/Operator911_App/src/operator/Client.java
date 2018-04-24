@@ -45,7 +45,8 @@ public class Client implements Runnable {
         String responseLine;
         try {
             while ((responseLine = is.readLine()) != null) {
-                messages.add(responseLine);
+                if(!responseLine.contains("$"))
+                    messages.add(responseLine);
                 if (responseLine.indexOf("***disconnected***") != -1)
                     break;
 

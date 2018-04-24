@@ -94,7 +94,7 @@ public class OperatorLogin {
 
     private void updateStatus() throws Exception {
 
-        String response = getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/login/");
+        String response = getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/operators/");
         ArrayList<OperatorModel> operatorModels = new ArrayList<>();
         JSONArray jsonArray = new JSONArray(response);
         for(int i=0; i<jsonArray.length(); i++){
@@ -117,7 +117,7 @@ public class OperatorLogin {
         jsonObject.put("ipAddress", InetAddress.getLocalHost().getHostAddress());
         jsonObject.put("image",operator.getImage());
 
-        URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/login/" + operator.getId());
+        URL url = new URL("http://proj-309-sb-5.cs.iastate.edu:8080/operators/" + operator.getId());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("PUT");
         connection.setDoOutput(true);

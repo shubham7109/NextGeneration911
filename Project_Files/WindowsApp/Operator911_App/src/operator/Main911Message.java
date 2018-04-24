@@ -43,7 +43,7 @@ public class Main911Message extends Application {
      * @throws Exception
      */
     public Main911Message(String username, String callerID, Client client) throws Exception {
-        JSONArray operators  = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/login"));
+        JSONArray operators  = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/operators"));
         JSONArray persons = new JSONArray(getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/persons"));
         this.client = client;
 

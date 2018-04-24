@@ -27,7 +27,7 @@ public class PersonModel {
     private String weightKilograms;
     private String latitude;
     private String longitude;
-
+    private String imageURL = "http://proj-309-sb-5.cs.iastate.edu/";
     /**
      * Constructor set the instance variables
      * @param jsonObject Used to parse and set variables from given keys
@@ -52,6 +52,17 @@ public class PersonModel {
         weightKilograms = jsonObject.getString("weightKilograms");
         latitude = jsonObject.getString("latitude");
         longitude = jsonObject.getString("longitude");
+        try{
+            imageURL += jsonObject.getString("picture");
+
+
+        }catch (JSONException ex){
+            imageURL = "http://proj-309-sb-5.cs.iastate.edu/user_images/default.png";
+        }
+    }
+
+    public String getImageURL() {
+        return imageURL;
     }
 
     /**
