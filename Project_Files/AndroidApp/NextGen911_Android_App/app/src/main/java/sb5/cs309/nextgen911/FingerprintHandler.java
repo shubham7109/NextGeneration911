@@ -11,6 +11,10 @@ import android.os.CancellationSignal;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
+/**
+ * Implementation of Fingerprint manager's authenticalCallback. Required to process fingerprints
+ */
+
 @TargetApi(Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
@@ -18,10 +22,19 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     private CancellationSignal cancellationSignal;
     private Context context;
 
+    /**
+     * @param mContext Context of the calling activity
+     */
     public FingerprintHandler(Context mContext) {
         context = mContext;
     }
 
+    /**
+     * Start authentication of a fingerprint
+     *
+     * @param manager      Provided by system security services
+     * @param cryptoObject Provided by system security services
+     */
     public void startAuth(FingerprintManager manager, FingerprintManager.CryptoObject cryptoObject) {
 
         cancellationSignal = new CancellationSignal();
@@ -31,29 +44,36 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         manager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
     }
 
+    /**
+     * Display an error toast on system error
+     *
+     * @param errMsgId  Unused parameter from override
+     * @param errString Unused parameter from override
+     */
     @Override
     public void onAuthenticationError(int errMsgId, CharSequence errString) {
         Toast.makeText(context, "Authentication error\n" + errString, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Display an error toast on authentication failure
+     */
     @Override
     public void onAuthenticationFailed() {
         Toast.makeText(context, "Authentication failed", Toast.LENGTH_LONG).show();
     }
 
+
+    /**
+     * On success open the Personal info activity
+     *
+     * @param result Unused Override param
+     */
     @Override
-
-
-    public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
-        Toast.makeText(context, "Authentication help\n" + helpString, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-
     public void onAuthenticationSucceeded(
             FingerprintManager.AuthenticationResult result) {
 
-        Toast.makeText(context, "Success!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, "Success!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(context, PersonalInfoActivity.class);
         context.startActivity(intent);
     }

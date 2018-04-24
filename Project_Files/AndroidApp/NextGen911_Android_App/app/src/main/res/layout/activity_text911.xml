@@ -12,18 +12,31 @@ android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin"
 tools:context="sb5.cs309.nextgen911.Text911Activity">
 
-<android.support.design.widget.FloatingActionButton
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:src="@drawable/ic_send_black_24dp"
-    android:id="@+id/fab"
-    android:tint="@android:color/white"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentEnd="true"
-    app:fabSize="mini" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:src="@drawable/ic_send_black_24dp"
+        android:tint="@android:color/white"
+        app:backgroundTint="@android:color/black"
+        app:fabSize="mini" />
 
-<android.support.design.widget.TextInputLayout
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/photo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fab"
+        android:layout_alignStart="@+id/fab"
+        android:clickable="true"
+        android:src="@drawable/camera"
+        android:tint="@android:color/white"
+        app:backgroundTint="@android:color/black"
+        app:fabSize="mini" />
+
+    <android.support.design.widget.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_toLeftOf="@id/fab"
@@ -44,7 +57,7 @@ tools:context="sb5.cs309.nextgen911.Text911Activity">
     android:layout_alignParentTop="true"
     android:layout_alignParentStart="true"
     android:layout_above="@id/fab"
-    android:dividerHeight="16dp"
+    android:dividerHeight="-20dp"
     android:divider="@android:color/transparent"
     android:id="@+id/list_of_messages"
     android:layout_marginBottom="16dp"/>

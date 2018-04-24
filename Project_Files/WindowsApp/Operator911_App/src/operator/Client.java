@@ -1,52 +1,80 @@
 package operator;
 
-import java.io.Serializable;
+import operator.Models.OperatorModel;
+
+import java.io.*;
 import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
  * Class to handle the client's socket calls
  * @author Shubham Sharma
  */
-public class Client extends NetworkConnection {
+public class Client implements Runnable {
 
-    private String ip;
-    private int port;
+    private static Socket clientSocket = null;
+    private static PrintStream os = null;
+    private static DataInputStream is = null;
+    private static boolean closed = false;
+    private ArrayList<String> messages;
 
-    /**
-     * Constructor to initialize and set up the client
-     * @param ip The IP of the server
-     * @param port The port connecting to the server
-     * @param onRecieveCallback Serializable consumer
-     */
-    public Client(String ip, int port, Consumer<Serializable> onRecieveCallback) {
-        super(onRecieveCallback);
-        this.ip = ip;
-        this.port = port;
+
+    public Client(int port, String host, String userName, String chatRoomName) {
+        messages = new ArrayList<>();
+        try {
+            clientSocket = new Socket(host, port);
+            os = new PrintStream(clientSocket.getOutputStream());
+            is = new DataInputStream(clientSocket.getInputStream());
+        } catch (UnknownHostException e) {
+            System.err.println("Failed to resolve hostname");
+        } catch (IOException e) {
+            System.err.println("I/O Error");
+        }
+
+        if (clientSocket != null && os != null && is != null) {
+            new Thread(this).start();
+        }
+        sendMessage(userName);
+        sendMessage(chatRoomName);
     }
 
-    /**
-     * Check if client is server
-     * @return Always returns false
-     */
-    @Override
-    protected boolean isServer() {
-        return false;
+    public void run() {
+        String responseLine;
+        try {
+            while ((responseLine = is.readLine()) != null) {
+                messages.add(responseLine);
+                if (responseLine.indexOf("***disconnected***") != -1)
+                    break;
+            }
+            closed = true;
+        } catch (IOException e) {
+            System.err.println("IOException:  " + e);
+        }
     }
 
-    /**
-     * @return Returns the IP for the server to connect to.
-     */
-    @Override
-    protected String getIP() {
-        return ip;
+    public void sendMessage(String message) {
+        if (closed) {
+            closeConnection();
+            System.err.println("Connection closed");
+        } else {
+            os.println(message);
+        }
     }
 
-    /**
-     * @return Returns the port to connect to.
-     */
-    @Override
-    protected int getPort() {
-        return port;
+    public void closeConnection() {
+        try {
+            os.close();
+            is.close();
+            clientSocket.close();
+        } catch (IOException e) {
+            System.err.println("IOException:  " + e);
+        }
+    }
+
+    public ArrayList<String> getMessages() {
+        return messages;
     }
 }

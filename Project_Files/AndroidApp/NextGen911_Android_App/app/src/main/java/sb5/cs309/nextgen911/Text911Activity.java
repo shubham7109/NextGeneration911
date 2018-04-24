@@ -1,32 +1,33 @@
 package sb5.cs309.nextgen911;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import sb5.cs309.nextgen911.ChatServer.AsyncConnection;
-
 import static sb5.cs309.nextgen911.MainMenu.idKey;
+import static sb5.cs309.nextgen911.MainMenu.requestCode;
 import static sb5.cs309.nextgen911.MainMenu.sharedPreferences;
+
+/**
+ * Contains the controller to send text messages to 911
+ */
 
 public class Text911Activity extends AppCompatActivity {
 
@@ -34,31 +35,161 @@ public class Text911Activity extends AppCompatActivity {
     public String serverIP;
     ArrayList<String> messageList;
     ArrayAdapter<String> adapter;
-    AsyncConnection firstConnection;
-    AsyncConnection secondConnection;
-    boolean firstMessage;
+    TCP_Client connection;
+    boolean connected;
+    Handler m_handler, background_handler;
+    Runnable m_handlerTask, background_handlerTask;
+    volatile boolean stop, hasChanged, firstExit,photoFlag;
+    volatile String message;
     private EditText inputBox;
     private ListView list_of_messages;
-    private boolean connected;
+    HandlerThread readThread;
 
     public static Context getAppContext() {
         return Text911Activity.context;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_text911);
         Text911Activity.context = getApplicationContext();
+        readThread = new HandlerThread("");
+        readThread.start();
 
-        firstMessage = true;
+        initMessages();
+        startCamera();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
         connected = false;
+        stop = false;
+        hasChanged = false;
+        firstExit = true;
+        photoFlag = false;
+        message = "";
+
+        background_handler = new Handler(readThread.getLooper());
+        background_handlerTask = new Runnable() {
+            @Override
+            public void run() {
+                if (!stop) {
+                    String new_message = connection.getMessages();
+                    if (new_message.contains("$")) {
+                        //
+                    } else if (new_message.contains("has left") && firstExit) {
+                        firstExit = false;
+                    }
+                    else if(new_message.contains("has left")){
+                        connection.stopConnection();
+                        stop = true;
+                        message = message + "\n" + "***Disconnected***";
+                        hasChanged = true;
+                    }
+                    else if(photoFlag || new_message.contains("<Photo>")){
+                        synchronized (this){
+                            if(photoFlag == false) {
+                                int end = new_message.indexOf("</Photo>");
+                                if(end != -1){
+                                    message = "<PHOTO>";
+                                    photoFlag = false;
+                                }
+                            }
+                            photoFlag = true;
+                            int end = new_message.indexOf("</Photo>");
+                            if(end != -1){
+                                message = "";
+                                photoFlag = false;
+                            }
+
+                        }
+                    }
+                    else if (!new_message.equals("")) {
+                        synchronized (this) {
+                            message = message + "\n" + new_message;
+                            hasChanged = true;
+                        }
+                    }
+
+                } else {
+                    background_handler.removeCallbacks(background_handlerTask); // cancel run
+                }
+                background_handler.postDelayed(background_handlerTask, 25);
+            }
+        };
+
+        m_handler = new Handler();
+        m_handlerTask = new Runnable() {
+            @Override
+            public void run() {
+                if(!stop) {
+                    synchronized (this) {
+                        if (hasChanged) {
+                            adapter.add(message);
+                            message = "";
+                            hasChanged = false;
+                            adapter.notifyDataSetChanged();
+                            list_of_messages.setSelection(adapter.getCount() - 1);
+                        }
+                    }
+                }else{
+                    m_handler.removeCallbacks(m_handlerTask);
+                }
+                m_handler.postDelayed(m_handlerTask, 50);
+            }
+        };
+
+
         getServerIP();
+    }
+
+    private void createClient() {
+        connection = new TCP_Client(6789, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), serverIP);
+        if(!serverIP.equals("-1") && !serverIP.equals("")) {
+            connected = true;
+            connection.startConnection();
+            background_handlerTask.run();
+            m_handlerTask.run();
+        }
+    }
+
+
+    @Override
+    public void onBackPressed(){
+        if(connected)
+            connection.stopConnection();
+        stop = true;
+        super.onBackPressed();
+        finish();
+    }
+
+    /**
+     * Find the IP of the chat server to connect to
+     */
+    public void getServerIP() {
+        Response.Listener<String> listener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                serverIP = response;
+                if(serverIP.equals("-1") || serverIP.equals("")){
+                    adapter.add("All Operators Busy");
+                    adapter.notifyDataSetChanged();
+                }else {
+                    createClient();
+                }
+            }
+        };
+        Networking.getOperatorIP(listener);
+
+    }
+
+    private void initMessages() {
         messageList = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(Text911Activity.this,
                 android.R.layout.simple_list_item_1, messageList);
-
         inputBox = findViewById(R.id.input);
         list_of_messages = findViewById(R.id.list_of_messages);
         list_of_messages.setAdapter(adapter);
@@ -67,23 +198,15 @@ public class Text911Activity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = sharedPreferences.getString(idKey, "");
-                message += ": ";
-                message += inputBox.getText().toString();
-                inputBox.setText("");
 
-                messageList.add(message);
-                adapter.notifyDataSetChanged();
-
-                updateLocation();
+                LocationServices.updateLocation(getAppContext());
                 try {
                     if (connected) {
-                        if (firstMessage) {
-                            firstConnection.write(sharedPreferences.getString(idKey, ""));
-                            //firstConnection.write("111");
-                            firstMessage = false;
-                        }
-                        secondConnection.write(message);
+                        String message = inputBox.getText().toString();
+                        inputBox.setText("");
+                        connection.send(message);
+                    } else {
+                        Toast.makeText(getAppContext(), "No Connection", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -91,151 +214,29 @@ public class Text911Activity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-    private void createClient() {
+    private void startCamera(){
+        Permissions.requestPermissions(this, requestCode);
 
-        firstConnection = new AsyncConnection(serverIP, 5555, 50000, new AsyncConnection.ConnectionHandler() {
+        FloatingActionButton capturedImageButton = findViewById(R.id.photo_button);
+        capturedImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void didReceiveData(String data) {
-
-            }
-
-            @Override
-            public void didDisconnect(Exception error) {
-
-            }
-
-            @Override
-            public void didConnect() {
-                connected = true;
+            public void onClick(View v) {
+                Intent photoCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(photoCaptureIntent, requestCode);
             }
         });
-
-        secondConnection = new AsyncConnection(serverIP, 7777, 50000, new AsyncConnection.ConnectionHandler() {
-            @Override
-            public void didReceiveData(String data) {
-
-            }
-
-            @Override
-            public void didDisconnect(Exception error) {
-
-            }
-
-            @Override
-            public void didConnect() {
-
-            }
-        });
-        firstConnection.execute();
-        secondConnection.execute();
-    }
-
-    public void updateLocation() {
-        String id = sharedPreferences.getString(idKey, "");
-
-        if (id.equals(""))
-            return;
-
-        //Make get request
-        com.android.volley.Response.Listener<JSONObject> listener = new com.android.volley.Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    LocationTuple loc = getLocation();
-                    response.put("latitude", loc.lat);
-                    response.put("longitude", loc.lng);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Networking.postPersonalInfo(response);
-            }
-        };
-        Networking.getPersonalInfo(id, listener);
-    }
-
-    public LocationTuple getLocation() {
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        boolean locationPerm = ContextCompat.checkSelfPermission(Text911Activity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
-        if (locationPerm) {
-            DecimalFormat decimalFormat = new DecimalFormat(".###"); // 5 digits gives +- 100 m
-
-            /* An empty listener is needed to update the location */
-            LocationListener locationListener = new LocationListener() {
-                public void onLocationChanged(Location location) {
-                }
-
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-                }
-
-                public void onProviderEnabled(String provider) {
-                }
-
-                public void onProviderDisabled(String provider) {
-                }
-            };
-
-
-            requestLocationUpdates(lm, locationListener);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-            double longitude = location.getLongitude();
-            double latitude = location.getLatitude();
-
-            LocationTuple result = new LocationTuple();
-            result.lat = latitude + "";
-            result.lng = longitude + "";
-
-            return result;
-        }
-
-        LocationTuple result = new LocationTuple();
-        result.lat = "0";
-        result.lng = "0";
-
-        return result;
-    }
-
-    public final void requestLocationUpdates(LocationManager locationManager, LocationListener locationListener) {
-        boolean locationPerm = ContextCompat.checkSelfPermission(Text911Activity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        if (locationPerm) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        }
     }
 
     @Override
-    public void onBackPressed() {
-        try {
-            firstConnection.disconnect();
-            secondConnection.disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            String photo = ImageHandler.encodeBase64(bitmap);
+            connection.send("<Photo>\n" + photo + "</Photo>");
         }
-        super.onBackPressed();  // optional depending on your needs
-    }
-
-    public void getServerIP() {
-        Response.Listener<String> listener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(getAppContext(), response + "", Toast.LENGTH_LONG).show(); //Todo
-                serverIP = response;
-                serverIP = "10.26.47.247";
-                createClient();
-            }
-        };
-        Networking.getOperatorIP(listener);
-
-    }
-
-    private static class LocationTuple {
-        public String lat;
-        public String lng;
     }
 }
 
