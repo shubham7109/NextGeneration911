@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -31,6 +32,8 @@ import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static java.lang.Character.isDigit;
 
@@ -298,6 +301,33 @@ public class Controller {
                 }
             }
         });
+
+        logView.setRowFactory(tv -> {
+            TableRow<LogModel> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY
+                        && event.getClickCount() == 2) {
+
+                    LogModel clickedRow = row.getItem();
+
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(createContent(clickedRow)));
+                    stage.setTitle("Archived logs:");
+                    stage.show();
+                }
+            });
+            return row ;
+        });
+    }
+
+    private Parent createContent(LogModel logModel){
+        TextArea message = new TextArea();
+        message.setWrapText(true);
+        message.setPrefHeight(1200);
+        VBox root = new VBox(20, message);
+        root.setPrefSize(300,600);
+        message.setText(logModel.getMessages());
+        return root;
     }
 
     /**

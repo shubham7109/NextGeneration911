@@ -108,6 +108,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     private String encoded_Image = "";
     private boolean isPhoto = false;
     private String roomNumber;
+    private Timer timer;
 
 
 
@@ -505,11 +506,15 @@ public class On911Message implements Initializable, MapComponentInitializedListe
 
         Stage stage = new Stage();
         stage.setTitle("Operator");
+        client.closeConnection();
+        timer.cancel();
+        timer.purge();
+        Thread.sleep(100);
         LoggedInView loggedInView = new LoggedInView(operatorModel.getUserName());
         try {
-            client.closeConnection();
             putRequest("http://proj-309-sb-5.cs.iastate.edu:8080/logs");
-            sleep(100);
+            Thread.sleep(100);
+            stage.setTitle("Welcome");
             loggedInView.start(stage);
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -560,6 +565,8 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         jsonObject.put("callLength",time);
         jsonObject.put("operatorName",operatorModel.getFirstName()+ " " + operatorModel.getLastName());
         jsonObject.put("phoneNumber",personModel.getPhoneNumber());
+        jsonObject.put("messages",messages.getText());
+        jsonObject.put("operatorId",operatorModel.getId());
 
 
         url = new URL(put_url);
@@ -671,7 +678,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
 
 
 
-        Timer timer = new Timer();
+        timer = new Timer();
         timeElapsed.setAlignment(Pos.CENTER);
         long startTime = System.currentTimeMillis();
         final int[] count = {0};
