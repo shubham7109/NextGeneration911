@@ -80,7 +80,7 @@ public class Controller {
     void openMessageView(ActionEvent ae) throws Exception {
         Stage stage = new Stage();
         stage.setTitle("Welcome");
-        Main911Message main911Call = new Main911Message(username, "1", client);
+        Main911Message main911Call = new Main911Message(username, "1","1");
         updateStatus();
         main911Call.start(stage);
         Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
@@ -102,7 +102,7 @@ public class Controller {
                 Stage stage = new Stage();
                 stage.setTitle("Welcome");
                 String personID = messages.get(0).substring(4, messages.get(0).indexOf(" has"));
-                Main911Message main911Call = new Main911Message(username, personID, client);
+                Main911Message main911Call = new Main911Message(username, personID,operator.getId());
                 updateStatus();
                 main911Call.start(stage);
                 Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();

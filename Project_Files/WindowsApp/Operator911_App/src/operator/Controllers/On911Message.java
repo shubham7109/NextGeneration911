@@ -107,6 +107,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     private String host = "10.25.69.139";
     private String encoded_Image = "";
     private boolean isPhoto = false;
+    private String roomNumber;
 
 
 
@@ -114,17 +115,16 @@ public class On911Message implements Initializable, MapComponentInitializedListe
      * Constructor to set the instance variables
      * @param operatorModel Operator information for chat implementation
      * @param personModel Person information for location
-     * @param client
      * @throws Exception
      */
-    public On911Message(OperatorModel operatorModel, PersonModel personModel, Client client) throws Exception {
+    public On911Message(OperatorModel operatorModel, PersonModel personModel, String roomNumber) throws Exception {
         if(personModel != null){
             LAT = Double.parseDouble(personModel.getLatitude());
             LONG = Double.parseDouble(personModel.getLongitude());
             this.personModel = personModel;
             this.operatorModel = operatorModel;
-            this.client = client;
             messagesList = new ArrayList<>();
+            this.roomNumber = roomNumber;
         }
     }
 
@@ -612,16 +612,16 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                 infoWindow.open(map,markerArrayList.get(finalI));
             });
         }
-        //callerLocation = new LatLong(LAT, LONG);
+        callerLocation = new LatLong(LAT, LONG);
         map.addMarker(callerMarker);
-//        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-//        infoWindowOptions.content("CALLER LOCATION");
-        //InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
-        //infoWindow.open(map, callerMarker);
-//
-//        map.addUIEventHandler(callerMarker, UIEventType.click, (JSObject obj) -> {
-//            infoWindow.open(map,callerMarker);
-//        });
+        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+        infoWindowOptions.content("CALLER LOCATION");
+        InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+        infoWindow.open(map, callerMarker);
+
+        map.addUIEventHandler(callerMarker, UIEventType.click, (JSObject obj) -> {
+            infoWindow.open(map,callerMarker);
+        });
     }
 
     private void processImage(){
@@ -637,9 +637,17 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-
-
+    @FXML private void onEnterID(ActionEvent ae) throws Exception {
+        if(id.getText() != personModel.getId()){
+            String response = getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/persons/"+id.getText());
+            personModel = new PersonModel(new JSONObject(response));
+            setPerons();
+            profileImage.setImage(new Image(personModel.getImageURL()));
+            LAT = Double.parseDouble(personModel.getLatitude());
+            LONG = Double.parseDouble(personModel.getLongitude());
+        }
     }
 
     /**
@@ -656,7 +664,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        client = new Client(portNumber, host, operatorModel.getFirstName(), operatorModel.getId());
+        client = new Client(portNumber, host, operatorModel.getFirstName(), roomNumber);
         messagesList = client.getMessages();
         messages.setWrapText(true);
         mapView.addMapInializedListener(this);

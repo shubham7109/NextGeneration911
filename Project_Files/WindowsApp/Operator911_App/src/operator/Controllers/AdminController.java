@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import operator.*;
@@ -51,6 +52,8 @@ public class AdminController {
     @FXML private TableColumn<LogModel, String> phoneNumber;
     @FXML private ImageView profileImage;
     @FXML private Button logoutButton;
+    @FXML private TextField idEnter;
+    @FXML private Text messageLabel;
 
     private String username;
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/logs";
@@ -58,8 +61,59 @@ public class AdminController {
     private ArrayList<LogModel> logModels;
     private Timer timer;
     private OperatorModel operator;
+    private int portNumber = 6789;
+    private String host = "10.25.69.139";
+    private ArrayList<OperatorModel> operatorModels;
 
     private boolean isServer = true;
+
+    private void updateOperators(){
+        operatorModels = new ArrayList<>();
+
+        try{
+            String response = getHTML("http://proj-309-sb-5.cs.iastate.edu:8080/operators");
+            JSONArray jsonArray = new JSONArray(response);
+            for(int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                operatorModels.add(new OperatorModel(jsonObject));
+                System.out.println(jsonObject);
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+    @FXML
+    public void onEnter(ActionEvent ae) throws Exception {
+        updateOperators();
+        boolean check = false;
+
+
+        for (OperatorModel operatorModel:
+             operatorModels) {
+            String id = idEnter.getText();
+
+            if(id.equals(operatorModel.getId()) && operatorModel.getStatus().equals("On-Call")){
+                timer.cancel();
+                timer.purge();
+                //client = new Client(portNumber,host,operator.getFirstName(),idEnter.getText());
+                Thread.sleep(100);
+                Stage stage = new Stage();
+                stage.setTitle("Welcome");
+                Main911Message main911Call = new Main911Message(username, idEnter.getText(),operatorModel.getId());
+                updateStatus();
+                main911Call.start(stage);
+                Stage primaryStage = (Stage) operatorStatus.getScene().getWindow();
+                primaryStage.close();
+                check = true;
+            }
+        }
+        if(!check){
+            messageLabel.setFill(Color.FIREBRICK);
+            messageLabel.setText("This operator is not on call!");
+        }
+
+    }
 
     /**
      * Required default constructor
