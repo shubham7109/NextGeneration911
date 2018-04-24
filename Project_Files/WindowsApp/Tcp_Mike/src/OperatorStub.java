@@ -8,34 +8,25 @@ public class OperatorStub {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         int portNumber = 6789;
-        String host = "localhost";
         //String host = "localhost";
+        String host = "proj-309-sb-5.cs.iastate.edu";
         ArrayList<String> messages;
         int length = 0;
-        Client me = new Client(portNumber, host, "3", "test");
+        Client me = new Client(portNumber, host, "listener", "test");
 
 
-        for (int j =0; j< 5; j++) {
+        for (int j = 0; j < 5; j++) {
             //me.sendMessage(String.valueOf(System.currentTimeMillis()));
             me.sendMessage(j + "");
+            sleep(500);
             messages = me.getMessages();
             for (int i = length; i < messages.size(); i++) {
                 System.out.println(messages.get(i));
-
-<<<<<<< HEAD
-        Client me = new Client(portNumber, host, "1", "1");
-        while (true) {
-            me.sendMessage(String.valueOf(System.currentTimeMillis()));
-            for (String line :
-                    me.getMessages()) {
-                System.out.println(line);
-=======
->>>>>>> 7e37ef1630ec4b8bf9ed43901671e0714616f2d9
             }
             length = messages.size();
-            sleep(1000);
-
         }
+
+
         me.sendMessage("/history");
         sleep(1000);
         messages = me.getMessages();

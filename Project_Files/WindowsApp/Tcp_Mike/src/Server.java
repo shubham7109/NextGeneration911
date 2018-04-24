@@ -134,7 +134,7 @@ class clientThread extends Thread {
                     if (c != this)
                         c.os.println("*** " + name + " has entered the chat room ***");
                 }
-                roomHistory.add("*** " + name + " has entered the chat room ***");
+                roomHistory.add("(History)*** " + name + " has entered the chat room ***");
             }
 
             while (true) {
@@ -149,6 +149,7 @@ class clientThread extends Thread {
                             os.println(s);
                         }
                     }
+                    continue;
                 }
 
 
@@ -167,7 +168,7 @@ class clientThread extends Thread {
                     for (clientThread c : chatRooms.get(roomID)) {
                         c.os.println("<" + name + "> " + line);
                     }
-                    roomHistory.add("<" + name + "> " + line);
+                    roomHistory.add("(History)<" + name + "> " + line);
                 }
             }
 
@@ -177,9 +178,9 @@ class clientThread extends Thread {
                         c.os.println("*** " + name + " has left ***");
                     else
                         c.os.println("***disconnected***");
-                }
-                roomHistory.add("*** " + name + " has left ***");
 
+                    roomHistory.add("(History)*** " + name + " has left ***");
+                }
                 synchronized (this) {
                     chatRooms.get(roomID).remove(this);
                     if (chatRooms.get(roomID).size() == 0) {
