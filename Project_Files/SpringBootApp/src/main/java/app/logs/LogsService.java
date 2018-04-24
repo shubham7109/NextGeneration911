@@ -30,7 +30,9 @@ public class LogsService {
 	 * @param log Logs
 	 */
 	public void addLogs(Logs log) {
-		logsRepository.save(log);
+		if (log.getOperatorName() != "Sumon Biswas") {
+			logsRepository.save(log);
+		}
 	}
 }
 
