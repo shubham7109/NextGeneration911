@@ -5,13 +5,17 @@ import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+@Controller
 public class LogsGenerator {
 	
 	@Autowired
 	private LogsService logsService;
 	
-	public static void main(String[] args) {
+	@RequestMapping("/logsGeneration")
+	public void GenerateLogs() {
 		Random rand = new Random(System.currentTimeMillis());
 		
 		List<String> operators = new ArrayList<String>();
@@ -46,9 +50,9 @@ public class LogsGenerator {
 			l.setTime(Integer.toString(rand.nextInt(23)) + ":" + Integer.toString(rand.nextInt(59)));
 			
 			logs.add(l);
-			/*
+			
 			logsService.addLogs(l);
-		*/}
+		}
 		
 		
 		
