@@ -13,7 +13,7 @@ public class LogsGenerator {
 	
 	@Autowired
 	private LogsService logsService;
-	
+/*	
 	@RequestMapping("/logsGeneration")
 	public void GenerateLogs() {
 		Random rand = new Random(System.currentTimeMillis());
@@ -57,5 +57,5 @@ public class LogsGenerator {
 		
 		
 	}
-
+*/
 }
