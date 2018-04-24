@@ -27,6 +27,7 @@ public class Person {
 	private String weightKilograms;
 	private String latitude;
 	private String longitude;
+	private String picture;
 	
 	public Person() {
 		super();
@@ -52,13 +53,14 @@ public class Person {
 		this.weightKilograms = "";
 		this.latitude = "";
 		this.longitude = "";
+		this.picture = "";
 	}
 	
 	
 	public Person(String id, String phoneNumber, String gender, String firstName, String middleName, String lastName,
 			String homeAddress, String city, String state, String zipcode, String dateOfBirth,
 			String licencePlateNumber, String vehicle, String bloodType, String heightCentimeters,
-			String weightKilograms, String latitude, String longitude) {
+			String weightKilograms, String latitude, String longitude, String picture) {
 		super();
 		this.id = id;
 		this.phoneNumber = phoneNumber;
@@ -78,6 +80,7 @@ public class Person {
 		this.weightKilograms = weightKilograms;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.picture = picture;
 	}
 
 	public String getLatitude() {
@@ -224,7 +227,15 @@ public class Person {
 		this.weightKilograms = weightKilograms;
 	}
 
-	
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	 
 	
 	
 	

@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class operatorsController {
+public class OperatorsController {
 
 	@Autowired
-	private operatorsService operatorService;
+	private OperatorsService operatorService;
 
 	/**
 	 * @return list of all operators
