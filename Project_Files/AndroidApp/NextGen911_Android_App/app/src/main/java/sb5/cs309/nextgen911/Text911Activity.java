@@ -43,6 +43,7 @@ public class Text911Activity extends AppCompatActivity {
     volatile String message;
     private EditText inputBox;
     private ListView list_of_messages;
+    HandlerThread readThread;
 
     public static Context getAppContext() {
         return Text911Activity.context;
@@ -54,15 +55,23 @@ public class Text911Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text911);
         Text911Activity.context = getApplicationContext();
+        readThread = new HandlerThread("");
+        readThread.start();
+
+        initMessages();
+        startCamera();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
         connected = false;
+        stop = false;
         hasChanged = false;
         firstExit = true;
         photoFlag = false;
         message = "";
 
-
-        HandlerThread readThread = new HandlerThread("");
-        readThread.start();
         background_handler = new Handler(readThread.getLooper());
         background_handlerTask = new Runnable() {
             @Override
@@ -108,7 +117,7 @@ public class Text911Activity extends AppCompatActivity {
                 } else {
                     background_handler.removeCallbacks(background_handlerTask); // cancel run
                 }
-                background_handler.postDelayed(background_handlerTask, 5);
+                background_handler.postDelayed(background_handlerTask, 25);
             }
         };
 
@@ -116,28 +125,30 @@ public class Text911Activity extends AppCompatActivity {
         m_handlerTask = new Runnable() {
             @Override
             public void run() {
-                synchronized (this) {
-                    if (hasChanged) {
-                        adapter.add(message);
-                        message = "";
-                        hasChanged = false;
-                        adapter.notifyDataSetChanged();
-                        list_of_messages.setSelection(adapter.getCount() - 1);
+                if(!stop) {
+                    synchronized (this) {
+                        if (hasChanged) {
+                            adapter.add(message);
+                            message = "";
+                            hasChanged = false;
+                            adapter.notifyDataSetChanged();
+                            list_of_messages.setSelection(adapter.getCount() - 1);
+                        }
                     }
+                }else{
+                    m_handler.removeCallbacks(m_handlerTask);
                 }
                 m_handler.postDelayed(m_handlerTask, 50);
             }
         };
 
-        initMessages();
-        startCamera();
-        getServerIP();
 
+        getServerIP();
     }
 
     private void createClient() {
         connection = new TCP_Client(6789, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), serverIP);
-        if(serverIP != "-1" || serverIP != "") {
+        if(!serverIP.equals("-1") && !serverIP.equals("")) {
             connected = true;
             connection.startConnection();
             background_handlerTask.run();
@@ -146,6 +157,14 @@ public class Text911Activity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed(){
+        if(connected)
+            connection.stopConnection();
+        stop = true;
+        super.onBackPressed();
+        finish();
+    }
 
     /**
      * Find the IP of the chat server to connect to
@@ -155,11 +174,12 @@ public class Text911Activity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 serverIP = response;
-                if(serverIP == "-1" || serverIP == ""){
+                if(serverIP.equals("-1") || serverIP.equals("")){
                     adapter.add("All Operators Busy");
                     adapter.notifyDataSetChanged();
+                }else {
+                    createClient();
                 }
-                createClient();
             }
         };
         Networking.getOperatorIP(listener);
