@@ -31,11 +31,9 @@ import operator.Models.PersonModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import sun.misc.BASE64Decoder;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
@@ -84,6 +82,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     @FXML private Button swatTeam;
     @FXML private Button firstResponders;
     @FXML private ImageView profileImage;
+    @FXML private ImageView sentImage;
     private String time;
     private String URL = "http://proj-309-sb-5.cs.iastate.edu:8080/persons/";
     private double LAT;
@@ -106,6 +105,9 @@ public class On911Message implements Initializable, MapComponentInitializedListe
     private int messagesCount =0;
     private int portNumber = 6789;
     private String host = "10.25.69.139";
+    private String encoded_Image = "";
+    private boolean isPhoto = false;
+
 
 
     /**
@@ -550,7 +552,7 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yy");
         String date =  sdf.format(cal.getTime());
         jsonObject = new JSONObject();
-        jsonObject.put("id",String.valueOf(ThreadLocalRandom.current().nextInt(0, 10000 + 1)));
+        jsonObject.put("id",String.valueOf(ThreadLocalRandom.current().nextInt(0, 1000000 + 1)));
         jsonObject.put("date",date);
         sdf = new SimpleDateFormat("HH:mm");
         date =  sdf.format(cal.getTime());
@@ -571,6 +573,11 @@ public class On911Message implements Initializable, MapComponentInitializedListe
         osw.flush();
         osw.close();
         System.err.println(connection.getResponseCode());
+    }
+
+    private void setEncoded_Image(String add) throws IOException {
+        encoded_Image +=  add.substring(add.indexOf(' '));
+
     }
 
     private void updateMap(){
@@ -617,6 +624,23 @@ public class On911Message implements Initializable, MapComponentInitializedListe
 //        });
     }
 
+    private void processImage(){
+        BASE64Decoder base64Decoder = new BASE64Decoder();
+        ByteArrayInputStream rocketInputStream = null;
+        encoded_Image = encoded_Image.replace("\n", "").replace("\r", "").replace(" ","");
+
+        try {
+            rocketInputStream = new ByteArrayInputStream(base64Decoder.decodeBuffer(encoded_Image));
+            Image rocketImg = new Image(rocketInputStream);
+            sentImage.setImage(rocketImg);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
 
     /**
      * Initialize the view of the controller and start a connection
@@ -651,16 +675,33 @@ public class On911Message implements Initializable, MapComponentInitializedListe
                     timeElapsed.setText("On Call for:\n"+time+ " seconds");
 
                     try {
-                        if(count[0] >= 15){
+                        if(count[0] >= 10){
                             setDeploys();
-                            //updateMap();
+                            updateMap();
                             count[0] =0;
                         }
 
+
                         for(String text : client.getMessages()){
-                            if(!text.contains("$"))
-                            messages.appendText(text + "\n");
+                            if(!text.contains("<Photo>") && !isPhoto)
+                            {
+                                messages.appendText(text + "\n");
+                            }
+                            else if(isPhoto && text.contains("</Photo>")) {
+                                processImage();
+                                isPhoto = false;
+                                encoded_Image = "";
+                            }
+
+                            else if(!isPhoto && text.contains("<Photo>")){
+                                isPhoto = true;
+                            }
+                            else {
+                                encoded_Image += text.substring(text.indexOf(" "));
+                            }
                         }
+
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
