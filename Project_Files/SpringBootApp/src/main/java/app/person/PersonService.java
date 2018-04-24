@@ -1,6 +1,10 @@
 package app.person;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +15,6 @@ public class PersonService {
 	
 	@Autowired
 	private PersonRepository personRepository;
-	
-	/*
-	private List<Person> persons = new ArrayList<>(Arrays.asList(
-			new Person(123),
-			new Person(456),
-			new Person(789)
-			));
-	*/
 	
 	/**
 	 * @return a list of persons
@@ -44,8 +40,12 @@ public class PersonService {
 	 * @param person to be added
 	 */
 	public void addPerson(Person person) {
-		//persons.add(person);
-		personRepository.save(person);
+		try {
+			save(person);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -54,14 +54,12 @@ public class PersonService {
 	 * @param person person
 	 */
 	public void updatePerson(int id, Person person) {
-		/* for (int i = 0; i < persons.size(); i++) {
-			Person p = persons.get(i);
-			if (p.getId() == id) {
-				persons.set(i, person);
-				return;
-			}
-		}*/
-		personRepository.save(person);
+		try {
+			save(person);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -69,12 +67,32 @@ public class PersonService {
 	 * @param id of person
 	 */
 	public void deletePerson(String id) {
-		/*for (int i = 0; i < persons.size(); i++) {
-			Person p = persons.get(i);
-			if (p.getId() == id) {
-				persons.remove(i);
-			}
-		}*/
 		personRepository.delete(id);
+	}
+	
+	private void save(Person person) throws IOException {
+		
+		if (person.getPicture() != null) {
+			//decode string as jpg and save to file
+			String s = person.getPicture();
+			s = s.replace("\n", "").replace("\r", "");
+			byte[] decoded = Base64.getDecoder().decode(s);
+			File file = new File("user_images/" + new String(person.getId()) + ".jpg");
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			FileOutputStream outs = null;
+			outs = new FileOutputStream("user_images/" + new String(person.getId()) + ".jpg");
+			outs.write(decoded);
+			outs.close();
+			
+			//set picture to the url for that picture
+			person.setPicture("user_images/" + new String(person.getId()) + ".jpg");
+		}
+		else {
+			person.setPicture("user_images/default.png");
+		}
+		
+		personRepository.save(person);
 	}
 }

@@ -22,8 +22,6 @@ public class LogsController {
 	{
 		List<Logs> s = logsService.getAllLogs();
 		
-		s.sort(new LogsReverseComparator());
-		
 		return s;
 	}
 

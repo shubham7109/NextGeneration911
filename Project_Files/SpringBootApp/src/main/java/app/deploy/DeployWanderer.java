@@ -31,7 +31,7 @@ public class DeployWanderer {
 	}
 	
 	private double moveLat() {
-		double lat = (rand.nextDouble() + 0.000001) * (RIGHTLATITUDE - LEFTLATITUDE) / 20;
+		double lat = (rand.nextDouble() + 0.000001) * (RIGHTLATITUDE - LEFTLATITUDE) / 40;
 		if (rand.nextInt() < 0) {
 			lat = lat * -1;
 		}
@@ -39,7 +39,7 @@ public class DeployWanderer {
 	}
 	
 	private double moveLong() {
-		double longi = (rand.nextDouble() + 0.000001) * (UPPERLONGITUDE - LOWERLONGITUDE) / 20;
+		double longi = (rand.nextDouble() + 0.000001) * (UPPERLONGITUDE - LOWERLONGITUDE) / 40;
 		if (rand.nextInt() < 0) {
 			longi = longi * -1;
 		}
@@ -57,40 +57,40 @@ public class DeployWanderer {
 		}
 		
 		/*ambulances*/
-		deploys.add(new Deploy("1", "ambulance", "42.033162", "-93.611287"));
-		deploys.add(new Deploy("2", "ambulance", "42.033168", "-93.611287"));
-		deploys.add(new Deploy("3", "ambulance", "42.037096", "-93.583847"));
+		deploys.add(new Deploy("1", "Ambulance", "42.033162", "-93.611287"));
+		deploys.add(new Deploy("2", "Ambulance", "42.033168", "-93.611287"));
+		deploys.add(new Deploy("3", "Ambulance", "42.037096", "-93.583847"));
 		
 		/*swatTeam*/
-		deploys.add(new Deploy("4", "swatTeam", randomLat(), randomLong()));
-		deploys.add(new Deploy("5", "swatTeam", randomLat(), randomLong()));
+		deploys.add(new Deploy("4", "Swat Team", randomLat(), randomLong()));
+		deploys.add(new Deploy("5", "Swat Team", randomLat(), randomLong()));
 		
 		/*stateTroopers*/
-		deploys.add(new Deploy("6", "stateTroopers", randomLat(), randomLong()));
-		deploys.add(new Deploy("7", "stateTroopers", randomLat(), randomLong()));
+		deploys.add(new Deploy("6", "State Trooper", randomLat(), randomLong()));
+		deploys.add(new Deploy("7", "State Trooper", randomLat(), randomLong()));
 		
 		/*countyOfficers*/
-		deploys.add(new Deploy("8", "countyOfficers", randomLat(), randomLong()));
-		deploys.add(new Deploy("9", "countyOfficers", randomLat(), randomLong()));
-		deploys.add(new Deploy("10", "countyOfficers", randomLat(), randomLong()));
+		deploys.add(new Deploy("8", "County Officer", randomLat(), randomLong()));
+		deploys.add(new Deploy("9", "county Officer", randomLat(), randomLong()));
+		deploys.add(new Deploy("10", "county Officer", randomLat(), randomLong()));
 		
 		/*fireBrigade*/
-		deploys.add(new Deploy("11", "fireBrigade", "42.020540", "-93.36546"));
-		deploys.add(new Deploy("12", "fireBrigade", "42.020600", "-93.36546"));
-		deploys.add(new Deploy("13", "fireBrigade", "42.020640", "-93.36546"));
-		deploys.add(new Deploy("14", "fireBrigade", "42.021556", "-93.38584"));
+		deploys.add(new Deploy("11", "Fire Brigade", "42.020540", "-93.36546"));
+		deploys.add(new Deploy("12", "Fire Brigade", "42.020600", "-93.36546"));
+		deploys.add(new Deploy("13", "Fire Brigade", "42.020640", "-93.36546"));
+		deploys.add(new Deploy("14", "Fire Brigade", "42.021556", "-93.38584"));
 		
 		/*firstResponders*/
-		deploys.add(new Deploy("15", "firstResponders", randomLat(), randomLong()));
-		deploys.add(new Deploy("16", "firstResponders", randomLat(), randomLong()));
-		deploys.add(new Deploy("17", "firstResponders", randomLat(), randomLong()));
+		deploys.add(new Deploy("15", "First Responder", randomLat(), randomLong()));
+		deploys.add(new Deploy("16", "First Responder", randomLat(), randomLong()));
+		deploys.add(new Deploy("17", "First Responder", randomLat(), randomLong()));
 		
 		for (int i = 0; i < deploys.size(); i++) {
 			deployService.addDeploy(deploys.get(i));
 		}	
 	}
 	
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedRate = 10000)
 	public void wander() {
 		List<Deploy> deploy = deployService.getAllDeploys();
 		
@@ -99,7 +99,7 @@ public class DeployWanderer {
 			Deploy d = deploy.get(i);
 			
 			// only wander non-stationary Deploys
-			if (d.getType() != "fireBrigade" && d.getType() != "ambulance") {
+			if (d.getType() != "Fire Brigade" && d.getType() != "Ambulance") {
 				double dLong = Double.parseDouble(d.getLongitude());
 				double dLat = Double.parseDouble(d.getLatitude());
 				

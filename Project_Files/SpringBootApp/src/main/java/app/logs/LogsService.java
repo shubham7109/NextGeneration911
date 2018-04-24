@@ -1,6 +1,7 @@
 package app.logs;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class LogsService {
 
 		List<Logs> logs = new ArrayList<>();
 		logsRepository.findAll().forEach(logs::add);
+		logs.sort(new LogsComparator());
+		Collections.reverse(logs);
 		return logs;
 	}
 
@@ -27,7 +30,9 @@ public class LogsService {
 	 * @param log Logs
 	 */
 	public void addLogs(Logs log) {
-		logsRepository.save(log);
+		if (log.getOperatorName() != "Sumon Biswas") {
+			logsRepository.save(log);
+		}
 	}
 }
 

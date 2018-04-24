@@ -1,24 +1,17 @@
 package app.logs;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
 
 public class LogsReverseComparator implements Comparator<Logs> {
 	
 	public int compare(Logs a, Logs b) {
 		
-		if (a.getDate().compareTo(b.getDate()) < 0) {
-			return 1;
-		} else if (a.getDate().compareTo(b.getDate()) > 0) {
-			return -1;
-		} else {
-			if (a.getTime().compareTo(b.getTime()) < 0 ) {
-				return 1;
-			} else if (a.getTime().compareTo(b.getTime()) > 0) {
-				return -1;
-			}
-		}
-		
-		return 0;
+		LogsComparator c = new LogsComparator();
+		return -1 * c.compare(a, b);
+
 	}
 	
 }

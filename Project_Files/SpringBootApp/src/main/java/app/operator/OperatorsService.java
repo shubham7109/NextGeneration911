@@ -7,18 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class operatorsService {
+public class OperatorsService {
 	
 	@Autowired
 	private OperatorsRepository operatorsRepository;
-	
-	/*
-	private List<Operators> operator = new ArrayList<>(Arrays.asList(
-			new Operators(123, "shubham", "password", "Shubham", "Sharma", 0),
-			new Operators(456, "paul", "password1", "Paul", "Biermann", 1),
-			new Operators(789, "mike", "password2", "Michael", "Onyszczak", 2)
-			));
-			*/
 
 	/**
 	 * @return list of operators
@@ -34,12 +26,6 @@ public class operatorsService {
 	 * @return operator
 	 */
 	public Operators getOperator(String id) {
-		/*for(int i = 0; i < operator.size(); i++)
-		{
-			if(operator.get(i).getID() == id)
-				return operator.get(i); 
-		}
-		return new Operators(id);*/
 		return operatorsRepository.findOne(id);
 	}
 
@@ -48,7 +34,6 @@ public class operatorsService {
 	 * @param operators Operators
 	 */
 	public void addOperator(Operators operators) {
-		/*operator.add(operators);*/
 		operatorsRepository.save(operators);
 	}
 
@@ -58,13 +43,6 @@ public class operatorsService {
 	 * @param operators the Operator
 	 */
 	public void updateOperator(int id, Operators operators) {
-		/*for (int i = 0; i < operator.size(); i++) {
-			Operators o = operator.get(i);
-			if (o.getID() == id) {
-				operator.set(i, operators);
-				return;
-			}
-		}*/
 		operatorsRepository.save(operators);
 	}
 
@@ -73,12 +51,6 @@ public class operatorsService {
 	 * @param id of operator
 	 */
 	public void deleteOperator(String id) {
-		/*for (int i = 0; i < operator.size(); i++) {
-			Operators o = operator.get(i);
-			if (o.getID() == id) {
-				operator.remove(i);
-			}
-		}*/
 		operatorsRepository.delete(id);
 	}
 	
