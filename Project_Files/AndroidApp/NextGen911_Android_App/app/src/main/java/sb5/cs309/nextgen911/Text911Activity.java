@@ -130,33 +130,22 @@ public class Text911Activity extends AppCompatActivity {
         };
 
         initMessages();
-        getServerIP();
         startCamera();
+        getServerIP();
 
     }
 
     private void createClient() {
-        connection = new TCP_Client(6789, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), "test");
-        connected = true;
-        connection.startConnection();
-        background_handlerTask.run();
-        m_handlerTask.run();
+        connection = new TCP_Client(6789, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), serverIP);
+        if(serverIP != "-1" || serverIP != "") {
+            connected = true;
+            connection.startConnection();
+            background_handlerTask.run();
+            m_handlerTask.run();
+        }
     }
 
 
-    @Override
-    public void onBackPressed() {
-        if(connected)
-            connection.stopConnection();
-        super.onBackPressed();
-    }
-
-    @Override
-    public void onDestroy() {
-        if(connected)
-            connection.stopConnection();
-        super.onDestroy();
-    }
 
     /**
      * Find the IP of the chat server to connect to
@@ -166,6 +155,10 @@ public class Text911Activity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 serverIP = response;
+                if(serverIP == "-1" || serverIP == ""){
+                    adapter.add("All Operators Busy");
+                    adapter.notifyDataSetChanged();
+                }
                 createClient();
             }
         };

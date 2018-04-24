@@ -1,0 +1,4 @@
+#Mon Apr 23 18:58:48 CDT 2018
+base.0=/home/mikeonys/SB_5_NextGeneration911/Project_Files/AndroidApp/android-udp-audio-chat/app/build/intermediates/transforms/dexMerger/debug/10
+path.0=classes.dex
+renamed.0=classes.dex
