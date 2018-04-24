@@ -15,29 +15,23 @@ public class Logs {
 	private String callLength;
 	private String operatorName;
 	private String phoneNumber; 
-	
-	public Logs(String id, String date, String time, String callLength, String operatorName, String phoneNumber)
-	{
+	private String messages;
+	private String operatorId;
+
+	public Logs(String id, String date, String time, String callLength, String operatorName, String phoneNumber,
+			String messages, String operatorId) {
 		super();
 		this.id = id;
-		this.date = date; 
-		this.time = time; 
-		this.callLength = callLength; 
-		this.operatorName = operatorName; 
-		this.phoneNumber = phoneNumber; 
+		this.date = date;
+		this.time = time;
+		this.callLength = callLength;
+		this.operatorName = operatorName;
+		this.phoneNumber = phoneNumber;
+		this.messages = messages;
+		this.operatorId = operatorId;
 	}
 
 	public Logs(){
-	}
-
-	public void setID(String id)
-	{
-		this.id = id;
-	}
-
-	public String getID()
-	{
-		return id;
 	}
 
 	public void setDate(String date)
@@ -90,6 +84,30 @@ public class Logs {
 		return phoneNumber;
 	}
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getMessages() {
+		return messages;
+	}
+
+	public void setMessages(String messages) {
+		this.messages = messages;
+	}
+
+	public String getOperatorId() {
+		return operatorId;
+	}
+
+	public void setOperatorId(String operatorId) {
+		this.operatorId = operatorId;
+	}
+
 	public String toString() {
 		return "Log: " + operatorName + " " + date + " " + time;
 	}

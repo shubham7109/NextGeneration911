@@ -13,7 +13,7 @@ public class LogsGenerator {
 	
 	@Autowired
 	private LogsService logsService;
-/*	
+	
 	@RequestMapping("/logsGeneration")
 	public void GenerateLogs() {
 		Random rand = new Random(System.currentTimeMillis());
@@ -25,6 +25,15 @@ public class LogsGenerator {
 		operators.add("Rishab Narendra");
 		operators.add("Jennifer Hardy");
 		operators.add("Sam Burns");
+		
+		List<Integer> opid = new ArrayList<Integer>();
+		opid.add(1);
+		opid.add(2);
+		opid.add(3);
+		opid.add(4);
+		opid.add(5);
+		opid.add(6);
+		
 		
 		List<String> phoneNumbers = new ArrayList<String>();
 		phoneNumbers.add("515-298-5098");
@@ -42,12 +51,15 @@ public class LogsGenerator {
 		for (int i = 0; i < 300; i++) {
 			Logs l = new Logs();
 			
+			int op = rand.nextInt(operators.size());
+			
 			l.setCallLength(Integer.toString((rand.nextInt(309) + 6)));
 			l.setDate("Apr-" + Integer.toString(rand.nextInt(21) + 1) + "-18");
-			l.setID(Integer.toString(rand.nextInt(1000000) + 1));
-			l.setOperatorName(operators.get(rand.nextInt(operators.size())));
+			l.setId(Integer.toString(rand.nextInt(1000000) + 1));
+			l.setOperatorName(operators.get(op));
 			l.setPhoneNumber(phoneNumbers.get(rand.nextInt(phoneNumbers.size())));
 			l.setTime(Integer.toString(rand.nextInt(23)) + ":" + Integer.toString(rand.nextInt(59)));
+			l.setOperatorId(Integer.toString(opid.get(i)));
 			
 			logs.add(l);
 			
@@ -57,5 +69,5 @@ public class LogsGenerator {
 		
 		
 	}
-*/
+
 }
