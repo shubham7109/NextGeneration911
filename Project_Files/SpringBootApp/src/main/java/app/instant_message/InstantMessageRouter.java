@@ -85,7 +85,9 @@ public class InstantMessageRouter {
 			
 			
 		}
-		System.out.println("outputs new operator");
+		
+		Operators none = new Operators();
+		none.setId("-1");
 		return new Operators();
 		
 		
