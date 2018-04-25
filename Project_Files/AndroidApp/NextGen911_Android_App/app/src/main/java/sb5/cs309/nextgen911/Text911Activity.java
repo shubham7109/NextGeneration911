@@ -58,6 +58,10 @@ public class Text911Activity extends AppCompatActivity {
         readThread = new HandlerThread("");
         readThread.start();
 
+        connected = false;
+        stop = false;
+        firstExit = true;
+
         initMessages();
         startCamera();
     }
@@ -65,10 +69,9 @@ public class Text911Activity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        connected = false;
-        stop = false;
+
         hasChanged = false;
-        firstExit = true;
+
         photoFlag = false;
         message = "";
 
@@ -147,12 +150,18 @@ public class Text911Activity extends AppCompatActivity {
     }
 
     private void createClient() {
+        if(connected) {
+            return;
+        }
         connection = new TCP_Client(6789, "proj-309-sb-5.cs.iastate.edu", sharedPreferences.getString(idKey, "0"), serverIP);
         if(!serverIP.equals("-1") && !serverIP.equals("")) {
             connected = true;
             connection.startConnection();
             background_handlerTask.run();
             m_handlerTask.run();
+        }else{
+            adapter.add("All Operators Busy");
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -175,8 +184,7 @@ public class Text911Activity extends AppCompatActivity {
             public void onResponse(String response) {
                 serverIP = response;
                 if(serverIP.equals("-1") || serverIP.equals("")){
-                    adapter.add("All Operators Busy");
-                    adapter.notifyDataSetChanged();
+                    //
                 }else {
                     createClient();
                 }

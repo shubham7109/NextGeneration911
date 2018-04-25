@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Tcp_Mike">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/Tcp_Mike_jar/Tcp_Mike.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
